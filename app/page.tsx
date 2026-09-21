@@ -222,7 +222,6 @@ function TempleScene({
             <span>{deity ? "神明形象" : "形象占位"}</span>
           </div>
         )}
-        <div className="deity-plaque">{deity?.canonical_name ?? "待问所求"}</div>
       </div>
       <div className="altar">
         <div className="altar-top">
