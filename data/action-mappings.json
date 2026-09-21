@@ -1,0 +1,431 @@
+[
+  {
+    "id": "MAP-001",
+    "life_domain": "关系",
+    "input_examples": ["想谈恋爱", "想脱单", "想找对象"],
+    "normalized_intent": "寻求婚恋对象或婚配缘分",
+    "routes": [{"target_id": "FOLK-005", "relation_level": "direct_traditional", "score": 100}],
+    "clarifying_questions": [],
+    "exclusions": ["不得承诺促成特定对象、改变他人意愿或保证恋爱结果"],
+    "source_ids": ["SRC-042", "SRC-043"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-002",
+    "life_domain": "关系",
+    "input_examples": ["希望感情和睦", "婚后减少争吵", "家庭和气"],
+    "normalized_intent": "维护既有伴侣或家庭关系的和谐",
+    "routes": [{"target_id": "FOLK-006", "relation_level": "direct_traditional", "score": 100}],
+    "clarifying_questions": ["是婚恋关系、家庭关系，还是一般人际合作？"],
+    "exclusions": ["存在控制、暴力或安全风险时，不以供奉替代现实求助"],
+    "source_ids": ["SRC-044", "SRC-045"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-003",
+    "life_domain": "关系",
+    "input_examples": ["想复合", "让前任回头", "让某人爱上我"],
+    "normalized_intent": "试图改变特定对象的感情决定",
+    "routes": [{"target_id": null, "relation_level": "no_match", "score": 0}],
+    "clarifying_questions": ["是否愿意把诉求改为关系修复、沟通或自我整理？"],
+    "exclusions": ["不得以月老或和合二仙承诺操控他人意愿"],
+    "source_ids": ["SRC-042", "SRC-044"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-004",
+    "life_domain": "衣",
+    "input_examples": ["养蚕", "做丝绸", "纺织生产", "传统服装制作"],
+    "normalized_intent": "蚕桑、缫丝、丝织或衣料生产",
+    "routes": [{"target_id": "FOLK-008", "relation_level": "direct_traditional", "score": 100}],
+    "clarifying_questions": ["重点是蚕桑、丝织，还是现代服装设计？"],
+    "exclusions": ["现代快时尚、穿搭和购物不自动视为先蚕职掌"],
+    "source_ids": ["SRC-047", "SRC-048"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-005",
+    "life_domain": "衣",
+    "input_examples": ["做服装设计", "学裁缝", "做纤维艺术"],
+    "normalized_intent": "服装与纺织相关创作",
+    "routes": [
+      {"target_id": "FOLK-008", "relation_level": "contextual_direct", "score": 75},
+      {"target_id": "FOLK-007", "relation_level": "functional_analogy", "score": 35}
+    ],
+    "clarifying_questions": ["创作是否直接涉及蚕桑、丝织或传统裁缝行业？"],
+    "exclusions": ["不得把所有视觉设计都归入嫘祖或鲁班"],
+    "source_ids": ["SRC-047", "SRC-049"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-006",
+    "life_domain": "衣",
+    "input_examples": ["买新衣服", "今天怎么穿", "穿搭求好运"],
+    "normalized_intent": "日常服饰消费或穿搭选择",
+    "routes": [{"target_id": null, "relation_level": "no_match", "score": 0}],
+    "clarifying_questions": [],
+    "exclusions": ["不得仅因属于‘衣’而强配嫘祖"],
+    "source_ids": ["SRC-047"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-007",
+    "life_domain": "食",
+    "input_examples": ["做饭", "经营厨房", "开餐馆", "餐饮后厨"],
+    "normalized_intent": "家庭或餐饮场所的厨房事务",
+    "routes": [{"target_id": "FOLK-003", "relation_level": "direct_traditional", "score": 100}],
+    "clarifying_questions": ["是家庭厨房，还是商业餐饮？"],
+    "exclusions": ["商业盈利诉求与厨房家神职掌分开处理"],
+    "source_ids": ["SRC-039"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-008",
+    "life_domain": "食",
+    "input_examples": ["种地", "春耕", "做农业", "种粮食"],
+    "normalized_intent": "农耕、播种和粮食生产",
+    "routes": [
+      {"target_id": "FOLK-009", "relation_level": "direct_traditional", "score": 100},
+      {"target_id": "FOLK-010", "relation_level": "direct_traditional", "score": 100}
+    ],
+    "clarifying_questions": ["是国家礼制、地方农神传统，还是现代农业文化展示？"],
+    "exclusions": ["神农、后稷和先农不能在所有时代视为同一对象"],
+    "source_ids": ["SRC-050", "SRC-051"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-009",
+    "life_domain": "食",
+    "input_examples": ["研究中药", "采药", "做本草研究"],
+    "normalized_intent": "本草、药学或传统医药研究",
+    "routes": [
+      {"target_id": "FOLK-009", "relation_level": "contextual_direct", "score": 75},
+      {"target_id": "FOLK-004", "relation_level": "direct_traditional", "score": 100}
+    ],
+    "clarifying_questions": ["是行业文化、学术研究，还是本人正在就医？"],
+    "exclusions": ["不得以神农尝百草传说替代药物安全和临床证据"],
+    "source_ids": ["SRC-040", "SRC-051"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-010",
+    "life_domain": "住",
+    "input_examples": ["盖房子", "装修", "做木工", "建筑施工"],
+    "normalized_intent": "营造、土木、木作或装修施工",
+    "routes": [{"target_id": "FOLK-007", "relation_level": "direct_traditional", "score": 100}],
+    "clarifying_questions": ["所属工种和地区是否有自己的行业祖师传统？"],
+    "exclusions": ["施工安全、许可和结构规范必须优先"],
+    "source_ids": ["SRC-049"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-011",
+    "life_domain": "住",
+    "input_examples": ["搬家", "住进新社区", "求邻里平安"],
+    "normalized_intent": "迁居后的地方与家庭安顿",
+    "routes": [
+      {"target_id": "FOLK-002", "relation_level": "contextual_direct", "score": 70},
+      {"target_id": "FOLK-003", "relation_level": "contextual_direct", "score": 70}
+    ],
+    "clarifying_questions": ["所在地和当地庙祀传统是什么？", "诉求侧重社区、宅地还是家庭厨房？"],
+    "exclusions": ["不得把全国土地神视为同一历史人物"],
+    "source_ids": ["SRC-022", "SRC-039", "SRC-052"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-012",
+    "life_domain": "住",
+    "input_examples": ["买房", "租房", "房价上涨", "卖房赚钱"],
+    "normalized_intent": "房地产交易或资产收益",
+    "routes": [{"target_id": null, "relation_level": "no_match", "score": 0}],
+    "clarifying_questions": ["是交易决策、搬迁安顿，还是装修施工？"],
+    "exclusions": ["不得因‘土地’一词把后土或土地神包装成房产投资神"],
+    "source_ids": ["SRC-052"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-013",
+    "life_domain": "住",
+    "input_examples": ["参与城市治理", "做社区服务", "城市公共安全"],
+    "normalized_intent": "城市或社区公共事务",
+    "routes": [{"target_id": "FOLK-001", "relation_level": "contextual_direct", "score": 70}],
+    "clarifying_questions": ["具体城市及其城隍人格化传统是什么？"],
+    "exclusions": ["不能用另一城市的城隍人物替代本地传统"],
+    "source_ids": ["SRC-022"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-014",
+    "life_domain": "行",
+    "input_examples": ["出海", "坐船", "远洋运输", "海上捕鱼", "邮轮旅行"],
+    "normalized_intent": "海上航行、作业或运输安全",
+    "routes": [{"target_id": "DAO-014", "relation_level": "direct_traditional", "score": 100}],
+    "clarifying_questions": ["是否实际乘船或在沿海水域作业？"],
+    "exclusions": ["必须同时提示天气、海况、救生设备与航行法规"],
+    "source_ids": ["SRC-019", "SRC-020"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-015",
+    "life_domain": "行",
+    "input_examples": ["开车", "坐飞机", "赶高铁", "骑摩托"],
+    "normalized_intent": "现代陆路或航空出行安全",
+    "routes": [{"target_id": null, "relation_level": "no_match", "score": 0}],
+    "clarifying_questions": ["行程是否还包含海运、特定山岳或地方庙祀场景？"],
+    "exclusions": ["不得把妈祖从海上保护泛化为所有交通工具保护神"],
+    "source_ids": ["SRC-019"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-016",
+    "life_domain": "行",
+    "input_examples": ["登山", "徒步进山", "山地露营"],
+    "normalized_intent": "进入特定山岳或山林活动",
+    "routes": [{"target_id": "FOLK-013", "relation_level": "contextual_direct", "score": 70}],
+    "clarifying_questions": ["是哪一座山、哪个地区？当地是否有明确山神或岳神传统？"],
+    "exclusions": ["无地点信息时不得返回一个虚构的全国统一山神", "必须优先提示路线、天气、装备与救援信息"],
+    "source_ids": ["SRC-010"],
+    "review_status": "needs_review"
+  },
+  {
+    "id": "MAP-017",
+    "life_domain": "自然与户外",
+    "input_examples": ["祈雨", "担心水旱", "农业需要降雨", "治理水患"],
+    "normalized_intent": "传统祈雨或地方水域治水文化",
+    "routes": [{"target_id": "DAO-016", "relation_level": "contextual_direct", "score": 75}],
+    "clarifying_questions": ["具体地区、水域与地方龙王传统是什么？"],
+    "exclusions": ["不得承诺改变天气；现实决策必须依据气象与防灾信息"],
+    "source_ids": ["SRC-053"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-018",
+    "life_domain": "自然与户外",
+    "input_examples": ["去拍鸟", "拍野生动物", "做生态摄影"],
+    "normalized_intent": "野生动物观察与摄影",
+    "routes": [{"target_id": null, "relation_level": "no_match", "score": 0}],
+    "clarifying_questions": ["拍摄地点是山林、湿地、海岸还是乘船？", "诉求是创作灵感还是行程安全？"],
+    "exclusions": ["不得因宿名或四象中的动物把二十八宿判定为鸟兽保护神", "不得以供奉替代野生动物伦理、保护区规定和户外安全"],
+    "source_ids": ["SRC-046"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-019",
+    "life_domain": "自然与户外",
+    "input_examples": ["乘船拍海鸟", "海上拍鲸", "海岛生态调查"],
+    "normalized_intent": "海上行程中的野生动物观察",
+    "routes": [
+      {"target_id": "DAO-014", "relation_level": "direct_traditional", "score": 100},
+      {"target_id": null, "relation_level": "no_match", "score": 0}
+    ],
+    "clarifying_questions": ["是否实际乘船？"],
+    "exclusions": ["妈祖只对应海上安全层，不等于掌管海鸟、鲸类或摄影成果"],
+    "source_ids": ["SRC-019"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-020",
+    "life_domain": "知识与学习",
+    "input_examples": ["观星", "学二十八宿", "研究传统天文", "做星宿文化展"],
+    "normalized_intent": "传统星宿知识、图像或仪式文化研究",
+    "routes": [{"target_id": "DAO-017", "relation_level": "direct_traditional", "score": 100}],
+    "clarifying_questions": ["是天文史研究、民俗展示，还是宗教仪式？"],
+    "exclusions": ["现代天文学观测结果不由星宿信仰替代"],
+    "source_ids": ["SRC-046"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-021",
+    "life_domain": "知识与学习",
+    "input_examples": ["准备考试", "考公", "升学考试", "求金榜题名"],
+    "normalized_intent": "应试、科举类功名或考试表现",
+    "routes": [
+      {"target_id": "DAO-009", "relation_level": "direct_traditional", "score": 100},
+      {"target_id": "FOLK-011", "relation_level": "direct_traditional", "score": 100}
+    ],
+    "clarifying_questions": ["诉求偏向日常学习、文章写作，还是一次性考试？"],
+    "exclusions": ["不得以供奉替代复习计划和考试规则"],
+    "source_ids": ["SRC-018", "SRC-041", "SRC-055"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-022",
+    "life_domain": "知识与学习",
+    "input_examples": ["写论文", "写文章", "备课", "做学术研究"],
+    "normalized_intent": "写作、读书、教育或学术工作",
+    "routes": [
+      {"target_id": "DAO-009", "relation_level": "direct_traditional", "score": 100},
+      {"target_id": "BUD-005", "relation_level": "contextual_direct", "score": 70}
+    ],
+    "clarifying_questions": ["是否希望采用佛教语境，还是道教／民间文运语境？"],
+    "exclusions": ["文殊的般若智慧不能被简化成保证论文录用"],
+    "source_ids": ["SRC-023", "SRC-024", "SRC-041"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-023",
+    "life_domain": "工作与商业",
+    "input_examples": ["开店", "做生意", "求财", "公司开业"],
+    "normalized_intent": "商业经营与财富诉求",
+    "routes": [
+      {"target_id": "DAO-008", "relation_level": "direct_traditional", "score": 100},
+      {"target_id": "DAO-010", "relation_level": "contextual_direct", "score": 75}
+    ],
+    "clarifying_questions": ["诉求侧重招财、守信、合作，还是行业本身？"],
+    "exclusions": ["不得承诺收益或把财神路由当作投资建议"],
+    "source_ids": ["SRC-005", "SRC-015", "SRC-017"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-024",
+    "life_domain": "工作与商业",
+    "input_examples": ["签合同", "找靠谱合伙人", "维护商业信用"],
+    "normalized_intent": "商业诚信、契约与伙伴关系",
+    "routes": [{"target_id": "DAO-010", "relation_level": "direct_traditional", "score": 100}],
+    "clarifying_questions": [],
+    "exclusions": ["法律审查、尽调和书面合同优先"],
+    "source_ids": ["SRC-015", "SRC-016"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-025",
+    "life_domain": "工作与商业",
+    "input_examples": ["炒股", "买币", "博彩", "买彩票必中"],
+    "normalized_intent": "高风险投机或赌博获利",
+    "routes": [{"target_id": null, "relation_level": "no_match", "score": 0}],
+    "clarifying_questions": [],
+    "exclusions": ["不得以赵公明、关帝或任何财神承诺投资和赌博结果"],
+    "source_ids": ["SRC-005", "SRC-017"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-026",
+    "life_domain": "健康",
+    "input_examples": ["看病", "做手术", "康复", "身体不舒服"],
+    "normalized_intent": "疾病诊疗或康复",
+    "routes": [
+      {"target_id": "FOLK-004", "relation_level": "contextual_direct", "score": 70},
+      {"target_id": "BUD-003", "relation_level": "contextual_direct", "score": 70}
+    ],
+    "clarifying_questions": ["是否偏好佛教或道教／民间文化语境？"],
+    "exclusions": ["必须先建议就医；不得替代诊断、药物、手术或康复方案"],
+    "source_ids": ["SRC-026", "SRC-040"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-027",
+    "life_domain": "健康与家庭",
+    "input_examples": ["备孕", "怀孕求平安", "希望孩子健康"],
+    "normalized_intent": "生育、孕产与妇幼平安",
+    "routes": [{"target_id": "DAO-018", "relation_level": "contextual_direct", "score": 75}],
+    "clarifying_questions": ["是否采用北方泰山娘娘信仰语境？"],
+    "exclusions": ["必须以产检和专业医疗为先；不得承诺受孕或胎儿结果"],
+    "source_ids": ["SRC-054"],
+    "review_status": "needs_review"
+  },
+  {
+    "id": "MAP-028",
+    "life_domain": "娱乐与表演",
+    "input_examples": ["唱戏", "戏曲首演", "搭台演出", "梨园行"],
+    "normalized_intent": "传统戏曲、戏班或舞台演出",
+    "routes": [{"target_id": "FOLK-012", "relation_level": "contextual_direct", "score": 80}],
+    "clarifying_questions": ["剧种、地区和戏班自身奉祀传统是什么？"],
+    "exclusions": ["全国不同剧种可能奉田都元帅、老郎神或其他祖师，不能一刀切"],
+    "source_ids": ["SRC-056", "SRC-057"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-029",
+    "life_domain": "娱乐与表演",
+    "input_examples": ["音乐会", "乐队演出", "学乐器"],
+    "normalized_intent": "音乐训练或公开表演",
+    "routes": [{"target_id": "FOLK-012", "relation_level": "contextual_direct", "score": 70}],
+    "clarifying_questions": ["是否属于闽地、传统戏曲或有明确田都元帅信仰的表演群体？"],
+    "exclusions": ["无地区或行业传统时不把田都元帅设为全国音乐之神"],
+    "source_ids": ["SRC-057"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-030",
+    "life_domain": "娱乐与数字生活",
+    "input_examples": ["打游戏", "看电影", "刷短视频", "电竞上分"],
+    "normalized_intent": "现代数字娱乐或竞技游戏",
+    "routes": [{"target_id": null, "relation_level": "no_match", "score": 0}],
+    "clarifying_questions": [],
+    "exclusions": ["不得把武神、财神或戏神包装成游戏胜负神"],
+    "source_ids": [],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-031",
+    "life_domain": "创作",
+    "input_examples": ["拍电影", "拍视频", "做摄影项目", "做内容创作"],
+    "normalized_intent": "现代影像或内容创作",
+    "routes": [
+      {"target_id": "DAO-009", "relation_level": "functional_analogy", "score": 35},
+      {"target_id": "FOLK-012", "relation_level": "functional_analogy", "score": 35}
+    ],
+    "clarifying_questions": ["核心是写作、舞台表演、器材制作，还是户外安全？"],
+    "exclusions": ["正典模式应返回无直配；文昌或田都元帅只能作为明确标注的文化类比"],
+    "source_ids": ["SRC-041", "SRC-056"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-032",
+    "life_domain": "技术与制造",
+    "input_examples": ["写代码", "做软件", "做产品设计", "造机器人"],
+    "normalized_intent": "现代工程、软件或产品制造",
+    "routes": [
+      {"target_id": "FOLK-007", "relation_level": "functional_analogy", "score": 35},
+      {"target_id": "DAO-009", "relation_level": "functional_analogy", "score": 35}
+    ],
+    "clarifying_questions": ["重点是工程制造、写作学习，还是只想选择一个玩梗守护神？"],
+    "exclusions": ["鲁班不是传统程序员之神，文昌也不直接掌管软件交付"],
+    "source_ids": ["SRC-041", "SRC-049"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-033",
+    "life_domain": "技术与数字生活",
+    "input_examples": ["做网络安全", "防黑客", "系统守门"],
+    "normalized_intent": "网络与信息系统防护",
+    "routes": [{"target_id": "DAO-007", "relation_level": "symbolic_only", "score": 10}],
+    "clarifying_questions": ["是否已主动开启玩梗模式？"],
+    "exclusions": ["王灵官的护法、纠察职掌不能改写成传统网络安全神职"],
+    "source_ids": ["SRC-005"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-034",
+    "life_domain": "公益与动物",
+    "input_examples": ["救助流浪动物", "做野保", "领养宠物", "做志愿服务"],
+    "normalized_intent": "慈善、救助或动物福利行动",
+    "routes": [{"target_id": "BUD-004", "relation_level": "functional_analogy", "score": 35}],
+    "clarifying_questions": ["是否接受佛教慈悲语境，还是只需现实行动建议？"],
+    "exclusions": ["观音慈悲是价值关联，不等于传统宠物或野生动物专职神"],
+    "source_ids": ["SRC-023", "SRC-024"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-035",
+    "life_domain": "体育与竞赛",
+    "input_examples": ["参加球赛", "练武", "团队比赛", "跑马拉松"],
+    "normalized_intent": "体育训练、团队协作或竞赛",
+    "routes": [{"target_id": "DAO-010", "relation_level": "functional_analogy", "score": 35}],
+    "clarifying_questions": ["是否只是希望以忠义、纪律作为团队象征？"],
+    "exclusions": ["关帝不是传统体育胜负神，不得承诺比赛结果"],
+    "source_ids": ["SRC-015", "SRC-016"],
+    "review_status": "draft"
+  },
+  {
+    "id": "MAP-036",
+    "life_domain": "宗教与纪念",
+    "input_examples": ["悼念亡者", "做佛教超荐", "表达孝亲追思"],
+    "normalized_intent": "亡者关怀、佛教救度或家族追思",
+    "routes": [{"target_id": "BUD-007", "relation_level": "contextual_direct", "score": 70}],
+    "clarifying_questions": ["是佛教仪式、宗族祭祖，还是非宗教纪念？"],
+    "exclusions": ["不同传统仪轨不可混用；家庭祭祖不自动等于地藏信仰"],
+    "source_ids": ["SRC-025", "SRC-027"],
+    "review_status": "draft"
+  }
+]

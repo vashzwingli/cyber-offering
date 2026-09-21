@@ -1,0 +1,844 @@
+[
+  {
+    "id": "DAO-001",
+    "canonical_name": "元始天尊",
+    "tradition": "道教",
+    "entity_type": "天尊",
+    "honorific_names": ["玉清元始天尊"],
+    "aliases": [],
+    "domains": ["道的本原象征", "三清之一"],
+    "matching_tags": ["道教最高神", "本原", "三清"],
+    "iconography": "三清组合中通常居中端坐；应与灵宝天尊、道德天尊成组识别。",
+    "iconography_variation": "左右座次在图像视角与殿堂参拜视角的描述中容易混淆；不得仅凭手中法物判断。",
+    "source_ids": ["SRC-001", "SRC-009", "SRC-013"],
+    "review_status": "draft"
+  },
+  {
+    "id": "DAO-002",
+    "canonical_name": "灵宝天尊",
+    "tradition": "道教",
+    "entity_type": "天尊",
+    "honorific_names": ["上清灵宝天尊"],
+    "aliases": ["太上道君"],
+    "domains": ["三清之一"],
+    "matching_tags": ["道教最高神", "三清", "灵宝"],
+    "iconography": "三清组合中的一尊，须结合三清整体座次、题记和时代判断。",
+    "iconography_variation": "不同宫观、文物与观察方向可能造成左右表述差异。",
+    "source_ids": ["SRC-001", "SRC-009", "SRC-013"],
+    "review_status": "draft"
+  },
+  {
+    "id": "DAO-003",
+    "canonical_name": "道德天尊",
+    "tradition": "道教",
+    "entity_type": "天尊",
+    "honorific_names": ["太清道德天尊"],
+    "aliases": ["太上老君", "老君"],
+    "domains": ["三清之一", "道教教祖信仰"],
+    "matching_tags": ["道德经", "老子", "三清", "修道"],
+    "iconography": "三清组合中的老者形象之一，需结合题记和殿堂座次识别。",
+    "iconography_variation": "太上老君单独造像与三清组合像不能简单视为同一构图。",
+    "source_ids": ["SRC-001", "SRC-009"],
+    "review_status": "draft"
+  },
+  {
+    "id": "DAO-004",
+    "canonical_name": "玉皇大帝",
+    "tradition": "道教",
+    "entity_type": "上帝／帝君",
+    "honorific_names": ["昊天金阙无上至尊自然妙有弥罗至真玉皇上帝", "玄穹高上玉皇大帝"],
+    "aliases": ["玉帝"],
+    "domains": ["总领诸天", "天界秩序"],
+    "matching_tags": ["天界", "秩序", "统御"],
+    "iconography": "常见帝王相，头戴通天冠或冕冠，着朝服，手持笏板，配侍臣仪仗。",
+    "iconography_variation": "三清四御与三清六御体系的组合、座次有历史变化。",
+    "source_ids": ["SRC-002", "SRC-010"],
+    "review_status": "draft"
+  },
+  {
+    "id": "DAO-005",
+    "canonical_name": "三官大帝",
+    "tradition": "道教",
+    "entity_type": "尊神组合",
+    "honorific_names": ["三元大帝", "三官帝君"],
+    "aliases": ["天官", "地官", "水官"],
+    "domains": ["天官赐福", "地官赦罪", "水官解厄"],
+    "matching_tags": ["祈福", "赦罪", "解厄", "天地水"],
+    "iconography": "常为三位帝君式尊神组合；具体冠服、笏板和座次需按宫观题记核验。",
+    "iconography_variation": "尧舜禹人格化等解释属于神格来源异说，不可当作唯一身份。",
+    "source_ids": ["SRC-003"],
+    "review_status": "draft"
+  },
+  {
+    "id": "DAO-006",
+    "canonical_name": "真武大帝",
+    "tradition": "道教",
+    "entity_type": "帝君",
+    "honorific_names": ["镇天真武灵应佑圣帝君", "北极镇天真武玄天上帝"],
+    "aliases": ["玄天上帝", "真武帝君", "荡魔天尊", "披发祖师"],
+    "domains": ["北方", "水", "护法", "武当信仰"],
+    "matching_tags": ["水运", "北方", "护卫", "武当"],
+    "iconography": "常以武将或帝君相出现，核心识别物为龟蛇；文物中可见着甲、踏龟蛇的坐像。",
+    "iconography_variation": "存在披发跣足、着甲戴盔等不同历史类型。",
+    "source_ids": ["SRC-004", "SRC-013", "SRC-014"],
+    "review_status": "draft"
+  },
+  {
+    "id": "DAO-007",
+    "canonical_name": "王灵官",
+    "tradition": "道教",
+    "entity_type": "护法神将",
+    "honorific_names": ["隆恩真君"],
+    "aliases": ["王善", "先天主将"],
+    "domains": ["纠察", "护法", "镇守山门"],
+    "matching_tags": ["监察", "纪律", "护卫", "山门"],
+    "iconography": "赤目三眼，披甲，执鞭，呈威猛护法相。",
+    "iconography_variation": "与华光大帝、其他灵官的历史关系需按具体传统区分。",
+    "source_ids": ["SRC-005"],
+    "review_status": "draft"
+  },
+  {
+    "id": "DAO-008",
+    "canonical_name": "赵公明",
+    "tradition": "道教及民间信仰",
+    "entity_type": "元帅／财神",
+    "honorific_names": ["黑虎玄坛赵元帅", "赵玄坛"],
+    "aliases": ["赵元帅", "武财神"],
+    "domains": ["护法", "雷部神将", "财富信仰"],
+    "matching_tags": ["商业", "财运", "护卫", "契约"],
+    "iconography": "黑面虬髯，戴铁冠，执铁鞭，以黑虎或神虎为坐骑。",
+    "iconography_variation": "历史造像可能缺少黑虎、铁鞭或黑面等部分特征，不宜单特征识别。",
+    "source_ids": ["SRC-005", "SRC-017"],
+    "review_status": "draft"
+  },
+  {
+    "id": "DAO-009",
+    "canonical_name": "文昌帝君",
+    "tradition": "道教及民间信仰",
+    "entity_type": "帝君",
+    "honorific_names": ["辅元开化文昌司禄宏仁帝君"],
+    "aliases": ["梓潼神", "文昌神"],
+    "domains": ["士人功名", "考试", "读书", "撰文", "禄籍"],
+    "matching_tags": ["学习", "考试", "写作", "教育", "功名"],
+    "iconography": "常见为文官或帝君坐像；冠服、所持法物及侍从须按具体文物核验。",
+    "iconography_variation": "梓潼神与文昌星神的融合过程需要与单纯星宿形象区分。",
+    "source_ids": ["SRC-018", "SRC-041"],
+    "review_status": "needs_review"
+  },
+  {
+    "id": "DAO-010",
+    "canonical_name": "关圣帝君",
+    "tradition": "道教、佛教护法及民间信仰",
+    "entity_type": "帝君／护法",
+    "honorific_names": ["关圣帝君", "武圣"],
+    "aliases": ["关羽", "关公", "关帝"],
+    "domains": ["忠义", "武备", "守护", "商业诚信", "财富信仰"],
+    "matching_tags": ["忠义", "商贸", "诚信", "护卫", "武职"],
+    "iconography": "常见武像为美髯、铠甲、青龙偃月刀，可骑赤兔马；亦有绿战袍捋须像、倚坐读《春秋》像和王冠王袍帝君像。",
+    "iconography_variation": "道教关帝、民间财神和佛教伽蓝护法语境必须分别标注。",
+    "source_ids": ["SRC-015", "SRC-016"],
+    "review_status": "draft"
+  },
+  {
+    "id": "DAO-011",
+    "canonical_name": "吕洞宾",
+    "tradition": "道教",
+    "entity_type": "祖师／仙真",
+    "honorific_names": ["纯阳演正警化孚佑帝君"],
+    "aliases": ["吕祖", "纯阳子", "吕纯阳"],
+    "domains": ["全真祖师信仰", "内丹修炼", "劝善"],
+    "matching_tags": ["修行", "养生", "劝善", "道学"],
+    "iconography": "常见文士或道人相；剑、拂尘等属性广泛流传，但本批尚缺足够权威图像来源。",
+    "iconography_variation": "八仙组合、吕祖单尊和全真祖师像的造型语境不同。",
+    "source_ids": ["SRC-008"],
+    "review_status": "needs_review"
+  },
+  {
+    "id": "DAO-012",
+    "canonical_name": "东岳大帝",
+    "tradition": "道教及国家山川祭祀",
+    "entity_type": "岳帝",
+    "honorific_names": ["东岳帝君"],
+    "aliases": ["泰山神", "泰山府君"],
+    "domains": ["泰山", "五岳", "生死簿籍", "地方与国家祭祀"],
+    "matching_tags": ["山岳", "泰山", "生死", "监察"],
+    "iconography": "常见苍老帝王相；冕冠、朝服与仪仗需依文物时代识别。",
+    "iconography_variation": "先秦山岳神、国家祀典之泰山神与道教东岳大帝的内涵并非完全相同。",
+    "source_ids": ["SRC-006"],
+    "review_status": "draft"
+  },
+  {
+    "id": "DAO-013",
+    "canonical_name": "西王母",
+    "tradition": "道教及古代神话信仰",
+    "entity_type": "女仙尊神",
+    "honorific_names": ["太真西王母"],
+    "aliases": ["王母娘娘"],
+    "domains": ["女仙之宗", "仙籍", "长生信仰"],
+    "matching_tags": ["女仙", "长寿", "仙籍"],
+    "iconography": "常见尊贵女神或后妃相；凤冠、仙桃等属于常见传统线索，但本批仍需文物来源分期。",
+    "iconography_variation": "早期神话形象与后世道教贵妇相差异很大。",
+    "source_ids": ["SRC-007"],
+    "review_status": "needs_review"
+  },
+  {
+    "id": "DAO-014",
+    "canonical_name": "妈祖",
+    "tradition": "民间信仰并被道教吸收",
+    "entity_type": "海神／女神",
+    "honorific_names": ["天妃", "天后", "天上圣母"],
+    "aliases": ["林默", "林默娘", "湄洲妈祖"],
+    "domains": ["航海保护", "救难", "沿海社区守护"],
+    "matching_tags": ["航海", "渔业", "物流", "港口", "海上安全"],
+    "iconography": "常见端坐女神相，可戴方形平顶冠或凤冠，着冕服、龙袍或霞帔；常配千里眼、顺风耳。",
+    "iconography_variation": "持印佩剑、持灯、素服与冠服像均有地域和时代差异。",
+    "source_ids": ["SRC-019", "SRC-020", "SRC-021"],
+    "review_status": "draft"
+  },
+  {
+    "id": "FOLK-001",
+    "canonical_name": "城隍",
+    "tradition": "民间信仰并被道教吸收",
+    "entity_type": "地方守护神",
+    "honorific_names": ["城隍神"],
+    "aliases": ["城隍老爷"],
+    "domains": ["城市守护", "地方监察", "祈福禳灾"],
+    "matching_tags": ["城市治理", "社区", "公共安全", "地方保护"],
+    "iconography": "常见地方官或王侯相，但各城可能人格化为不同历史人物。",
+    "iconography_variation": "城隍不是全国同一个历史人物，产品必须绑定城市或地区。",
+    "source_ids": ["SRC-022"],
+    "review_status": "draft"
+  },
+  {
+    "id": "FOLK-002",
+    "canonical_name": "土地神",
+    "tradition": "民间信仰并被道教吸收",
+    "entity_type": "基层地方守护神",
+    "honorific_names": ["福德正神"],
+    "aliases": ["土地公", "土地老爷"],
+    "domains": ["土地与社区守护", "乡里秩序"],
+    "matching_tags": ["社区", "土地", "本地", "乡村"],
+    "iconography": "常见慈祥老者或地方官相，部分地区与土地婆合祀。",
+    "iconography_variation": "身份、冠服和配祀对象高度地方化。",
+    "source_ids": ["SRC-022"],
+    "review_status": "needs_review"
+  },
+  {
+    "id": "FOLK-003",
+    "canonical_name": "灶君",
+    "tradition": "民间信仰并被道教吸收",
+    "entity_type": "家庭神",
+    "honorific_names": ["东厨司命"],
+    "aliases": ["灶神", "灶王爷"],
+    "domains": ["家庭", "厨房", "司命与岁末上天言事信仰"],
+    "matching_tags": ["餐饮", "厨房", "家庭", "饮食"],
+    "iconography": "年画中常见官员相，可与灶王奶奶并列；具体服色和组合具有年画产地差异。",
+    "iconography_variation": "不同地区可能是一位、夫妇或多神组合。",
+    "source_ids": ["SRC-039"],
+    "review_status": "needs_review"
+  },
+  {
+    "id": "FOLK-004",
+    "canonical_name": "药王孙思邈",
+    "tradition": "民间信仰及道教",
+    "entity_type": "医药祖师神",
+    "honorific_names": ["药王"],
+    "aliases": ["孙真人", "孙思邈"],
+    "domains": ["医药", "养生", "医者伦理"],
+    "matching_tags": ["医疗", "药学", "健康", "医生"],
+    "iconography": "常见医者、真人或老者坐像；药葫芦等属性须另找可靠文物来源。",
+    "iconography_variation": "神农、扁鹊、孙思邈等均可能被称药王，不得只写“药王”而省略身份。",
+    "source_ids": ["SRC-040"],
+    "review_status": "needs_review"
+  },
+  {
+    "id": "BUD-001",
+    "canonical_name": "释迦牟尼佛",
+    "tradition": "佛教",
+    "entity_type": "佛",
+    "honorific_names": ["释迦牟尼", "世尊"],
+    "aliases": ["佛陀"],
+    "domains": ["佛教教主", "教法"],
+    "matching_tags": ["佛教", "修学", "觉悟", "教法"],
+    "iconography": "典型佛相可见螺发、髻珠、白毫、袈裟、结跏趺坐和莲座；手印随题材变化。",
+    "iconography_variation": "汉传、藏传、南传及不同时代造像差异显著。",
+    "source_ids": ["SRC-013", "SRC-023"],
+    "review_status": "draft"
+  },
+  {
+    "id": "BUD-002",
+    "canonical_name": "阿弥陀佛",
+    "tradition": "佛教",
+    "entity_type": "佛",
+    "honorific_names": ["阿弥陀如来"],
+    "aliases": ["无量寿佛", "无量光佛"],
+    "domains": ["西方极乐世界", "净土信仰"],
+    "matching_tags": ["净土", "念佛", "临终关怀"],
+    "iconography": "如来相；可单尊，也可与观音、大势至组成西方三圣。",
+    "iconography_variation": "无量寿佛在藏传造像中的长寿佛形态不可直接替代汉传阿弥陀佛图像。",
+    "source_ids": ["SRC-023"],
+    "review_status": "draft"
+  },
+  {
+    "id": "BUD-003",
+    "canonical_name": "药师琉璃光如来",
+    "tradition": "佛教",
+    "entity_type": "佛",
+    "honorific_names": ["药师佛", "药师如来"],
+    "aliases": ["大医王佛"],
+    "domains": ["东方净琉璃世界", "身心安乐愿"],
+    "matching_tags": ["健康", "医药", "康复", "佛教"],
+    "iconography": "常见结跏趺坐，持药钵；另一手可持锡杖、药丸、药树或结印，坐或立于莲台。",
+    "iconography_variation": "持钵左右手和另一手所持物在不同时代作品中并不统一。",
+    "source_ids": ["SRC-026"],
+    "review_status": "draft"
+  },
+  {
+    "id": "BUD-004",
+    "canonical_name": "观世音菩萨",
+    "tradition": "佛教",
+    "entity_type": "菩萨",
+    "honorific_names": ["大慈大悲观世音菩萨"],
+    "aliases": ["观音", "观自在菩萨"],
+    "domains": ["慈悲", "救苦救难", "闻声救度"],
+    "matching_tags": ["救助", "慈悲", "平安", "困难"],
+    "iconography": "形态很多；汉传常见水月观音、杨柳观音、千手观音等，不存在单一标准像。",
+    "iconography_variation": "性别表现、冠饰、持物、坐姿和化身随时代与宗派变化。",
+    "source_ids": ["SRC-023", "SRC-024", "SRC-025"],
+    "review_status": "draft"
+  },
+  {
+    "id": "BUD-005",
+    "canonical_name": "文殊菩萨",
+    "tradition": "佛教",
+    "entity_type": "菩萨",
+    "honorific_names": ["大智文殊师利菩萨"],
+    "aliases": ["文殊师利", "曼殊室利"],
+    "domains": ["智慧", "般若", "五台山道场"],
+    "matching_tags": ["智慧", "学习", "研究", "教育"],
+    "iconography": "汉传常见宝剑、经卷与青狮；也常作为释迦牟尼佛左胁侍。",
+    "iconography_variation": "藏传中有静相与多首多臂猛相等多种形态。",
+    "source_ids": ["SRC-023", "SRC-024", "SRC-025"],
+    "review_status": "draft"
+  },
+  {
+    "id": "BUD-006",
+    "canonical_name": "普贤菩萨",
+    "tradition": "佛教",
+    "entity_type": "菩萨",
+    "honorific_names": ["大行普贤菩萨"],
+    "aliases": ["三曼多跋陀罗"],
+    "domains": ["行愿", "实践", "峨眉山道场"],
+    "matching_tags": ["实践", "愿行", "行动", "修持"],
+    "iconography": "常见乘六牙白象，与文殊菩萨共同作为释迦牟尼佛胁侍。",
+    "iconography_variation": "单尊、华严三圣和密教形态需分开记录。",
+    "source_ids": ["SRC-023", "SRC-024"],
+    "review_status": "draft"
+  },
+  {
+    "id": "BUD-007",
+    "canonical_name": "地藏菩萨",
+    "tradition": "佛教",
+    "entity_type": "菩萨",
+    "honorific_names": ["大愿地藏王菩萨"],
+    "aliases": ["地藏王菩萨"],
+    "domains": ["大愿", "救度", "九华山道场"],
+    "matching_tags": ["亡者关怀", "救度", "孝亲", "愿力"],
+    "iconography": "汉传常见比丘相，右手持锡杖、左手持宝珠，立或坐于莲台。",
+    "iconography_variation": "也存在戴宝冠的菩萨相及不同手持物；谛听并非所有造像都有。",
+    "source_ids": ["SRC-025", "SRC-027"],
+    "review_status": "draft"
+  },
+  {
+    "id": "DAO-015",
+    "canonical_name": "后土皇地祇",
+    "tradition": "道教及古代国家祭祀",
+    "entity_type": "地祇",
+    "honorific_names": ["承天效法厚德光大后土皇地祇"],
+    "aliases": ["后土", "地母"],
+    "domains": ["总司土地", "大地秩序"],
+    "matching_tags": ["大地", "土地", "地祇", "国土"],
+    "iconography": "后世常见尊贵女神相，但早期“后土”也可能指大地、土官或男性人格神，必须结合时代与题记识别。",
+    "iconography_variation": "不得把后土皇地祇与任一地方土地神、民间地母形象直接合并。",
+    "source_ids": ["SRC-052"],
+    "review_status": "draft"
+  },
+  {
+    "id": "DAO-016",
+    "canonical_name": "龙王",
+    "tradition": "道教、佛教及民间水神信仰",
+    "entity_type": "水神／神祇组合",
+    "honorific_names": ["龙王"],
+    "aliases": ["五方龙王", "四海龙王"],
+    "domains": ["行云布雨", "司水治水", "地方水域信仰"],
+    "matching_tags": ["降雨", "水域", "农业用水", "治水"],
+    "iconography": "可作龙身、人身龙尾或帝王官员相；方位、海域与地方水系不同，身份和形象亦不同。",
+    "iconography_variation": "龙王并非单一对象；产品必须在可能时绑定海域、河湖、地方庙祀或具体名号。",
+    "source_ids": ["SRC-053"],
+    "review_status": "draft"
+  },
+  {
+    "id": "DAO-017",
+    "canonical_name": "二十八宿",
+    "tradition": "道教及传统星占体系",
+    "entity_type": "星宿神将组合",
+    "honorific_names": ["二十八星宿"],
+    "aliases": [],
+    "domains": ["二十八天区", "四象星宿", "斋醮中的星神神将"],
+    "matching_tags": ["星宿", "天文文化", "四象", "禳星"],
+    "iconography": "二十八位星君或神将按东方青龙、北方玄武、西方白虎、南方朱雀各七宿分组；具体人形、兽形和法物应按图像谱系核验。",
+    "iconography_variation": "宿名中的动物或四象不等于对现实鸟兽的管辖，不得据此映射野生动物、宠物或摄影行为。",
+    "source_ids": ["SRC-046"],
+    "review_status": "draft"
+  },
+  {
+    "id": "DAO-018",
+    "canonical_name": "碧霞元君",
+    "tradition": "道教及泰山民间信仰",
+    "entity_type": "女神／元君",
+    "honorific_names": ["天仙玉女碧霞元君"],
+    "aliases": ["泰山娘娘", "泰山老母"],
+    "domains": ["泰山信仰", "主生信仰", "妇幼保护"],
+    "matching_tags": ["生育", "妇幼", "泰山", "北方娘娘信仰"],
+    "iconography": "常见端坐女神相，冠服庄严；具体冠饰、侍从及配祀娘娘具有地域差异。",
+    "iconography_variation": "其广泛民间愿望职能不能全部当作稳定核心神职；生育相关映射须同时提示现代医疗优先。",
+    "source_ids": ["SRC-054"],
+    "review_status": "needs_review"
+  },
+  {
+    "id": "FOLK-005",
+    "canonical_name": "月下老人",
+    "tradition": "民间信仰",
+    "entity_type": "婚姻神",
+    "honorific_names": ["月下老人"],
+    "aliases": ["月老"],
+    "domains": ["婚姻姻缘", "媒合信仰"],
+    "matching_tags": ["恋爱", "求偶", "姻缘", "婚配"],
+    "iconography": "常见白须老者相，以婚姻簿册和红绳为核心识别线索。",
+    "iconography_variation": "不同庙宇持物与冠服不同；红绳意象不能扩张为对所有人际关系的管辖。",
+    "source_ids": ["SRC-042", "SRC-043"],
+    "review_status": "draft"
+  },
+  {
+    "id": "FOLK-006",
+    "canonical_name": "和合二仙",
+    "tradition": "民间信仰并受佛教人物传说影响",
+    "entity_type": "和合神组合",
+    "honorific_names": ["和合二圣"],
+    "aliases": ["寒山拾得"],
+    "domains": ["婚姻和谐", "家庭和合", "人际和睦"],
+    "matching_tags": ["伴侣关系", "婚后和谐", "家庭", "和合"],
+    "iconography": "常作两位喜笑人物，一持荷花，一持圆盒，取“荷”“盒”与“和合”之意。",
+    "iconography_variation": "历史上和合神身份有演变；不得把寒山、拾得的佛教人物身份与民间婚姻神职完全等同。",
+    "source_ids": ["SRC-044", "SRC-045"],
+    "review_status": "draft"
+  },
+  {
+    "id": "FOLK-007",
+    "canonical_name": "鲁班",
+    "tradition": "行业祖师信仰",
+    "entity_type": "工匠祖师",
+    "honorific_names": ["鲁班先师", "巧圣先师"],
+    "aliases": ["公输班", "公输子", "鲁班爷"],
+    "domains": ["木作", "营造", "土木建筑", "手工业"],
+    "matching_tags": ["建筑", "装修", "木工", "工程", "制造"],
+    "iconography": "常作工匠、文士或祖师坐像；尺、墨斗、斧锯等工具属于常见行业属性，具体持物需依文物核验。",
+    "iconography_variation": "不同行业与地区所奉鲁班像差异明显；现代软件、工业设计等只能作功能类比。",
+    "source_ids": ["SRC-049"],
+    "review_status": "draft"
+  },
+  {
+    "id": "FOLK-008",
+    "canonical_name": "嫘祖／先蚕",
+    "tradition": "古代国家祀典及民间行业信仰",
+    "entity_type": "蚕神／行业先祖",
+    "honorific_names": ["先蚕"],
+    "aliases": ["嫘祖", "西陵氏", "蚕母娘娘"],
+    "domains": ["养蚕", "缫丝", "丝织", "衣服原料生产"],
+    "matching_tags": ["蚕桑", "丝绸", "纺织", "服装制作"],
+    "iconography": "常见贵妇或女神相，可配桑叶、蚕茧、丝线等蚕桑属性；须以具体文物题记为准。",
+    "iconography_variation": "历代国家祀典中的“先蚕”并不始终指名嫘祖，也曾有苑窳夫人、寓氏公主等说法。",
+    "source_ids": ["SRC-047", "SRC-048"],
+    "review_status": "needs_review"
+  },
+  {
+    "id": "FOLK-009",
+    "canonical_name": "神农",
+    "tradition": "古代国家祀典及民间祖先神信仰",
+    "entity_type": "农耕始祖／先农",
+    "honorific_names": ["炎帝神农氏"],
+    "aliases": ["神农氏", "炎帝"],
+    "domains": ["教民耕种", "先农祭祀", "本草传说"],
+    "matching_tags": ["农业", "种植", "农学", "本草"],
+    "iconography": "常见古代圣王或人文始祖相；牛首、草药等流行属性需要按文物与地方传统另行核验。",
+    "iconography_variation": "农业始祖、药王与炎帝身份在不同叙事中重合程度不同，不得把全部传说合成唯一神职。",
+    "source_ids": ["SRC-040", "SRC-051"],
+    "review_status": "needs_review"
+  },
+  {
+    "id": "FOLK-010",
+    "canonical_name": "后稷",
+    "tradition": "古代国家祀典及民间农神信仰",
+    "entity_type": "农神／农业始祖",
+    "honorific_names": ["农神后稷"],
+    "aliases": ["稷神"],
+    "domains": ["教民稼穑", "五谷", "农业祭祀"],
+    "matching_tags": ["农业", "粮食", "播种", "丰收"],
+    "iconography": "常见古代官员、圣贤或农神相；当前资料不足以给出跨地区统一法物。",
+    "iconography_variation": "后稷与神农均可能进入先农祭祀，具体对象随时代、礼制和地区变化。",
+    "source_ids": ["SRC-050", "SRC-051"],
+    "review_status": "draft"
+  },
+  {
+    "id": "FOLK-011",
+    "canonical_name": "魁星",
+    "tradition": "民间文运信仰并被道教吸收",
+    "entity_type": "文运星神",
+    "honorific_names": ["魁斗星君"],
+    "aliases": ["魁星爷"],
+    "domains": ["科举功名", "考试", "文运"],
+    "matching_tags": ["应试", "金榜题名", "功名", "文运"],
+    "iconography": "常见一脚立鳌头、一脚后跷，一手捧斗、一手执笔，表现“魁星点斗、独占鳌头”。",
+    "iconography_variation": "魁星、文昌帝君与文曲星相关但不是可任意互换的同一神名。",
+    "source_ids": ["SRC-055"],
+    "review_status": "draft"
+  },
+  {
+    "id": "FOLK-012",
+    "canonical_name": "田都元帅",
+    "tradition": "闽地及相关地区戏神信仰",
+    "entity_type": "戏神／乐神",
+    "honorific_names": ["九天风火院三田都元帅"],
+    "aliases": ["田元帅", "雷海青"],
+    "domains": ["戏曲演出", "音乐表演", "戏班祖师信仰"],
+    "matching_tags": ["戏曲", "舞台", "表演", "音乐", "梨园"],
+    "iconography": "常见元帅或少年神将相；不同地区的面貌、手势、坐骑与法器差异较大，本批不设唯一标准像。",
+    "iconography_variation": "以闽地及传播地区最有直接证据；全国戏班还可能奉老郎神等其他祖师，路由必须追问地区与剧种。",
+    "source_ids": ["SRC-056", "SRC-057"],
+    "review_status": "draft"
+  },
+  {
+    "id": "FOLK-013",
+    "canonical_name": "山神（地方神格类）",
+    "tradition": "地方民间信仰并见于道教神系",
+    "entity_type": "地方自然神职位",
+    "honorific_names": ["山神"],
+    "aliases": ["山神主者"],
+    "domains": ["特定山岳或山区守护"],
+    "matching_tags": ["山岳", "山林", "地方守护"],
+    "iconography": "无全国统一形象，可能作地方官、老者、武将或与特定历史人物结合。",
+    "iconography_variation": "只能在明确具体地点和当地传统后匹配；不存在一位可覆盖所有山林活动的全国统一“山神”。",
+    "source_ids": ["SRC-010"],
+    "review_status": "needs_review"
+  },
+  {
+    "id": "DAO-019", "canonical_name": "中天紫微北极大帝", "tradition": "道教", "entity_type": "帝君／星主", "honorific_names": ["中天紫微北极大帝"], "aliases": ["紫微大帝", "北极大帝"],
+    "domains": ["总御万星", "天经地纬", "日月星辰与四时"], "matching_tags": ["星辰", "天象", "紫微", "四御"],
+    "iconography": "常作冕旒帝王相，持圭或笏，须结合四御组合、题记和殿堂位置识别。", "iconography_variation": "紫微大帝与赐福天官等名称在部分民间叙事中会混用，不得无条件合并。", "source_ids": ["SRC-058"], "review_status": "draft"
+  },
+  {
+    "id": "DAO-020", "canonical_name": "勾陈上宫天皇大帝", "tradition": "道教", "entity_type": "帝君／星主", "honorific_names": ["勾陈上宫天皇大帝"], "aliases": ["勾陈大帝", "天皇大帝"],
+    "domains": ["统御众星", "南北二极", "兵革之事"], "matching_tags": ["星辰", "兵革", "四御", "勾陈"],
+    "iconography": "常作冕旒帝王相、持圭端坐；单靠帝王冠服不能与玉皇、紫微、后土区分。", "iconography_variation": "四御和六御体系中的位置、名称存在历史版本。", "source_ids": ["SRC-058"], "review_status": "draft"
+  },
+  {
+    "id": "DAO-021", "canonical_name": "南极长生大帝", "tradition": "道教", "entity_type": "帝君", "honorific_names": ["南极长生大帝"], "aliases": ["玉清真王"],
+    "domains": ["总御万灵", "长生信仰", "六御之一"], "matching_tags": ["长生", "万灵", "南极", "六御"],
+    "iconography": "帝君相；与民间白须持杖的南极仙翁形象须分开核验。", "iconography_variation": "南极长生大帝、南极仙翁和寿星常被混称，主数据暂不合并。", "source_ids": ["SRC-058"], "review_status": "needs_review"
+  },
+  {
+    "id": "DAO-022", "canonical_name": "太乙救苦天尊", "tradition": "道教", "entity_type": "天尊", "honorific_names": ["寻声救苦天尊", "十方救苦天尊"], "aliases": ["救苦天尊", "东极青华大帝"],
+    "domains": ["寻声救苦", "济度亡魂", "解除厄难"], "matching_tags": ["救苦", "亡者", "济度", "青华"],
+    "iconography": "端坐九色莲花座，九头狮子簇拥或乘九头狮子，可持杨柳洒琼浆。", "iconography_variation": "东极青华大帝与太乙救苦天尊的名号关系需按经籍和宫观语境说明。", "source_ids": ["SRC-059"], "review_status": "draft"
+  },
+  {
+    "id": "DAO-023", "canonical_name": "斗姆元君", "tradition": "道教", "entity_type": "元君／星母", "honorific_names": ["圆明道母无尊"], "aliases": ["斗姥", "斗母"],
+    "domains": ["北斗众星之母", "朝斗法科", "星辰信仰"], "matching_tags": ["北斗", "星母", "本命", "朝斗"],
+    "iconography": "常见三目、四首、八臂像，持多种法器，形象庄严。", "iconography_variation": "斗姆与佛教摩利支天存在历史互涉，但不得当作同一传统中的完全同一实体。", "source_ids": ["SRC-060"], "review_status": "draft"
+  },
+  {
+    "id": "DAO-024", "canonical_name": "北斗七元星君", "tradition": "道教", "entity_type": "星君组合", "honorific_names": ["北斗真君", "北斗七元君"], "aliases": ["北斗七星君"],
+    "domains": ["北斗星辰", "本命延生", "司生司杀与四时"], "matching_tags": ["北斗", "本命", "星命", "七元"],
+    "iconography": "常作七位道装星君，黄衣、乘黄云、持白圭的经籍形象可作参考。", "iconography_variation": "七元各有独立尊名；组合像与单星君像应分别建图像记录。", "source_ids": ["SRC-061"], "review_status": "draft"
+  },
+  {
+    "id": "DAO-025", "canonical_name": "南斗六司", "tradition": "道教", "entity_type": "星君组合", "honorific_names": ["南斗六司星君"], "aliases": ["南斗六星君"],
+    "domains": ["南斗星辰", "注生信仰", "寿命簿籍"], "matching_tags": ["南斗", "注生", "星命", "六司"],
+    "iconography": "通常表现为六位星君或官员式神祇组合，具体冠服与座次待专门图像资料核验。", "iconography_variation": "不可仅以‘南斗注生、北斗注死’的民间概括代替各司完整职掌。", "source_ids": ["SRC-061", "SRC-064"], "review_status": "needs_review"
+  },
+  {
+    "id": "DAO-026", "canonical_name": "九天应元雷声普化天尊", "tradition": "道教", "entity_type": "天尊／雷祖", "honorific_names": ["九天应元雷声普化天尊"], "aliases": ["雷祖", "普化天尊"],
+    "domains": ["统辖雷部", "雷霆政令", "赏善罚恶"], "matching_tags": ["雷部", "雷霆", "天罚", "普化"],
+    "iconography": "常作威严帝君或天尊相，具体多臂、多目等造像须按宫观和时代核验。", "iconography_variation": "雷祖与雷公不是同一层级实体；前者统雷部，后者多为执行雷神。", "source_ids": ["SRC-062"], "review_status": "draft"
+  },
+  {
+    "id": "DAO-027", "canonical_name": "九天玄女", "tradition": "道教及古代神话信仰", "entity_type": "女仙／女神", "honorific_names": ["九天玄女娘娘"], "aliases": ["玄女", "元女", "九天娘娘"],
+    "domains": ["正义女仙", "兵法与扶助英雄传说", "玄鸟神话"], "matching_tags": ["兵法", "女仙", "玄鸟", "扶危"],
+    "iconography": "后世多作女仙、女将或尊贵女神相；玄鸟是其早期神话线索。", "iconography_variation": "小说中的军师女仙形象与道教宫观造像不可无差别混用。", "source_ids": ["SRC-063"], "review_status": "draft"
+  },
+  {
+    "id": "DAO-028", "canonical_name": "张道陵", "tradition": "道教正一派", "entity_type": "天师／祖师", "honorific_names": ["祖天师", "三天扶教大法师正一辅玄静应真君"], "aliases": ["张天师"],
+    "domains": ["天师道祖师", "正一法箓", "教化"], "matching_tags": ["正一", "天师", "符箓", "祖师"],
+    "iconography": "常作道士、真人或天师相，可持剑、印、符箓；具体法物须依题记。", "iconography_variation": "‘张天师’也可能泛指历代嗣汉天师，必须注明是否特指张道陵。", "source_ids": ["SRC-064"], "review_status": "draft"
+  },
+  {
+    "id": "DAO-029", "canonical_name": "葛玄", "tradition": "道教灵宝派祖师传统", "entity_type": "天师／仙真", "honorific_names": ["太极左宫仙公冲应孚佑真君"], "aliases": ["葛仙翁", "葛仙公"],
+    "domains": ["灵宝经法祖师传统", "炼丹", "道教天师信仰"], "matching_tags": ["灵宝", "葛仙翁", "炼丹", "祖师"],
+    "iconography": "常作道士或仙翁相；与葛洪须依姓名、题记和传承语境区分。", "iconography_variation": "葛玄与葛洪均称葛仙翁的情况会造成误识。", "source_ids": ["SRC-064"], "review_status": "draft"
+  },
+  {
+    "id": "DAO-030", "canonical_name": "许逊", "tradition": "道教净明派", "entity_type": "天师／祖师", "honorific_names": ["九州都仙太史神功妙济真君"], "aliases": ["许真君", "许旌阳"],
+    "domains": ["净明派祖师", "孝道", "治水斩蛟传说"], "matching_tags": ["净明", "孝道", "治水", "许真君"],
+    "iconography": "常作道士、真人或官员相，可与剑、蛟龙、铁柱等传说线索相连。", "iconography_variation": "地方斩蛟、锁蛟图像与祖师礼像应分开记录。", "source_ids": ["SRC-064"], "review_status": "draft"
+  },
+  {
+    "id": "DAO-031", "canonical_name": "萨守坚", "tradition": "道教神霄与雷法传统", "entity_type": "天师／祖师", "honorific_names": ["崇恩真君"], "aliases": ["萨真人", "萨天师"],
+    "domains": ["雷法祖师", "道教天师信仰"], "matching_tags": ["雷法", "天师", "祖师", "萨真人"],
+    "iconography": "常作道士或天师相，持扇、剑或法器的说法需按宫观造像核验。", "iconography_variation": "四大天师名单存在张葛许萨、张葛许邱等不同版本。", "source_ids": ["SRC-064"], "review_status": "needs_review"
+  },
+  {
+    "id": "DAO-032", "canonical_name": "王重阳", "tradition": "道教全真派", "entity_type": "祖师", "honorific_names": ["重阳全真开化辅极帝君"], "aliases": ["重阳祖师", "王喆"],
+    "domains": ["全真道创教", "内丹修炼", "三教平等"], "matching_tags": ["全真", "内丹", "祖师", "重阳"],
+    "iconography": "常作全真道人或祖师坐像，须结合全真祖师殿题记识别。", "iconography_variation": "历史人物肖像、祖师神像和文学传说图像应分开。", "source_ids": ["SRC-066"], "review_status": "draft"
+  },
+  {
+    "id": "DAO-033", "canonical_name": "丘处机", "tradition": "道教全真龙门派", "entity_type": "祖师", "honorific_names": ["长春演道主教真人"], "aliases": ["丘祖", "长春真人", "邱处机"],
+    "domains": ["全真龙门派祖师", "传戒弘教", "全真教发展"], "matching_tags": ["龙门派", "全真", "长春", "祖师"],
+    "iconography": "常作清瘦道人、长髯祖师相；以题记、白云观或龙门派语境为主要依据。", "iconography_variation": "现代影视形象不能替代宗教造像资料。", "source_ids": ["SRC-065"], "review_status": "draft"
+  },
+  {
+    "id": "DAO-034", "canonical_name": "张三丰", "tradition": "道教武当与全真相关传统", "entity_type": "真人／祖师", "honorific_names": ["张三丰真人"], "aliases": ["张三峰", "玄玄子", "张邋遢"],
+    "domains": ["武当祖师信仰", "内家拳传说", "修炼养生"], "matching_tags": ["武当", "内家拳", "太极拳", "真人"],
+    "iconography": "常作披发、蓄髯、宽袍道人或不修边幅的真人形象。", "iconography_variation": "史籍中的同名人物、武术祖师传说与道教神像存在多版本。", "source_ids": ["SRC-067"], "review_status": "needs_review"
+  },
+  {
+    "id": "DAO-035", "canonical_name": "三茅真君", "tradition": "道教上清与茅山传统", "entity_type": "祖师组合", "honorific_names": ["三茅真君"], "aliases": ["茅盈", "茅固", "茅衷"],
+    "domains": ["茅山祖师信仰", "上清派传统", "司命信仰"], "matching_tags": ["茅山", "上清", "三茅", "祖师"],
+    "iconography": "通常表现为三位真人或道士并列，具体长幼座次和持物须依宫观题记。", "iconography_variation": "三位真君可作组合或单尊供奉，数据库暂以组合实体记录。", "source_ids": ["SRC-010"], "review_status": "needs_review"
+  },
+  {
+    "id": "DAO-036", "canonical_name": "钟离权", "tradition": "道教全真与八仙信仰", "entity_type": "仙真／祖师", "honorific_names": ["正阳开悟传道真君"], "aliases": ["汉钟离", "正阳真人"],
+    "domains": ["八仙", "全真北五祖传统", "度化传道"], "matching_tags": ["八仙", "全真", "钟离权", "度化"],
+    "iconography": "常作袒腹、髯须仙人，持芭蕉扇。", "iconography_variation": "历史传说与戏曲、年画形象并不完全一致。", "source_ids": ["SRC-068", "SRC-069"], "review_status": "draft"
+  },
+  {
+    "id": "DAO-037", "canonical_name": "铁拐李", "tradition": "道教及民间八仙信仰", "entity_type": "仙真", "honorific_names": ["铁拐仙师"], "aliases": ["李铁拐", "李凝阳"],
+    "domains": ["八仙", "民间仙真信仰"], "matching_tags": ["八仙", "葫芦", "铁拐", "仙真"],
+    "iconography": "常见蓬头跛足、持铁拐和葫芦的形象。", "iconography_variation": "姓名与身世有异说，形象多受戏曲、年画影响。", "source_ids": ["SRC-068", "SRC-069", "SRC-079"], "review_status": "draft"
+  },
+  {
+    "id": "DAO-038", "canonical_name": "张果老", "tradition": "道教及民间八仙信仰", "entity_type": "仙真", "honorific_names": ["通玄先生"], "aliases": ["张果"],
+    "domains": ["八仙", "民间仙真信仰"], "matching_tags": ["八仙", "渔鼓", "倒骑驴", "仙真"],
+    "iconography": "常作老者，持渔鼓或道情筒，倒骑驴是流行叙事线索。", "iconography_variation": "文物中未必出现驴，需结合八仙组合识别。", "source_ids": ["SRC-068", "SRC-069", "SRC-079"], "review_status": "draft"
+  },
+  {
+    "id": "DAO-039", "canonical_name": "何仙姑", "tradition": "道教及民间八仙信仰", "entity_type": "女仙", "honorific_names": ["何仙姑"], "aliases": [],
+    "domains": ["八仙", "女仙信仰"], "matching_tags": ["八仙", "荷花", "女仙"],
+    "iconography": "常作年轻女仙，持荷花或笊篱。", "iconography_variation": "籍贯、身世和持物存在地方版本。", "source_ids": ["SRC-068", "SRC-069", "SRC-079"], "review_status": "draft"
+  },
+  {
+    "id": "DAO-040", "canonical_name": "蓝采和", "tradition": "道教及民间八仙信仰", "entity_type": "仙真", "honorific_names": ["蓝采和"], "aliases": [],
+    "domains": ["八仙", "民间仙真信仰"], "matching_tags": ["八仙", "花篮", "歌者", "仙真"],
+    "iconography": "常作少年或性别表现含混的游方歌者，持花篮。", "iconography_variation": "性别、年龄、服饰与法物在不同时代差异明显。", "source_ids": ["SRC-068", "SRC-069", "SRC-079"], "review_status": "draft"
+  },
+  {
+    "id": "DAO-041", "canonical_name": "韩湘子", "tradition": "道教及民间八仙信仰", "entity_type": "仙真", "honorific_names": ["韩湘子"], "aliases": [],
+    "domains": ["八仙", "民间仙真信仰"], "matching_tags": ["八仙", "笛箫", "音乐", "仙真"],
+    "iconography": "常作文士或青年仙人，持横笛或箫。", "iconography_variation": "与历史人物韩湘的关系属于传说融合，不能完全等同。", "source_ids": ["SRC-068", "SRC-069", "SRC-079"], "review_status": "draft"
+  },
+  {
+    "id": "DAO-042", "canonical_name": "曹国舅", "tradition": "道教及民间八仙信仰", "entity_type": "仙真", "honorific_names": ["曹国舅"], "aliases": [],
+    "domains": ["八仙", "民间仙真信仰"], "matching_tags": ["八仙", "阴阳板", "玉板", "仙真"],
+    "iconography": "常作文官或贵族相，持阴阳板、玉板或朝笏。", "iconography_variation": "与宋代历史人物曹佾的对应属于后世融合。", "source_ids": ["SRC-068", "SRC-069", "SRC-079"], "review_status": "draft"
+  },
+  {
+    "id": "DAO-043", "canonical_name": "西岳大帝", "tradition": "道教及国家山川祭祀", "entity_type": "岳帝", "honorific_names": ["西岳华山大帝"], "aliases": ["华山神"],
+    "domains": ["西岳华山", "五岳祭祀", "山岳守护"], "matching_tags": ["华山", "西岳", "山岳", "五岳"],
+    "iconography": "常作帝王或岳神相，须与华山庙题记、神位和地方文物结合。", "iconography_variation": "国家祀典的西岳神与道教帝君神格应分层记录。", "source_ids": ["SRC-070"], "review_status": "draft"
+  },
+  {
+    "id": "DAO-044", "canonical_name": "南岳大帝", "tradition": "道教及国家山川祭祀", "entity_type": "岳帝", "honorific_names": ["南岳衡山大帝"], "aliases": ["衡山神"],
+    "domains": ["南岳衡山", "五岳祭祀", "山岳守护"], "matching_tags": ["衡山", "南岳", "山岳", "五岳"],
+    "iconography": "常作帝王或岳神相，需结合南岳庙题记和地方造像。", "iconography_variation": "湖南衡山与历史上南岳指称变化须在地点数据中注明。", "source_ids": ["SRC-070"], "review_status": "draft"
+  },
+  {
+    "id": "DAO-045", "canonical_name": "北岳大帝", "tradition": "道教及国家山川祭祀", "entity_type": "岳帝", "honorific_names": ["北岳恒山大帝"], "aliases": ["恒山神"],
+    "domains": ["北岳恒山", "五岳祭祀", "山岳守护"], "matching_tags": ["恒山", "北岳", "山岳", "五岳"],
+    "iconography": "常作帝王或岳神相，须依北岳庙、神位和题记识别。", "iconography_variation": "历史北岳祭祀地点曾有曲阳与山西恒山之变，产品必须标时期。", "source_ids": ["SRC-070"], "review_status": "needs_review"
+  },
+  {
+    "id": "DAO-046", "canonical_name": "中岳大帝", "tradition": "道教及国家山川祭祀", "entity_type": "岳帝", "honorific_names": ["中岳嵩山大帝"], "aliases": ["嵩山神"],
+    "domains": ["中岳嵩山", "五岳祭祀", "山岳守护"], "matching_tags": ["嵩山", "中岳", "山岳", "五岳"],
+    "iconography": "常作帝王或岳神相，须依中岳庙题记和地方文物识别。", "iconography_variation": "不可把中岳大帝与少林寺佛教护法或嵩山地方神混为一体。", "source_ids": ["SRC-070"], "review_status": "draft"
+  },
+  {
+    "id": "DAO-047", "canonical_name": "雷公", "tradition": "道教雷部及民间自然神信仰", "entity_type": "雷神", "honorific_names": ["雷公"], "aliases": ["雷神"],
+    "domains": ["行雷", "雷部执行神", "自然现象人格化"], "matching_tags": ["雷", "雷部", "天象", "行雨诸神"],
+    "iconography": "常见尖嘴、鹰爪、背翼，执楔与槌或配雷鼓的威猛形象。", "iconography_variation": "各地雷公可能持剑、槌、枪或驾雷车；不得与雷祖混为一尊。", "source_ids": ["SRC-071", "SRC-072"], "review_status": "draft"
+  },
+  {
+    "id": "DAO-048", "canonical_name": "电母", "tradition": "道教雷部及民间自然神信仰", "entity_type": "闪电女神", "honorific_names": ["金光圣母"], "aliases": ["闪电娘娘", "电母娘娘"],
+    "domains": ["司闪电", "行雨诸神"], "matching_tags": ["闪电", "雷部", "天象", "女神"],
+    "iconography": "常作端庄女神相，双手各持一面镜子，以镜光表现闪电。", "iconography_variation": "风姨、电母及其他雷部女神在地方壁画中须凭题记区分。", "source_ids": ["SRC-072"], "review_status": "draft"
+  },
+  {
+    "id": "FOLK-014", "canonical_name": "保生大帝", "tradition": "闽台民间信仰并被道教吸收", "entity_type": "医神／地方保护神", "honorific_names": ["恩主昊天金阙御史慈济医灵妙道真君万寿无极保生大帝"], "aliases": ["吴真人", "大道公", "吴夲"],
+    "domains": ["医药", "护生", "闽台地方保护"], "matching_tags": ["医疗", "医神", "闽台", "保生"],
+    "iconography": "常作真人、医者或帝君相，具体冠服和药物属性随祖庙与分灵系统变化。", "iconography_variation": "吴夲、保生大帝与其他药王信仰不可仅用‘医神’合并。", "source_ids": ["SRC-073"], "review_status": "draft"
+  },
+  {
+    "id": "FOLK-015", "canonical_name": "临水夫人", "tradition": "闽浙台民间信仰并被道教吸收", "entity_type": "妇幼保护神", "honorific_names": ["顺天圣母"], "aliases": ["陈靖姑", "陈十四娘娘", "临水陈太后"],
+    "domains": ["护产", "妇女儿童保护", "地方信俗"], "matching_tags": ["生育", "妇幼", "闽台", "临水夫人"],
+    "iconography": "常作端庄女神或法师相，冠服、持剑或法器等因地区而异。", "iconography_variation": "陈靖姑信俗在福建、浙江、台湾各有仪式和图像差别。", "source_ids": ["SRC-074"], "review_status": "draft"
+  },
+  {
+    "id": "FOLK-016", "canonical_name": "秦琼与尉迟恭门神", "tradition": "民间年画与门神信仰", "entity_type": "武门神组合", "honorific_names": ["秦叔宝门神", "尉迟敬德门神"], "aliases": ["秦琼尉迟恭", "秦叔宝尉迟敬德"],
+    "domains": ["司门守卫", "镇宅护院", "岁时年画"], "matching_tags": ["门户", "门神", "镇宅", "春节"],
+    "iconography": "通常成对张贴，作披甲武将相；秦琼常持锏，尉迟恭常持鞭。", "iconography_variation": "左右位置、脸色、兵器和服饰随年画产地变化，不能设全国唯一模板。", "source_ids": ["SRC-075", "SRC-076"], "review_status": "draft"
+  },
+  {
+    "id": "FOLK-017", "canonical_name": "钟馗", "tradition": "民间信仰并被道教吸收", "entity_type": "捉鬼神／门神", "honorific_names": ["赐福镇宅圣君"], "aliases": ["钟进士", "福判"],
+    "domains": ["驱邪捉鬼", "门神", "端午与岁时信俗"], "matching_tags": ["驱邪", "门神", "镇宅", "钟馗"],
+    "iconography": "常作虬髯、豹头环眼、持剑或率鬼卒的进士／判官相。", "iconography_variation": "赐福钟馗、嫁妹钟馗和门神钟馗属于不同题材。", "source_ids": ["SRC-075"], "review_status": "draft"
+  },
+  {
+    "id": "FOLK-018", "canonical_name": "比干", "tradition": "民间财神信仰", "entity_type": "文财神", "honorific_names": ["文财神比干"], "aliases": ["比干财神"],
+    "domains": ["公正无偏的财富象征", "文财神信仰"], "matching_tags": ["财神", "公正", "商业", "比干"],
+    "iconography": "常作文官、丞相或财神相，持如意、朝笏等；具体形象多见年画与财神殿。", "iconography_variation": "‘无心不偏’属于后世民间解释，不可等同史实。", "source_ids": ["SRC-077"], "review_status": "needs_review"
+  },
+  {
+    "id": "FOLK-019", "canonical_name": "范蠡", "tradition": "民间财神与商祖信仰", "entity_type": "文财神／商祖", "honorific_names": ["陶朱公", "文财神"], "aliases": ["范少伯"],
+    "domains": ["经商", "财富伦理", "商祖信仰"], "matching_tags": ["商业", "财神", "商祖", "范蠡"],
+    "iconography": "常作文官、长者或商祖相，可配聚宝、如意等财神年画属性。", "iconography_variation": "历史范蠡肖像、戏曲人物和文财神像需分开。", "source_ids": ["SRC-077", "SRC-078"], "review_status": "draft"
+  },
+  {
+    "id": "FOLK-020", "canonical_name": "刘海蟾", "tradition": "道教仙真及民间吉祥信仰", "entity_type": "仙真／求财吉祥人物", "honorific_names": ["海蟾祖师"], "aliases": ["刘海", "刘操", "海蟾子"],
+    "domains": ["道教仙真", "刘海戏金蟾吉祥图像", "财源象征"], "matching_tags": ["金蟾", "财源", "吉祥", "刘海"],
+    "iconography": "常作童子或仙人，以钱串戏三足金蟾；也可作道人祖师相。", "iconography_variation": "道教海蟾祖师与民间童子刘海图像存在明显分化。", "source_ids": ["SRC-079"], "review_status": "draft"
+  },
+  {
+    "id": "FOLK-021", "canonical_name": "扁鹊", "tradition": "民间医神与药王信仰", "entity_type": "医神／药王", "honorific_names": ["药王真君", "神应王"], "aliases": ["秦越人"],
+    "domains": ["医学", "诊疗", "药王祭祀"], "matching_tags": ["医疗", "药王", "中医", "扁鹊"],
+    "iconography": "常作古代医者或王侯相，药箱、经卷等属性需按庙宇文物核验。", "iconography_variation": "与孙思邈、神农共享‘药王’称谓，必须保留本名。", "source_ids": ["SRC-080"], "review_status": "draft"
+  },
+  {
+    "id": "FOLK-022", "canonical_name": "华佗", "tradition": "民间医神与名医祭祀", "entity_type": "医神／行业先贤", "honorific_names": ["神医华佗"], "aliases": ["华元化"],
+    "domains": ["外科与麻醉传说", "养生导引", "名医祭祀"], "matching_tags": ["医疗", "外科", "五禽戏", "华佗"],
+    "iconography": "常作古代医者、老者或名医配祀像，具体持物须依药王殿题记。", "iconography_variation": "历史名医纪念与神格化供奉程度因地方而异。", "source_ids": ["SRC-081"], "review_status": "needs_review"
+  },
+  {
+    "id": "FOLK-023", "canonical_name": "杜康", "tradition": "酿酒行业祖师信仰", "entity_type": "酒祖／行业神", "honorific_names": ["酒祖", "酒圣"], "aliases": ["杜康酒祖"],
+    "domains": ["酿酒", "酒业祖师", "地方庙会祭祀"], "matching_tags": ["酿酒", "酒业", "杜康", "行业祖师"],
+    "iconography": "常作古代先贤、酿酒者或祖师相，酒器、酒坛属于常见行业属性。", "iconography_variation": "杜康籍贯和造酒传说多地并存，产品不得宣称唯一故里。", "source_ids": ["SRC-082"], "review_status": "draft"
+  },
+  {
+    "id": "FOLK-024", "canonical_name": "陆羽", "tradition": "茶业行业祖师与茶神信仰", "entity_type": "茶圣／行业神", "honorific_names": ["茶圣", "茶神"], "aliases": ["陆鸿渐"],
+    "domains": ["茶学", "制茶饮茶", "茶业奉祀"], "matching_tags": ["茶", "茶业", "茶经", "陆羽"],
+    "iconography": "常作文士、隐者或茶人相，可配茶具、经卷；唐代已有陶瓷陆羽像供茶商奉祀的记载。", "iconography_variation": "历史人物肖像、茶圣纪念像和茶神奉祀像应区别。", "source_ids": ["SRC-083"], "review_status": "draft"
+  },
+  {
+    "id": "FOLK-025", "canonical_name": "仓颉", "tradition": "文化始祖与地方祭祀", "entity_type": "文祖／字祖", "honorific_names": ["中华文祖", "字圣"], "aliases": ["仓圣"],
+    "domains": ["文字创造传说", "文字文化", "谷雨祭祀"], "matching_tags": ["文字", "汉字", "文祖", "仓颉"],
+    "iconography": "常作古代史官或圣贤相，多目形象为流行传说线索，须依文物题记核验。", "iconography_variation": "造字是文化传说，不能当作可证实的单人历史发明事实。", "source_ids": ["SRC-084"], "review_status": "draft"
+  },
+  {
+    "id": "BUD-008", "canonical_name": "弥勒菩萨", "tradition": "佛教", "entity_type": "菩萨／未来佛", "honorific_names": ["当来下生弥勒尊佛"], "aliases": ["弥勒", "慈氏菩萨"],
+    "domains": ["未来成佛", "兜率净土", "慈心修学"], "matching_tags": ["未来佛", "慈氏", "兜率", "弥勒"],
+    "iconography": "早期常作交脚或倚坐菩萨相，宝冠、璎珞；汉地寺院也常以布袋和尚形象表现弥勒化身。", "iconography_variation": "宝冠弥勒、交脚弥勒与布袋弥勒不能用同一张‘标准像’替代。", "source_ids": ["SRC-085", "SRC-087"], "review_status": "draft"
+  },
+  {
+    "id": "BUD-009", "canonical_name": "大势至菩萨", "tradition": "佛教", "entity_type": "菩萨", "honorific_names": ["大精进菩萨"], "aliases": ["得大势菩萨"],
+    "domains": ["智慧光明", "净土信仰", "西方三圣"], "matching_tags": ["净土", "智慧光", "西方三圣", "念佛"],
+    "iconography": "汉传常作菩萨装，与观音分侍阿弥陀佛两侧；冠上宝瓶是常见识别线索。", "iconography_variation": "左右位置和冠饰须结合西方三圣整体及题记识别。", "source_ids": ["SRC-094"], "review_status": "draft"
+  },
+  {
+    "id": "BUD-010", "canonical_name": "准提菩萨", "tradition": "汉传佛教与密教", "entity_type": "菩萨／佛母", "honorific_names": ["准提佛母"], "aliases": ["准提观音", "七俱胝佛母"],
+    "domains": ["准提法门", "密教修持", "观音化现传统"], "matching_tags": ["准提", "佛母", "密教", "多臂"],
+    "iconography": "常见三目十八臂菩萨相，也有二臂、四臂等形态，诸手持不同法器。", "iconography_variation": "准提佛母与观世音菩萨的化现关系应按宗派说明，不宜简单拆成完全无关实体。", "source_ids": ["SRC-093"], "review_status": "needs_review"
+  },
+  {
+    "id": "BUD-011", "canonical_name": "虚空藏菩萨", "tradition": "佛教", "entity_type": "菩萨", "honorific_names": ["虚空藏菩萨"], "aliases": ["虚空孕菩萨"],
+    "domains": ["智慧与福德如虚空", "八大菩萨", "密教修持"], "matching_tags": ["虚空藏", "智慧", "福德", "八大菩萨"],
+    "iconography": "常作宝冠菩萨相，持莲花、宝剑、宝珠或月轮等属性，须按具体传统辨识。", "iconography_variation": "汉传、藏传与密教造像持物差异较大。", "source_ids": ["SRC-095"], "review_status": "draft"
+  },
+  {
+    "id": "BUD-012", "canonical_name": "韦驮菩萨", "tradition": "汉传佛教", "entity_type": "护法神", "honorific_names": ["韦驮天", "韦天将军"], "aliases": ["韦琨", "韦驮天王"],
+    "domains": ["护持佛法", "寺院守护", "僧团护法"], "matching_tags": ["护法", "寺院", "金刚杵", "韦驮"],
+    "iconography": "汉地多作披甲武将相，持金刚杵，常位于天王殿弥勒像背后并面向大雄宝殿。", "iconography_variation": "与印度六面童子源流、汉地韦天将军像及韦驮菩萨称谓需分层。", "source_ids": ["SRC-087"], "review_status": "draft"
+  },
+  {
+    "id": "BUD-013", "canonical_name": "伽蓝菩萨", "tradition": "汉传佛教", "entity_type": "寺院护法神格", "honorific_names": ["伽蓝菩萨"], "aliases": ["伽蓝神"],
+    "domains": ["寺院护持", "僧伽蓝摩守护", "护法"], "matching_tags": ["寺院", "护法", "伽蓝", "关公"],
+    "iconography": "汉地常以关羽为代表性伽蓝护法，亦可能供奉其他伽蓝神；须看寺院题记。", "iconography_variation": "伽蓝菩萨是职能类称谓，不应与关圣帝君主数据完全合并。", "source_ids": ["SRC-016", "SRC-087"], "review_status": "needs_review"
+  },
+  {
+    "id": "BUD-014", "canonical_name": "东方持国天王", "tradition": "佛教", "entity_type": "护世天王", "honorific_names": ["持国天王"], "aliases": ["提头赖吒"],
+    "domains": ["护持国土", "守护东方", "护持佛法"], "matching_tags": ["东方", "四大天王", "琵琶", "护法"],
+    "iconography": "汉传常作披甲天王相，手持琵琶。", "iconography_variation": "与《封神演义》魔礼海等文学人物不可直接等同。", "source_ids": ["SRC-086"], "review_status": "draft"
+  },
+  {
+    "id": "BUD-015", "canonical_name": "南方增长天王", "tradition": "佛教", "entity_type": "护世天王", "honorific_names": ["增长天王"], "aliases": ["毗琉璃"],
+    "domains": ["令善根增长", "守护南方", "护持佛法"], "matching_tags": ["南方", "四大天王", "宝剑", "护法"],
+    "iconography": "汉传常作披甲天王相，手持宝剑。", "iconography_variation": "脸色、宝剑姿势与随从随时代寺院变化。", "source_ids": ["SRC-086"], "review_status": "draft"
+  },
+  {
+    "id": "BUD-016", "canonical_name": "西方广目天王", "tradition": "佛教", "entity_type": "护世天王", "honorific_names": ["广目天王"], "aliases": ["毗留博叉"],
+    "domains": ["净眼观察", "守护西方", "护持佛法"], "matching_tags": ["西方", "四大天王", "龙蛇", "护法"],
+    "iconography": "汉传常作披甲天王相，手执龙、蛇或绳索。", "iconography_variation": "持龙、蛇、索及色相不统一，需依具体寺院造像。", "source_ids": ["SRC-086"], "review_status": "draft"
+  },
+  {
+    "id": "BUD-017", "canonical_name": "北方多闻天王", "tradition": "佛教", "entity_type": "护世天王", "honorific_names": ["多闻天王"], "aliases": ["毗沙门天"],
+    "domains": ["守护北方", "护持佛法", "福德与财富守护传统"], "matching_tags": ["北方", "四大天王", "宝伞", "宝塔"],
+    "iconography": "汉传常作披甲天王相，持宝伞或宝塔。", "iconography_variation": "汉传多闻天、藏传财宝天王与民间托塔天王形象不可互换。", "source_ids": ["SRC-086"], "review_status": "draft"
+  },
+  {
+    "id": "BUD-018", "canonical_name": "十八罗汉", "tradition": "汉传佛教", "entity_type": "罗汉组合", "honorific_names": ["十八尊者"], "aliases": ["十八阿罗汉"],
+    "domains": ["住世护法", "应供", "寺院罗汉信仰"], "matching_tags": ["罗汉", "护法", "住世", "尊者"],
+    "iconography": "通常为十八位僧人或尊者组合，面貌、姿态、持物各异。", "iconography_variation": "十六罗汉、十八罗汉与五百罗汉名单及图像体系不同，不得混用。", "source_ids": ["SRC-036"], "review_status": "draft"
+  },
+  {
+    "id": "BUD-019", "canonical_name": "帝释天", "tradition": "佛教", "entity_type": "护法天神", "honorific_names": ["释提桓因"], "aliases": ["帝释", "天帝释"],
+    "domains": ["忉利天之主", "护持佛法", "诸天信仰"], "matching_tags": ["帝释天", "忉利天", "护法", "诸天"],
+    "iconography": "汉传寺院诸天图中常作帝王或天人相，配天女与仪仗。", "iconography_variation": "印度因陀罗、佛教帝释天和中国民间玉皇大帝不可直接视为同一神。", "source_ids": ["SRC-088"], "review_status": "draft"
+  },
+  {
+    "id": "BUD-020", "canonical_name": "大梵天", "tradition": "佛教", "entity_type": "护法天神", "honorific_names": ["梵天王"], "aliases": ["梵王"],
+    "domains": ["色界初禅天主", "护持佛法", "诸天信仰"], "matching_tags": ["梵天", "护法", "诸天", "帝释梵天"],
+    "iconography": "汉传诸天图中常作天王或天人相，与帝释天分列佛会两侧。", "iconography_variation": "婆罗门教梵天源流与佛教护法梵天的教义位置须区分。", "source_ids": ["SRC-088"], "review_status": "draft"
+  },
+  {
+    "id": "BUD-021", "canonical_name": "摩利支天", "tradition": "佛教密教", "entity_type": "护法天神", "honorific_names": ["摩利支天菩萨"], "aliases": ["摩里支天", "阳焰天"],
+    "domains": ["光明阳焰", "隐身与消灾传统", "密教护法"], "matching_tags": ["摩利支天", "光明", "消灾", "密教"],
+    "iconography": "可作多臂女神相，部分传统带猪面、乘车或持日月等，具体依仪轨。", "iconography_variation": "与道教斗姆的历史互涉不等于两者可无条件合并。", "source_ids": ["SRC-088"], "review_status": "needs_review"
+  },
+  {
+    "id": "BUD-022", "canonical_name": "辩才天", "tradition": "佛教", "entity_type": "护法女神", "honorific_names": ["大辩才天女"], "aliases": ["妙音天", "辩才天女"],
+    "domains": ["辩才", "音乐", "佛法护持"], "matching_tags": ["辩才", "音乐", "诸天", "女神"],
+    "iconography": "汉传诸天图中作天女相，也有多臂及持乐器等形态。", "iconography_variation": "辩才天与吉祥天在部分图像中可能发生替换，必须依题记。", "source_ids": ["SRC-088"], "review_status": "draft"
+  },
+  {
+    "id": "BUD-023", "canonical_name": "吉祥天", "tradition": "佛教", "entity_type": "护法女神", "honorific_names": ["大功德天"], "aliases": ["功德天", "吉祥天女"],
+    "domains": ["福德", "吉祥", "佛法护持"], "matching_tags": ["吉祥", "功德天", "福德", "女神"],
+    "iconography": "常作庄严天女相，可持如意珠、莲花等；汉传诸天图中列于护法诸天。", "iconography_variation": "与辩才天、鬼子母的伴随关系和图像替换需谨慎。", "source_ids": ["SRC-088"], "review_status": "draft"
+  },
+  {
+    "id": "BUD-024", "canonical_name": "鬼子母", "tradition": "佛教", "entity_type": "护法女神", "honorific_names": ["诃梨帝母"], "aliases": ["欢喜母", "爱子母"],
+    "domains": ["护法", "儿童与母亲守护传统", "诸天信仰"], "matching_tags": ["鬼子母", "诃梨帝", "妇幼", "护法"],
+    "iconography": "常作抱子或伴随儿童的母神相，也见诸天图中的庄严天女形象。", "iconography_variation": "早期食子恶神与皈依后的护法母神是故事转化的不同阶段。", "source_ids": ["SRC-089"], "review_status": "draft"
+  },
+  {
+    "id": "BUD-025", "canonical_name": "孔雀明王", "tradition": "佛教密教", "entity_type": "明王／佛母", "honorific_names": ["佛母大孔雀明王"], "aliases": ["孔雀佛母"],
+    "domains": ["孔雀明王法门", "息灾与解毒传统", "密教修持"], "matching_tags": ["孔雀", "明王", "佛母", "息灾"],
+    "iconography": "大足宋代造像为一头四臂，持拂子、经卷、荷苞、宝珠，端坐孔雀所负莲台。", "iconography_variation": "不同密教传统的臂数、持物和眷属配置可能不同。", "source_ids": ["SRC-090"], "review_status": "draft"
+  },
+  {
+    "id": "BUD-026", "canonical_name": "菩提达摩", "tradition": "汉传佛教禅宗", "entity_type": "祖师", "honorific_names": ["达摩祖师", "初祖菩提达摩"], "aliases": ["达摩", "菩提达磨"],
+    "domains": ["中国禅宗初祖", "壁观修行", "少林祖庭传统"], "matching_tags": ["禅宗", "少林", "祖师", "壁观"],
+    "iconography": "常作胡貌梵僧、浓眉虬髯、披袈裟的祖师相，亦有一苇渡江、面壁题材。", "iconography_variation": "禅宗祖师像与武术传说、文学形象须区分。", "source_ids": ["SRC-091"], "review_status": "draft"
+  },
+  {
+    "id": "BUD-027", "canonical_name": "济公", "tradition": "汉传佛教人物与民间信仰", "entity_type": "高僧／民间神圣人物", "honorific_names": ["济公活佛", "道济禅师"], "aliases": ["济颠", "李修缘"],
+    "domains": ["济世传说", "民间劝善", "江浙济公信仰"], "matching_tags": ["济公", "济世", "民间传说", "罗汉化身"],
+    "iconography": "常作衣履不整、持破扇或酒葫芦的颠僧形象，也有庄严罗汉或禅师像。", "iconography_variation": "历史僧人、文学济颠、降龙罗汉转世说和民间活佛信仰须分层。", "source_ids": ["SRC-092"], "review_status": "needs_review"
+  }
+]

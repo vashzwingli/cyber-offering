@@ -1,0 +1,158 @@
+[
+  {
+    "id": "RIT-001",
+    "term": "太牢",
+    "category": "祭牲等级",
+    "tradition": "古代国家礼制",
+    "region": "中国历史礼制",
+    "period": "先秦以后多朝代，具体制度随时代变化",
+    "definition": "典型解释为牛、羊、豕三牲齐备的高等级祭牲组合。",
+    "not_equivalent_to": ["大三牲", "现代道教宫观通用供品"],
+    "modern_actionable": false,
+    "source_ids": ["SRC-028", "SRC-032"],
+    "review_status": "draft"
+  },
+  {
+    "id": "RIT-002",
+    "term": "少牢",
+    "category": "祭牲等级",
+    "tradition": "古代国家礼制",
+    "region": "中国历史礼制",
+    "period": "先秦以后多朝代，具体制度随时代变化",
+    "definition": "典型解释为羊、豕两牲，不用牛。",
+    "not_equivalent_to": ["小三牲"],
+    "modern_actionable": false,
+    "source_ids": ["SRC-028", "SRC-032"],
+    "review_status": "draft"
+  },
+  {
+    "id": "RIT-003",
+    "term": "特牲",
+    "category": "祭牲等级",
+    "tradition": "古代礼制",
+    "region": "中国历史礼制",
+    "period": "历史",
+    "definition": "使用一种牺牲的祭礼规格。",
+    "not_equivalent_to": ["小三牲"],
+    "modern_actionable": false,
+    "source_ids": ["SRC-028"],
+    "review_status": "draft"
+  },
+  {
+    "id": "RIT-004",
+    "term": "三牲",
+    "category": "祭牲组合",
+    "tradition": "礼制与地方民俗多义词",
+    "region": "地域差异显著",
+    "period": "历史至近现代",
+    "definition": "可泛指三种牲畜或地方习俗中的三种荤供；组成并非全国固定。",
+    "variants": [
+      {"region": "广东客家材料", "items": ["鸡", "猪肉", "鱼"], "source_id": "SRC-031"},
+      {"region": "高平地方材料", "items": ["羊", "鸡", "鱼"], "label": "小三牲", "source_id": "SRC-030"}
+    ],
+    "modern_actionable": false,
+    "source_ids": ["SRC-029", "SRC-030", "SRC-031"],
+    "review_status": "draft"
+  },
+  {
+    "id": "RIT-005",
+    "term": "大三牲",
+    "category": "地方祭牲称谓",
+    "tradition": "地方民俗",
+    "region": "待分区",
+    "period": "待分期",
+    "definition": "不同地区用于指称较高规格牲礼的称谓，当前不足以给出全国统一组成。",
+    "modern_actionable": false,
+    "source_ids": [],
+    "review_status": "needs_review"
+  },
+  {
+    "id": "RIT-006",
+    "term": "小三牲",
+    "category": "地方祭牲称谓",
+    "tradition": "地方民俗",
+    "region": "地域差异显著",
+    "period": "近现代地方民俗记录",
+    "definition": "相对于当地大牲礼的简化组合；已知材料中组成不一。",
+    "variants": [
+      {"region": "山西高平", "items": ["羊", "鸡", "鱼"], "source_id": "SRC-030"}
+    ],
+    "modern_actionable": false,
+    "source_ids": ["SRC-030"],
+    "review_status": "needs_review"
+  },
+  {
+    "id": "RIT-007",
+    "term": "三献礼",
+    "category": "祭祀程序",
+    "tradition": "国家礼制、宗族礼制及部分地方信俗",
+    "region": "多地",
+    "period": "历史至当代非遗祭典",
+    "definition": "通常由初献、亚献、终献构成；各献所进物品和礼节随祭典变化。",
+    "modern_actionable": false,
+    "source_ids": ["SRC-032", "SRC-033"],
+    "review_status": "draft"
+  },
+  {
+    "id": "RIT-008",
+    "term": "五供",
+    "category": "供案器具组合",
+    "tradition": "墓祭与寺观陈设均可见，需按场景核验",
+    "region": "多地",
+    "period": "历史至近现代",
+    "definition": "一种常见实例为中置香炉、两侧一对烛台、外侧一对花瓶，共五件。",
+    "not_equivalent_to": ["五种食物", "五果"],
+    "modern_actionable": true,
+    "source_ids": ["SRC-034"],
+    "review_status": "needs_review"
+  },
+  {
+    "id": "RIT-009",
+    "term": "香花灯水果",
+    "category": "基础供品类别",
+    "tradition": "道教",
+    "region": "当代中国大陆登记道教活动场所",
+    "period": "当代",
+    "definition": "香、花、灯、水、果五类清洁供品，强调天然、洁净、节俭和安全。",
+    "modern_actionable": true,
+    "source_ids": ["SRC-011", "SRC-035"],
+    "review_status": "draft"
+  },
+  {
+    "id": "RIT-010",
+    "term": "罗汉供",
+    "category": "佛教寺院仪轨",
+    "tradition": "汉传佛教",
+    "region": "天台山及受《百丈清规》影响的寺院传统",
+    "period": "历史仪轨",
+    "definition": "供养十六或五百罗汉的正式寺院仪式，涉及人员分工、茶、果、菜、灯与唱赞回向。",
+    "modern_actionable": false,
+    "source_ids": ["SRC-036"],
+    "review_status": "draft"
+  },
+  {
+    "id": "RIT-011",
+    "term": "供佛斋天",
+    "category": "佛教寺院仪轨",
+    "tradition": "汉传佛教",
+    "region": "中国汉传佛教寺院",
+    "period": "历史至当代",
+    "definition": "供养三宝与护世诸天的正式法会；材料记载茶水、果物、菜蔬应净洁新鲜。",
+    "modern_actionable": false,
+    "source_ids": ["SRC-037"],
+    "review_status": "needs_review"
+  },
+  {
+    "id": "RIT-012",
+    "term": "七种供养",
+    "category": "佛教供养组合",
+    "tradition": "藏传佛教",
+    "region": "藏区材料",
+    "period": "当代记录的传统习俗",
+    "definition": "水、水、花、香、灯、茶、饭的七供顺序。",
+    "modern_actionable": true,
+    "source_ids": ["SRC-038"],
+    "review_status": "draft"
+  }
+]
+
