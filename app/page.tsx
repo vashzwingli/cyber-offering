@@ -2,30 +2,37 @@
 
 import {
   Apple,
-  BookOpenText,
-  ChevronDown,
+  Check,
   CircleAlert,
+  CupSoda,
   Droplets,
+  Flame,
   Flower2,
-  History,
+  Hand,
   LampDesk,
-  LibraryBig,
+  Leaf,
   LoaderCircle,
-  Plus,
-  Search,
-  ShieldCheck,
+  RotateCcw,
   Sparkles,
-  X,
+  type LucideIcon,
 } from "lucide-react";
-import { FormEvent, useMemo, useState } from "react";
+import { type CSSProperties, type FormEvent, useMemo, useState } from "react";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
 import mappingsJson from "@/data/action-mappings.json";
 import deitiesJson from "@/data/deities.json";
 import { findRuleMappingId } from "@/lib/intent-router";
+
+type Stage = "asking" | "seeking" | "ritual";
+type OfferingKind = "water" | "flower" | "lamp" | "fruit" | "incense" | "tea" | "vegetable" | "reverence";
 
 type Route = {
   target_id: string | null;
@@ -65,56 +72,42 @@ type MatchResult = {
   mapping: Mapping;
   deity: Deity | null;
   engine: "local" | "llm";
+  message: string;
+};
+
+type RitualStep = {
+  id: string;
+  label: string;
+  note: string;
+  kind: OfferingKind;
+  icon: LucideIcon;
+};
+
+type RitualProfile = {
+  label: string;
+  note: string;
+  steps: RitualStep[];
 };
 
 const mappings = mappingsJson as Mapping[];
 const deities = deitiesJson as Deity[];
 
-const relationLabels: Record<string, string> = {
-  direct_traditional: "传统职掌直配",
-  contextual_direct: "传统语境匹配",
-  contextual_match: "语境匹配",
-  functional_analogy: "功能类比",
-  symbolic_only: "象征关联",
-  playful: "玩梗路由",
-  no_match: "无传统直配",
-};
-
-const examplePrompts = [
-  "想谈恋爱",
-  "准备研究生考试",
-  "周末去拍野生鸟类",
-  "第一次坐船出海",
-  "新房刚刚入住",
-];
-
-const offeringIcons = [Flower2, LampDesk, Droplets, Apple, Sparkles];
-
 function similarity(query: string, mapping: Mapping) {
   const normalized = query.replace(/[，。！？、\s]/g, "").toLowerCase();
-  const corpus = [
-    ...mapping.input_examples,
-    mapping.normalized_intent,
-    mapping.life_domain,
-  ]
+  const corpus = [...mapping.input_examples, mapping.normalized_intent, mapping.life_domain]
     .join("")
     .replace(/[，。！？、\s]/g, "")
     .toLowerCase();
-
-  if (mapping.input_examples.some((item) => normalized.includes(item) || item.includes(normalized))) {
-    return 100;
-  }
-
-  const removeFillers = (value: string) => value.replace(/我|想|要|准备|近期|第一次|去|做|制作|希望|参与|开始|进行/g, "");
-  const semanticQuery = removeFillers(normalized) || normalized;
-  const semanticCorpus = removeFillers(corpus);
+  if (mapping.input_examples.some((item) => normalized.includes(item) || item.includes(normalized))) return 100;
+  const strip = (value: string) => value.replace(/我|想|要|准备|近期|第一次|去|做|制作|希望|参与|开始|进行/g, "");
+  const subject = strip(normalized) || normalized;
+  const evidence = strip(corpus);
   let score = 0;
-  for (let index = 0; index < semanticQuery.length - 1; index += 1) {
-    const pair = semanticQuery.slice(index, index + 2);
-    if (semanticCorpus.includes(pair)) score += 8;
+  for (let index = 0; index < subject.length - 1; index += 1) {
+    if (evidence.includes(subject.slice(index, index + 2))) score += 8;
   }
-  for (const character of new Set(semanticQuery)) {
-    if (semanticCorpus.includes(character)) score += 1;
+  for (const character of new Set(subject)) {
+    if (evidence.includes(character)) score += 1;
   }
   return score;
 }
@@ -122,437 +115,304 @@ function similarity(query: string, mapping: Mapping) {
 function localMatch(query: string): MatchResult {
   const ranked = [...mappings].sort((a, b) => similarity(query, b) - similarity(query, a));
   const ruleId = findRuleMappingId(query);
-  const ruleMapping = mappings.find((item) => item.id === ruleId);
-  const mapping = ruleMapping ?? (similarity(query, ranked[0]) >= 16 ? ranked[0] : {
-    id: "NO-MATCH",
-    life_domain: "未分类",
-    input_examples: [],
-    normalized_intent: "未在当前行为映射库中找到可靠对应",
-    routes: [{ target_id: null, relation_level: "no_match", score: 0 }],
-    clarifying_questions: ["可以补充具体行为、场景和希望获得的帮助吗？"],
-    exclusions: ["不根据谐音、动物名、法器或单一造像元素猜测神职"],
-    source_ids: [],
-    review_status: "verified",
-  });
-  const route = mapping.routes[0];
-  const deity = route?.target_id
-    ? deities.find((item) => item.id === route.target_id) ?? null
+  const mapping = mappings.find((item) => item.id === ruleId) ??
+    (similarity(query, ranked[0]) >= 16 ? ranked[0] : {
+      id: "NO-MATCH",
+      life_domain: "未分类",
+      input_examples: [],
+      normalized_intent: "未在当前行为映射库中找到可靠对应",
+      routes: [{ target_id: null, relation_level: "no_match", score: 0 }],
+      clarifying_questions: ["可以补充具体行为、场景和希望获得的帮助吗？"],
+      exclusions: ["不根据谐音、动物名、法器或单一造像元素猜测神职"],
+      source_ids: [],
+      review_status: "verified",
+    });
+  const deity = mapping.routes[0]?.target_id
+    ? deities.find((item) => item.id === mapping.routes[0].target_id) ?? null
     : null;
-
-  return { query, mapping, deity, engine: "local" };
+  const message = deity
+    ? `所求关乎“${mapping.normalized_intent}”。愿你先尽人事、守住分寸，再以此礼整理心意。`
+    : "此事在现有资料中没有可信的传统直配。不妄指神职，也是一种敬慎。";
+  return { query, mapping, deity, engine: "local", message };
 }
 
-function getOfferingProfile(deity: Deity | null) {
-  if (!deity) {
+function getRitualProfile(deity: Deity | null): RitualProfile {
+  if (!deity) return { label: "不生成仪轨", note: "没有可靠直配时，不自动拼接供奉步骤。", steps: [] };
+
+  if (/^(佛教|汉传佛教|藏传佛教)/.test(deity.tradition)) {
     return {
-      items: [] as string[],
-      note: "没有可靠的传统职掌对应，因此不自动生成传统供品清单。",
+      label: "清净供养次序",
+      note: "仅呈现资料支持的清净供养类别；正式法会由寺院依本宗仪轨主持。",
+      steps: [
+        { id: "water", label: "奉净水", note: "使用洁净清水，不设固定数量。", kind: "water", icon: Droplets },
+        { id: "flower", label: "献鲜花", note: "选择清洁、无损坏的鲜花。", kind: "flower", icon: Flower2 },
+        { id: "lamp", label: "供灯", note: "页面模拟供灯；现实场所须遵守明火规定。", kind: "lamp", icon: LampDesk },
+        { id: "tea", label: "奉茶", note: "使用清洁茶水，不代拟正式斋供。", kind: "tea", icon: CupSoda },
+        { id: "fruit", label: "摆果蔬", note: "选择新鲜洁净的果物或菜蔬。", kind: "vegetable", icon: Leaf },
+        { id: "reverence", label: "合掌致意", note: "静心片刻，不许诺现实结果。", kind: "reverence", icon: Hand },
+      ],
     };
   }
-  if (deity?.tradition.includes("佛教")) {
+
+  if (deity.tradition.includes("道教")) {
     return {
-      items: ["鲜花", "净水", "灯", "茶", "果物与菜蔬"],
-      note: "按汉传佛教清净供养边界给出类别，不代拟寺院法会。",
+      label: "五类清供次序",
+      note: "依据“香、花、灯、水、果”类别编排；数量与摆位依当地宫观。",
+      steps: [
+        { id: "incense", label: "奉香", note: "仅在场所允许且有人看管时进行。", kind: "incense", icon: Flame },
+        { id: "flower", label: "献鲜花", note: "以天然、洁净、节俭为原则。", kind: "flower", icon: Flower2 },
+        { id: "lamp", label: "供灯", note: "页面模拟供灯；现实中避免无人看管明火。", kind: "lamp", icon: LampDesk },
+        { id: "water", label: "奉净水", note: "使用洁净清水，不补造杯数。", kind: "water", icon: Droplets },
+        { id: "fruit", label: "摆净果", note: "使用新鲜时令果物，不规定单双数。", kind: "fruit", icon: Apple },
+        { id: "reverence", label: "拱手致礼", note: "以敬意收束，不把仪式当作结果保证。", kind: "reverence", icon: Hand },
+      ],
     };
   }
-  if (deity?.tradition.includes("道教")) {
-    return {
-      items: ["香", "鲜花", "灯", "净水", "时令鲜果"],
-      note: "按当代道教活动场所的清洁、节俭、安全原则给出类别。",
-    };
-  }
+
   return {
-    items: ["鲜花", "净水", "时令鲜果"],
-    note: "此民间信仰条目尚无已核验的专属规格；仅列清洁供品候选，实际依当地庙宇。",
+    label: "清洁供品候选",
+    note: "该民间信仰尚无已核验的专属规格；以下不是地方仪轨，实际请依庙宇传统。",
+    steps: [
+      { id: "water", label: "奉净水", note: "以清洁、安全为原则。", kind: "water", icon: Droplets },
+      { id: "flower", label: "献鲜花", note: "不替代地方庙宇的正式规定。", kind: "flower", icon: Flower2 },
+      { id: "fruit", label: "摆净果", note: "不规定品种、数量与左右位置。", kind: "fruit", icon: Apple },
+      { id: "reverence", label: "静心致意", note: "表达心意，不承诺改变现实结果。", kind: "reverence", icon: Hand },
+    ],
   };
 }
 
-function Seal({ deity }: { deity: Deity | null }) {
-  const label = deity?.canonical_name ?? "无传统直配";
-  const code = deity?.id ?? "NO-MATCH";
+function TempleScene({
+  deity,
+  completedSteps,
+  illumination,
+  blurred,
+}: {
+  deity: Deity | null;
+  completedSteps: RitualStep[];
+  illumination: number;
+  blurred: boolean;
+}) {
   return (
-    <div className="seal-stage" aria-label={`${label}的程序生成身份印记，非标准神像`}>
-      <div className="seal-orbit seal-orbit-one" />
-      <div className="seal-orbit seal-orbit-two" />
-      <div className="seal-core">
-        <span className="seal-kicker">身份印记</span>
-        <strong>{label.slice(0, 4)}</strong>
-        <span>{code}</span>
+    <div
+      className={`temple-scene ${blurred ? "is-blurred" : ""}`}
+      style={{ "--illumination": illumination } as CSSProperties}
+      aria-hidden="true"
+    >
+      <div className="temple-ceiling"><span /><span /><span /><span /><span /></div>
+      <div className="temple-pillar pillar-left" />
+      <div className="temple-pillar pillar-right" />
+      <div className="side-lantern lantern-left" />
+      <div className="side-lantern lantern-right" />
+      <div className="shrine-halo" />
+      <div className="deity-placeholder">
+        <div className="placeholder-aureole" />
+        <div className="placeholder-figure">
+          <span>{deity ? "神明形象" : "形象占位"}</span>
+        </div>
+        <div className="deity-plaque">{deity?.canonical_name ?? "待问所求"}</div>
       </div>
-      <p>程序生成 · 非标准神像</p>
+      <div className="altar">
+        <div className="altar-top">
+          <div className="offering-row">
+            {completedSteps.filter((step) => step.kind !== "reverence").map((step) => {
+              const Icon = step.icon;
+              return (
+                <div className={`scene-offering offering-${step.kind}`} key={step.id}>
+                  <Icon />
+                  <span>{step.label}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <div className="altar-front"><span>敬</span></div>
+      </div>
+      <div className="floor-light" />
+      <div className="scene-vignette" />
     </div>
   );
 }
 
 export default function Home() {
-  const initial = useMemo(() => localMatch("想谈恋爱"), []);
-  const [query, setQuery] = useState("想谈恋爱");
-  const [result, setResult] = useState<MatchResult>(initial);
-  const [strict, setStrict] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [showDirectory, setShowDirectory] = useState(false);
-  const [directoryQuery, setDirectoryQuery] = useState("");
-  const [jokeInput, setJokeInput] = useState("");
-  const [jokeOfferings, setJokeOfferings] = useState<string[]>([]);
+  const [stage, setStage] = useState<Stage>("asking");
+  const [query, setQuery] = useState("");
+  const [result, setResult] = useState<MatchResult | null>(null);
+  const [completedCount, setCompletedCount] = useState(0);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const ritual = useMemo(() => getRitualProfile(result?.deity ?? null), [result]);
+  const isComplete = ritual.steps.length > 0 && completedCount === ritual.steps.length;
+  const illumination = stage === "ritual"
+    ? Math.min(1, 0.16 + (completedCount / Math.max(ritual.steps.length, 1)) * 0.84)
+    : 0;
 
-  const route = result.mapping.routes[0];
-  const isBlockedByStrict = strict &&
-    (result.mapping.review_status !== "verified" || result.deity?.review_status !== "verified");
-  const offeringProfile = getOfferingProfile(result.deity);
-  const filteredDeities = deities.filter((deity) => {
-    const haystack = [
-      deity.canonical_name,
-      deity.tradition,
-      ...deity.aliases,
-      ...deity.domains,
-      ...deity.matching_tags,
-    ].join(" ");
-    return haystack.includes(directoryQuery.trim());
-  });
-
-  async function submit(event?: FormEvent) {
-    event?.preventDefault();
+  async function ask(event: FormEvent) {
+    event.preventDefault();
     const trimmed = query.trim();
     if (!trimmed) return;
-    setLoading(true);
+    setStage("seeking");
+    setCompletedCount(0);
     try {
-      const response = await fetch("/api/match", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ query: trimmed }),
-      });
-      if (!response.ok) throw new Error("route unavailable");
-      const payload = (await response.json()) as MatchResult;
-      setResult(payload);
+      const [response] = await Promise.all([
+        fetch("/api/match", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ query: trimmed }),
+        }),
+        new Promise((resolve) => setTimeout(resolve, 1400)),
+      ]);
+      if (!response.ok) throw new Error("match failed");
+      setResult(await response.json() as MatchResult);
     } catch {
       setResult(localMatch(trimmed));
     } finally {
-      setLoading(false);
+      setStage("ritual");
     }
   }
 
-  function addJokeOffering() {
-    const item = jokeInput.trim();
-    if (!item || jokeOfferings.includes(item)) return;
-    setJokeOfferings((current) => [...current, item]);
-    setJokeInput("");
+  function restart() {
+    setStage("asking");
+    setQuery("");
+    setResult(null);
+    setCompletedCount(0);
+    setDialogOpen(false);
   }
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
-      <div className="ambient-grid" aria-hidden="true" />
-      <header className="relative z-10 border-b border-white/8">
-        <div className="mx-auto flex max-w-[1480px] items-center justify-between gap-4 px-5 py-4 lg:px-8">
-          <div className="flex items-center gap-3">
-            <div className="logo-mark" aria-hidden="true">功</div>
-            <div>
-              <p className="font-serif text-lg font-semibold tracking-[0.12em] text-[#f3d58c]">赛博供奉</p>
-              <p className="text-xs text-white/45">现代诉求 · 传统职掌 · 证据路由</p>
-            </div>
-          </div>
-          <div className="hidden items-center gap-2 text-xs text-white/55 sm:flex">
-            <span className="status-dot" />
-            <span>100 位神佛</span>
-            <span className="text-white/20">/</span>
-            <span>36 条行为映射</span>
-          </div>
-          <Button
-            variant="outline"
-            className="border-white/12 bg-white/5 text-white hover:bg-white/10 hover:text-white"
-            onClick={() => setShowDirectory((value) => !value)}
-          >
-            <LibraryBig /> 名录库
-          </Button>
-        </div>
-      </header>
+    <main className={`experience stage-${stage}`}>
+      <TempleScene
+        deity={result?.deity ?? null}
+        completedSteps={ritual.steps.slice(0, completedCount)}
+        illumination={illumination}
+        blurred={stage !== "ritual"}
+      />
 
-      <section className="relative z-10 mx-auto max-w-[1480px] px-5 pb-10 pt-6 lg:px-8">
-        <div className="mb-5 flex flex-col justify-between gap-3 md:flex-row md:items-end">
-          <div>
-            <p className="eyebrow">请述所愿</p>
-            <h1 className="font-serif text-2xl font-semibold tracking-wide text-white md:text-3xl">
-              你最近准备做什么？
-            </h1>
-          </div>
-          <label className="flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.035] px-4 py-2 text-sm text-white/70">
-            <Switch
-              checked={strict}
-              onCheckedChange={setStrict}
-              aria-label="切换正典模式"
-              className="data-[state=checked]:bg-[#49cbbf]"
-            />
-            正典模式
-            <span className="hidden text-xs text-white/35 sm:inline">仅显示已核验数据</span>
-          </label>
-        </div>
-
-        <form onSubmit={submit} className="query-bar">
-          <Search className="size-5 shrink-0 text-[#d7b86b]" />
-          <Input
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            className="h-12 border-0 bg-transparent px-0 text-base text-white shadow-none placeholder:text-white/30 focus-visible:ring-0 md:text-base"
-            placeholder="例如：准备拍摄野生动物、想换工作、第一次出海……"
-            aria-label="输入要从事的行业或行为"
-          />
-          <Button
-            type="submit"
-            disabled={loading || !query.trim()}
-            className="h-11 rounded-xl bg-[#d6ad54] px-5 text-[#17130b] hover:bg-[#edc86f]"
-          >
-            {loading ? <LoaderCircle className="animate-spin" /> : <Sparkles />}
-            识别神职
-          </Button>
-        </form>
-
-        <div className="mt-3 flex flex-wrap gap-2">
-          {examplePrompts.map((prompt) => (
-            <button
-              key={prompt}
-              type="button"
-              className="prompt-chip"
-              onClick={() => {
-                setQuery(prompt);
-                setResult(localMatch(prompt));
-              }}
-            >
-              {prompt}
-            </button>
-          ))}
-        </div>
-
-        {isBlockedByStrict ? (
-          <section className="strict-empty mt-7" aria-live="polite">
-            <ShieldCheck className="size-7 text-[#49cbbf]" />
-            <div>
-              <h2 className="font-serif text-xl text-white">暂无可进入正式答案的条目</h2>
-              <p className="mt-1 text-sm leading-6 text-white/55">
-                本次候选“{result.deity?.canonical_name ?? "无传统直配"}”与对应映射仍处于研究草案；正典模式不会越过审核状态。
-              </p>
-            </div>
-            <Button
-              type="button"
-              variant="outline"
-              className="border-white/12 bg-transparent text-white hover:bg-white/10 hover:text-white"
-              onClick={() => setStrict(false)}
-            >
-              查看研究草案
-            </Button>
-          </section>
-        ) : (
-          <div className="result-grid mt-7" aria-live="polite">
-            <article className="panel deity-panel">
-              <div className="panel-label">
-                <span>01</span>
-                <p>职掌匹配</p>
-                <Badge className="ml-auto border-[#49cbbf]/25 bg-[#49cbbf]/10 text-[#78ddd4]">
-                  {result.engine === "llm" ? "LLM + 数据库" : "本地语义路由"}
-                </Badge>
-              </div>
-              <Seal deity={result.deity} />
-              <div className="mt-5">
-                <div className="flex flex-wrap items-center gap-2">
-                  <Badge variant="outline" className="border-white/15 text-white/65">
-                    {result.deity?.tradition ?? "不路由"}
-                  </Badge>
-                  <Badge variant="outline" className="border-[#d6ad54]/25 text-[#d8bd7d]">
-                    {relationLabels[route?.relation_level] ?? route?.relation_level}
-                  </Badge>
-                  <Badge variant="outline" className="border-white/10 text-white/40">
-                    {result.mapping.review_status === "verified" ? "已核验" : "研究草案"}
-                  </Badge>
-                </div>
-                <h2 className="mt-4 font-serif text-4xl font-semibold tracking-[0.08em] text-white">
-                  {result.deity?.canonical_name ?? "无传统直配"}
-                </h2>
-                {result.deity?.honorific_names?.[0] && (
-                  <p className="mt-2 text-sm text-[#d7bd80]">{result.deity.honorific_names[0]}</p>
-                )}
-                <p className="mt-4 text-base leading-7 text-white/65">
-                  {result.mapping.normalized_intent}
-                </p>
-                <div className="mt-5 border-t border-white/8 pt-4">
-                  <p className="section-mini-title">传统职掌</p>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {(result.deity?.domains ?? ["未发现可证实的传统对应"]).map((domain) => (
-                      <span key={domain} className="domain-tag">{domain}</span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article className="panel evidence-panel">
-              <div className="panel-label">
-                <span>02</span>
-                <p>形象与证据</p>
-              </div>
-              <div className="evidence-block">
-                <p className="section-mini-title">标准形象依据</p>
-                <p>{result.deity?.iconography ?? "没有传统直配，不生成神像或法号。"}</p>
-              </div>
-              {result.deity?.iconography_variation && (
-                <div className="evidence-block">
-                  <p className="section-mini-title">不可忽略的变体</p>
-                  <p>{result.deity.iconography_variation}</p>
-                </div>
-              )}
-              {result.mapping.exclusions.length > 0 && (
-                <div className="caution-block">
-                  <CircleAlert className="mt-0.5 size-4 shrink-0" />
-                  <p>{result.mapping.exclusions[0]}</p>
-                </div>
-              )}
-              {result.mapping.clarifying_questions.length > 0 && (
-                <div className="mt-auto pt-5">
-                  <p className="section-mini-title">若要更准确，可继续说明</p>
-                  <button
-                    type="button"
-                    className="mt-2 w-full rounded-xl border border-white/10 bg-white/[0.025] p-3 text-left text-sm leading-6 text-white/65 transition hover:border-[#49cbbf]/35 hover:bg-[#49cbbf]/5"
-                    onClick={() => setQuery(result.mapping.clarifying_questions[0])}
-                  >
-                    {result.mapping.clarifying_questions[0]}
-                  </button>
-                </div>
-              )}
-              <p className="mt-5 flex items-center gap-2 text-xs text-white/30">
-                <BookOpenText className="size-3.5" />
-                依据 {new Set([...(result.deity?.source_ids ?? []), ...result.mapping.source_ids]).size} 项来源编号
-              </p>
-            </article>
-
-            <article className="panel offering-panel">
-              <div className="panel-label">
-                <span>03</span>
-                <p>当代安全供品</p>
-              </div>
-              <p className="mt-4 text-sm leading-6 text-white/55">{offeringProfile.note}</p>
-              {offeringProfile.items.length > 0 ? (
-              <div className="offering-tray" aria-label="推荐供品类别">
-                {offeringProfile.items.map((item, index) => {
-                  const Icon = offeringIcons[index % offeringIcons.length];
-                  return (
-                    <div className="offering-item" key={item}>
-                      <Icon />
-                      <span>{item}</span>
-                    </div>
-                  );
-                })}
-              </div>
-              ) : (
-                <div className="mt-5 rounded-xl border border-dashed border-white/10 p-5 text-center text-sm text-white/35">
-                  暂不生成传统供品
-                </div>
-              )}
-              <div className="ritual-note">
-                <History className="size-4 shrink-0 text-[#d6ad54]" />
-                <p>
-                  “大三牲／小三牲”具有显著地域差异，不作为全国通用规格；数量、香数与摆位均请依当地寺观。
-                </p>
-              </div>
-              <div className="mt-5 border-t border-white/8 pt-4">
-                <div className="flex items-center justify-between gap-3">
-                  <p className="section-mini-title">玩梗贡品</p>
-                  <span className="text-xs text-white/30">与传统供品分栏</span>
-                </div>
-                <div className="mt-2 flex gap-2">
-                  <Input
-                    value={jokeInput}
-                    onChange={(event) => setJokeInput(event.target.value)}
-                    onKeyDown={(event) => {
-                      if (event.key === "Enter") {
-                        event.preventDefault();
-                        addJokeOffering();
-                      }
-                    }}
-                    className="border-white/10 bg-white/[0.035] text-white placeholder:text-white/25"
-                    placeholder="如：满格电量"
-                    aria-label="添加玩梗贡品"
-                  />
-                  <Button
-                    type="button"
-                    size="icon"
-                    variant="outline"
-                    className="border-white/12 bg-white/5 text-white hover:bg-white/10 hover:text-white"
-                    onClick={addJokeOffering}
-                    aria-label="添加玩梗贡品"
-                  >
-                    <Plus />
-                  </Button>
-                </div>
-                {jokeOfferings.length > 0 && (
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {jokeOfferings.map((item) => (
-                      <span className="joke-tag" key={item}>
-                        {item}
-                        <button
-                          type="button"
-                          aria-label={`移除${item}`}
-                          onClick={() => setJokeOfferings((items) => items.filter((value) => value !== item))}
-                        >
-                          <X />
-                        </button>
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </article>
-          </div>
-        )}
-
-        <div className="mt-5 flex flex-wrap items-center justify-between gap-3 text-xs leading-5 text-white/35">
-          <p>不承诺消灾、治病、发财、升学或改变他人意愿；低置信度会返回候选或“无传统直配”。</p>
-          <p>数据版本：2026-09-21 · 研究草案</p>
-        </div>
-
-        {showDirectory && (
-          <section className="directory-panel mt-8">
-            <div className="flex flex-col justify-between gap-4 border-b border-white/8 pb-5 sm:flex-row sm:items-end">
-              <div>
-                <p className="eyebrow">研究名录</p>
-                <h2 className="font-serif text-2xl text-white">100 位神佛与传统神职</h2>
-              </div>
+      {stage === "asking" && (
+        <section className="petition-layer">
+          <form className="petition-form" onSubmit={ask}>
+            <p className="brand-whisper">赛博供奉</p>
+            <h1>所求何事</h1>
+            <div className="petition-input-wrap">
               <Input
-                value={directoryQuery}
-                onChange={(event) => setDirectoryQuery(event.target.value)}
-                className="max-w-sm border-white/10 bg-white/[0.035] text-white placeholder:text-white/25"
-                placeholder="搜索名称、职掌或体系"
-                aria-label="搜索神佛名录"
+                autoFocus
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="说清要做的事、所在场景与心中所求"
+                aria-label="所求何事"
               />
+              <span className="input-glow" />
             </div>
-            <div className="directory-grid mt-5">
-              {filteredDeities.slice(0, 24).map((deity) => (
-                <button
-                  type="button"
-                  key={deity.id}
-                  className="directory-card"
-                  onClick={() => {
-                    const mapping = mappings.find((item) =>
-                      item.routes.some((candidate) => candidate.target_id === deity.id),
+            <Button type="submit" disabled={!query.trim()} className="divination-button">
+              问卜
+            </Button>
+            <p className="petition-footnote">系统只在现有名录与证据中寻找对应，不凭谐音臆造神职</p>
+          </form>
+        </section>
+      )}
+
+      {stage === "seeking" && (
+        <section className="seeking-layer" aria-live="polite">
+          <div className="seeking-orbit">
+            <span /><span /><span />
+            <LoaderCircle />
+          </div>
+          <p>正在寻找对应神明</p>
+          <small>辨行为 · 察场景 · 明所求</small>
+        </section>
+      )}
+
+      {stage === "ritual" && result && (
+        <section className="ritual-interface">
+          <header className="ritual-header">
+            <div>
+              <span className="tiny-seal">功</span>
+              <p>赛博供奉</p>
+            </div>
+            <button type="button" onClick={restart} className="restart-button">
+              <RotateCcw /> 另问一事
+            </button>
+          </header>
+
+          {result.deity ? (
+            <>
+              <div className="deity-caption">
+                <span>{result.deity.tradition}</span>
+                <h2>{result.deity.canonical_name}</h2>
+                <p>{result.mapping.normalized_intent}</p>
+              </div>
+
+              <aside className="ritual-controls">
+                <div className="ritual-control-head">
+                  <span>{result.engine === "llm" ? "LLM 路由" : "证据路由"} · 研究草案</span>
+                  <h3>{ritual.label}</h3>
+                  <p>{ritual.note}</p>
+                </div>
+                <div className="ritual-progress" aria-label={`供奉进度 ${completedCount}/${ritual.steps.length}`}>
+                  <span style={{ width: `${(completedCount / ritual.steps.length) * 100}%` }} />
+                </div>
+                <div className="ritual-step-list">
+                  {ritual.steps.map((step, index) => {
+                    const Icon = step.icon;
+                    const done = index < completedCount;
+                    const active = index === completedCount;
+                    return (
+                      <button
+                        type="button"
+                        key={step.id}
+                        disabled={!active}
+                        className={`ritual-step ${done ? "is-done" : ""} ${active ? "is-active" : ""}`}
+                        onClick={() => setCompletedCount((count) => Math.min(count + 1, ritual.steps.length))}
+                      >
+                        <span className="step-index">{done ? <Check /> : String(index + 1).padStart(2, "0")}</span>
+                        <Icon className="step-icon" />
+                        <span className="step-copy"><strong>{step.label}</strong><small>{step.note}</small></span>
+                      </button>
                     );
-                    if (mapping) {
-                      setQuery(mapping.input_examples[0]);
-                      setResult({ query: mapping.input_examples[0], mapping, deity, engine: "local" });
-                      window.scrollTo({ top: 0, behavior: "smooth" });
-                    }
-                  }}
-                >
-                  <span>{deity.id}</span>
-                  <strong>{deity.canonical_name}</strong>
-                  <p>{deity.domains.slice(0, 2).join(" · ")}</p>
-                  <ChevronDown className="size-4 -rotate-90" />
-                </button>
-              ))}
-            </div>
-            {filteredDeities.length > 24 && (
-              <p className="mt-4 text-center text-xs text-white/35">
-                已显示前 24 条，请继续缩小搜索范围。
-              </p>
-            )}
-          </section>
-        )}
-      </section>
+                  })}
+                </div>
+                {isComplete && (
+                  <Button className="bow-button" onClick={() => setDialogOpen(true)}>
+                    <Sparkles /> 叩拜
+                  </Button>
+                )}
+                <p className="ritual-safety">三牲、纸钱、酒供及具体数量未进入默认流程；请依当地寺观规定。</p>
+              </aside>
+            </>
+          ) : (
+            <aside className="no-match-card">
+              <CircleAlert />
+              <span>无传统直配</span>
+              <h2>未找到可信对应</h2>
+              <p>{result.mapping.normalized_intent}</p>
+              <small>{result.mapping.exclusions[0]}</small>
+              <Button onClick={restart}>换个说法</Button>
+            </aside>
+          )}
+        </section>
+      )}
+
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent className="revelation-dialog">
+          <DialogHeader>
+            <span className="dialog-kicker">礼成 · 尊号</span>
+            <DialogTitle>{result?.deity?.honorific_names[0] || result?.deity?.canonical_name}</DialogTitle>
+            <DialogDescription>{result?.deity?.tradition} · {result?.deity?.entity_type}</DialogDescription>
+          </DialogHeader>
+          <div className="revelation-section">
+            <span>原典形象</span>
+            <p>{result?.deity?.iconography}</p>
+            {result?.deity?.iconography_variation && <small>{result.deity.iconography_variation}</small>}
+          </div>
+          <div className="message-scroll">
+            <span>寄语</span>
+            <blockquote>{result?.message}</blockquote>
+            <small>现代生成寄语 · 非签文、非神谕、不承诺结果</small>
+          </div>
+          <div className="dialog-evidence">
+            数据状态：{result?.deity?.review_status === "verified" ? "已核验" : "研究草案"} ·
+            来源编号 {result?.deity?.source_ids.join("、")}
+          </div>
+        </DialogContent>
+      </Dialog>
     </main>
   );
 }

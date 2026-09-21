@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "赛博供奉｜现代诉求与传统神职路由",
-  description: "从现代生活行为出发，在传统神职数据库中寻找可追溯的对应关系与安全供奉建议。",
+  title: "赛博供奉｜所求何事",
+  description: "说出所求，在传统神职数据库中寻找对应，循清净供奉次序完成一场克制、可追溯的数字仪式。",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",

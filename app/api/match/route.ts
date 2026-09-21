@@ -49,7 +49,19 @@ function noMatch() {
   };
 }
 
-function resolveResult(query: string, mappingId?: string, engine: "local" | "llm" = "local") {
+function createMessage(mapping: ReturnType<typeof noMatch> | Mapping, deity: Deity | null) {
+  if (!deity) {
+    return "此事在现有资料中没有可信的传统直配。不妄指神职，也是一种敬慎。";
+  }
+  return `所求关乎“${mapping.normalized_intent}”。愿你先尽人事、守住分寸，再以此礼整理心意。`;
+}
+
+function resolveResult(
+  query: string,
+  mappingId?: string,
+  engine: "local" | "llm" = "local",
+  llmMessage?: string,
+) {
   const ranked = [...mappingsJson].sort((a, b) => similarity(query, b) - similarity(query, a));
   const ruleId = findRuleMappingId(query);
   const selected = mappingId
@@ -62,7 +74,13 @@ function resolveResult(query: string, mappingId?: string, engine: "local" | "llm
     ? (deitiesJson as Deity[]).find((item) => item.id === route.target_id) ?? null
     : null;
 
-  return { query, mapping, deity, engine };
+  return {
+    query,
+    mapping,
+    deity,
+    engine,
+    message: llmMessage?.trim().slice(0, 100) || createMessage(mapping, deity),
+  };
 }
 
 async function chooseWithLlm(query: string) {
@@ -91,7 +109,7 @@ async function chooseWithLlm(query: string) {
         {
           role: "system",
           content:
-            "你是受约束的传统神职路由器。只能从候选列表选择一个 mapping_id；若没有可靠对应，返回 null。先拆分行为、场景、诉求。不得因动物名、法器、造像元素、谐音或玩梗臆造职掌。只输出 JSON：{\"mapping_id\": string|null}。",
+            "你是受约束的传统神职路由器。只能从候选列表选择一个 mapping_id；若没有可靠对应，返回 null。先拆分行为、场景、诉求。不得因动物名、法器、造像元素、谐音或玩梗臆造职掌。另写一句30至60字的现代寄语，不冒充神明口吻，不承诺结果，不替代医疗、法律或现实行动。只输出 JSON：{\"mapping_id\": string|null,\"message\":string}。",
         },
         {
           role: "user",
@@ -108,10 +126,13 @@ async function chooseWithLlm(query: string) {
   };
   const content = payload.choices?.[0]?.message?.content;
   if (!content) return null;
-  const parsed = JSON.parse(content) as { mapping_id?: string | null };
-  return parsed.mapping_id && mappingsJson.some((item) => item.id === parsed.mapping_id)
-    ? parsed.mapping_id
-    : null;
+  const parsed = JSON.parse(content) as { mapping_id?: string | null; message?: string };
+  return {
+    mappingId: parsed.mapping_id && mappingsJson.some((item) => item.id === parsed.mapping_id)
+      ? parsed.mapping_id
+      : null,
+    message: typeof parsed.message === "string" ? parsed.message : undefined,
+  };
 }
 
 export async function POST(request: Request) {
@@ -128,8 +149,10 @@ export async function POST(request: Request) {
   }
 
   try {
-    const mappingId = await chooseWithLlm(query);
-    if (mappingId) return NextResponse.json(resolveResult(query, mappingId, "llm"));
+    const llmResult = await chooseWithLlm(query);
+    if (llmResult) {
+      return NextResponse.json(resolveResult(query, llmResult.mappingId ?? undefined, "llm", llmResult.message));
+    }
   } catch {
     // External model failures deliberately fall through to the evidence-bound local router.
   }
