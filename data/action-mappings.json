@@ -265,7 +265,7 @@
   {
     "id": "MAP-023",
     "life_domain": "工作与商业",
-    "input_examples": ["开店", "做生意", "求财", "公司开业"],
+    "input_examples": ["开店", "做生意", "求财", "公司开业", "财神", "赵公明", "正一玄坛元帅"],
     "normalized_intent": "商业经营与财富诉求",
     "routes": [
       {"target_id": "DAO-008", "relation_level": "direct_traditional", "score": 100},

@@ -91,6 +91,9 @@ type RitualProfile = {
 
 const mappings = mappingsJson as Mapping[];
 const deities = deitiesJson as Deity[];
+const deityImages: Record<string, string> = {
+  "DAO-008": "/images/zhao-gongming-transparent.png",
+};
 
 function similarity(query: string, mapping: Mapping) {
   const normalized = query.replace(/[，。！？、\s]/g, "").toLowerCase();
@@ -192,6 +195,8 @@ function TempleScene({
   illumination: number;
   blurred: boolean;
 }) {
+  const deityImage = deity ? deityImages[deity.id] : undefined;
+
   return (
     <div
       className={`temple-scene ${blurred ? "is-blurred" : ""}`}
@@ -206,9 +211,17 @@ function TempleScene({
       <div className="shrine-halo" />
       <div className="deity-placeholder">
         <div className="placeholder-aureole" />
-        <div className="placeholder-figure">
-          <span>{deity ? "神明形象" : "形象占位"}</span>
-        </div>
+        {deityImage ? (
+          <img
+            className="deity-figure-image"
+            src={deityImage}
+            alt={`${deity.canonical_name}极简形象`}
+          />
+        ) : (
+          <div className="placeholder-figure">
+            <span>{deity ? "神明形象" : "形象占位"}</span>
+          </div>
+        )}
         <div className="deity-plaque">{deity?.canonical_name ?? "待问所求"}</div>
       </div>
       <div className="altar">

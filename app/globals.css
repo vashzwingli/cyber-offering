@@ -238,6 +238,22 @@ input:focus-visible {
   box-shadow: inset 0 0 40px rgba(215, 171, 89, 0.04);
 }
 
+.deity-figure-image {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 86%;
+  margin-top: 1%;
+  object-fit: contain;
+  object-position: center bottom;
+  opacity: calc(0.68 + var(--illumination) * 0.32);
+  filter:
+    brightness(calc(0.52 + var(--illumination) * 0.55))
+    saturate(calc(0.7 + var(--illumination) * 0.3))
+    drop-shadow(0 24px 28px rgba(0, 0, 0, 0.78));
+  transition: filter 900ms ease, opacity 900ms ease;
+}
+
 .placeholder-figure span {
   position: absolute;
   top: 46%;
