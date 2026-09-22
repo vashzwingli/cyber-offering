@@ -758,7 +758,10 @@ input:focus-visible {
 .no-match-card small { display: block; margin: 0.7rem 0 1.4rem; color: rgba(240, 233, 220, 0.28); font-size: 0.7rem; }
 
 .revelation-dialog {
-  max-width: 620px;
+  width: min(920px, calc(100vw - 2rem));
+  max-width: 920px;
+  max-height: min(90svh, 820px);
+  overflow-y: auto;
   border: 1px solid rgba(215, 171, 89, 0.26);
   border-radius: 0;
   padding: clamp(1.4rem, 4vw, 2.4rem);
@@ -770,6 +773,70 @@ input:focus-visible {
 }
 
 .revelation-dialog > button { color: rgba(240, 233, 220, 0.5); }
+.revelation-layout {
+  display: grid;
+  grid-template-columns: minmax(250px, 0.82fr) minmax(0, 1.35fr);
+  gap: clamp(1.4rem, 4vw, 3rem);
+  align-items: stretch;
+}
+
+.revelation-image-frame {
+  position: relative;
+  display: grid;
+  min-height: 500px;
+  margin: 0;
+  place-items: end center;
+  overflow: hidden;
+  border: 1px solid rgba(215, 171, 89, 0.16);
+  background:
+    linear-gradient(to top, rgba(215, 171, 89, 0.06), transparent 52%),
+    radial-gradient(circle at 50% 42%, rgba(215, 171, 89, 0.09), transparent 46%),
+    rgba(3, 3, 2, 0.46);
+}
+
+.revelation-aureole {
+  position: absolute;
+  top: 11%;
+  left: 50%;
+  width: min(92%, 310px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(215, 171, 89, 0.16);
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(from 0deg, rgba(215, 171, 89, 0.1) 0 1deg, transparent 1deg 10deg),
+    radial-gradient(circle, rgba(215, 171, 89, 0.08), transparent 66%);
+  transform: translateX(-50%);
+}
+
+.revelation-image-frame img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 90%;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: brightness(0.96) saturate(0.92) drop-shadow(0 24px 30px rgba(0, 0, 0, 0.62));
+}
+
+.revelation-image-frame figcaption {
+  position: absolute;
+  z-index: 2;
+  right: 0.8rem;
+  bottom: 0.65rem;
+  color: rgba(238, 211, 158, 0.62);
+  font-family: var(--font-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  writing-mode: vertical-rl;
+}
+
+.revelation-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .dialog-kicker { color: #bb914c; font-size: 0.68rem; letter-spacing: 0.22em; }
 .revelation-dialog [data-slot="dialog-title"] { margin-top: 0.45rem; font-family: var(--font-serif); font-size: clamp(1.65rem, 4vw, 2.5rem); font-weight: 900; letter-spacing: 0.08em; line-height: 1.3; }
 .revelation-dialog [data-slot="dialog-description"] { color: rgba(240, 233, 220, 0.38); }
@@ -841,6 +908,15 @@ input:focus-visible {
   .scene-offering span { display: none; }
   .ritual-controls { max-height: 43svh; padding: 0.85rem; }
   .ritual-control-head p { display: none; }
+  .revelation-dialog {
+    width: calc(100vw - 1rem);
+    max-height: 94svh;
+    padding: 1rem;
+  }
+  .revelation-layout { grid-template-columns: 1fr; gap: 1.15rem; }
+  .revelation-image-frame { min-height: 330px; max-height: 40svh; }
+  .revelation-image-frame img { height: 96%; }
+  .revelation-copy { justify-content: flex-start; }
   .ritual-control-head h3 { font-size: 1.1rem; }
   .ritual-step { padding-block: 0.45rem; }
   .ritual-safety { display: none; }

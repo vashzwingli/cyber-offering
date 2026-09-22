@@ -91,9 +91,10 @@ type RitualProfile = {
 
 const mappings = mappingsJson as Mapping[];
 const deities = deitiesJson as Deity[];
-const deityImages: Record<string, string> = {
-  "DAO-008": "/images/zhao-gongming-transparent.png",
-};
+
+function getDeityImagePath(deity: Deity | null) {
+  return deity ? `/images/deities/${deity.id}.png` : undefined;
+}
 
 function similarity(query: string, mapping: Mapping) {
   const normalized = query.replace(/[，。！？、\s]/g, "").toLowerCase();
@@ -195,7 +196,7 @@ function TempleScene({
   illumination: number;
   blurred: boolean;
 }) {
-  const deityImage = deity ? deityImages[deity.id] : undefined;
+  const deityImage = getDeityImagePath(deity);
 
   return (
     <div
@@ -404,24 +405,38 @@ export default function Home() {
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="revelation-dialog">
-          <DialogHeader>
-            <span className="dialog-kicker">礼成 · 尊号</span>
-            <DialogTitle>{result?.deity?.honorific_names[0] || result?.deity?.canonical_name}</DialogTitle>
-            <DialogDescription>{result?.deity?.tradition} · {result?.deity?.entity_type}</DialogDescription>
-          </DialogHeader>
-          <div className="revelation-section">
-            <span>原典形象</span>
-            <p>{result?.deity?.iconography}</p>
-            {result?.deity?.iconography_variation && <small>{result.deity.iconography_variation}</small>}
-          </div>
-          <div className="message-scroll">
-            <span>寄语</span>
-            <blockquote>{result?.message}</blockquote>
-            <small>现代生成寄语 · 非签文、非神谕、不承诺结果</small>
-          </div>
-          <div className="dialog-evidence">
-            数据状态：{result?.deity?.review_status === "verified" ? "已核验" : "研究草案"} ·
-            来源编号 {result?.deity?.source_ids.join("、")}
+          <div className="revelation-layout">
+            {result?.deity && (
+              <figure className="revelation-image-frame">
+                <div className="revelation-aureole" />
+                <img
+                  src={getDeityImagePath(result.deity)}
+                  alt={`${result.deity.canonical_name}造像`}
+                />
+                <figcaption>{result.deity.canonical_name}</figcaption>
+              </figure>
+            )}
+            <div className="revelation-copy">
+              <DialogHeader>
+                <span className="dialog-kicker">礼成 · 尊号</span>
+                <DialogTitle>{result?.deity?.honorific_names[0] || result?.deity?.canonical_name}</DialogTitle>
+                <DialogDescription>{result?.deity?.tradition} · {result?.deity?.entity_type}</DialogDescription>
+              </DialogHeader>
+              <div className="revelation-section">
+                <span>原典形象</span>
+                <p>{result?.deity?.iconography}</p>
+                {result?.deity?.iconography_variation && <small>{result.deity.iconography_variation}</small>}
+              </div>
+              <div className="message-scroll">
+                <span>寄语</span>
+                <blockquote>{result?.message}</blockquote>
+                <small>现代生成寄语 · 非签文、非神谕、不承诺结果</small>
+              </div>
+              <div className="dialog-evidence">
+                数据状态：{result?.deity?.review_status === "verified" ? "已核验" : "研究草案"} ·
+                来源编号 {result?.deity?.source_ids.join("、")}
+              </div>
+            </div>
           </div>
         </DialogContent>
       </Dialog>
