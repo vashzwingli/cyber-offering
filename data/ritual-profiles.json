@@ -1,0 +1,104 @@
+[
+  {
+    "id": "dao-jiao-classical",
+    "label": "黄箓醮仪摘要",
+    "note": "据传统道教斋醮文本抽取“发炉降神—三献—送神复炉”的主干；这是典籍展示，不冒充任何宫观的现行科仪。",
+    "sources": [
+      {
+        "title": "《无上黄箓大斋立成仪·醮说》",
+        "locator": "卷十五：发炉降神、一献上香、读词再献、三献送神复炉；茶果酒馔随力丰俭",
+        "url": "https://zh.wikisource.org/zh-hans/%E7%84%A1%E4%B8%8A%E9%BB%83%E7%B1%99%E5%A4%A7%E9%BD%8B%E7%AB%8B%E6%88%90%E5%84%80/15"
+      },
+      {
+        "title": "《正一威仪经》",
+        "locator": "烧香威仪、然灯威仪：整治香具、每当三献、行香与然灯",
+        "url": "https://zh.wikisource.org/zh-hans/%E6%AD%A3%E4%B8%80%E5%A8%81%E5%84%80%E7%B6%93"
+      }
+    ],
+    "steps": [
+      { "id": "purify", "label": "澡洁正衣", "note": "典籍先强调洁净坛场、香具与衣冠，再进入行礼。", "kind": "reverence", "icon": "hand" },
+      { "id": "invoke", "label": "发炉降神", "note": "启坛奉请，表明所告之事与奉祀对象。", "kind": "lamp", "icon": "lamp" },
+      { "id": "first-offering", "label": "一献上香", "note": "《醮说》所列第一献；《正一威仪经》亦记三献续香。", "kind": "incense", "icon": "flame" },
+      { "id": "second-offering", "label": "读词再献", "note": "第二献配合宣读词文，不以空泛许愿代替祝告。", "kind": "text", "icon": "scroll" },
+      { "id": "set-feast", "label": "陈茶果酒馔", "note": "《醮说》原列茶、果、酒、馔并言随力丰俭；不同神位用物有别。", "kind": "meal", "icon": "meal" },
+      { "id": "third-offering", "label": "三献送神", "note": "完成第三献，依文送神复炉，礼有始终。", "kind": "wine", "icon": "wine" }
+    ]
+  },
+  {
+    "id": "buddhist-scriptural",
+    "label": "佛典供养摘要",
+    "note": "依据汉译佛典所列香、华、灯明、饮食及赞叹瞻礼等供养类别编排；不是压缩寺院法会。",
+    "sources": [
+      {
+        "title": "《妙法莲华经·法师品》",
+        "locator": "大正藏 T09 No.262：华香、璎珞、末香、涂香、烧香、缯盖、幢幡、衣服、伎乐，合掌恭敬",
+        "url": "https://siddham.net/download/sutra/pdf/T09/T09n0262.pdf"
+      },
+      {
+        "title": "《地藏菩萨本愿经》",
+        "locator": "大正藏 T13 No.412：香华、衣服、饮食、净水、赞叹瞻礼等供养记载",
+        "url": "https://dlbs.liberal.ntu.edu.tw/BDLM/sutra/html/T13/T13n0412.htm"
+      }
+    ],
+    "steps": [
+      { "id": "compose", "label": "正身合掌", "note": "先摄身心，以合掌恭敬进入供养。", "kind": "reverence", "icon": "hand" },
+      { "id": "flower", "label": "献华", "note": "经文所见“华香”供养之一，不规定现代花材与数量。", "kind": "flower", "icon": "flower" },
+      { "id": "incense", "label": "烧香", "note": "佛典区分末香、涂香、烧香等，这里仅以烧香作界面代表。", "kind": "incense", "icon": "flame" },
+      { "id": "lamp", "label": "燃灯明", "note": "灯明供养见于佛典；页面只作象征呈现。", "kind": "lamp", "icon": "lamp" },
+      { "id": "food", "label": "陈饮食", "note": "经文称饮食供养；不据现代网络说法补造固定果数和摆位。", "kind": "meal", "icon": "meal" },
+      { "id": "praise", "label": "赞叹瞻礼", "note": "以赞叹、瞻礼收束；不替代寺院的专门法会仪轨。", "kind": "reverence", "icon": "sparkles" }
+    ]
+  },
+  {
+    "id": "state-ritual-classical",
+    "label": "古代祀典摘要",
+    "note": "用于具有国家祀典背景的山川、农桑等神格，依古礼展示斋戒、陈馔、三献和送神；绝非现代家庭采购清单。",
+    "sources": [
+      {
+        "title": "《仪礼·少牢馈食礼》",
+        "locator": "筮日、戒备、陈鼎俎簠簋、馈食与献酬的完整礼制",
+        "url": "https://zh.wikisource.org/zh-hans/%E5%84%80%E7%A6%AE%E7%AB%A0%E5%8F%A5_%28%E5%9B%9B%E5%BA%AB%E5%85%A8%E6%9B%B8%E6%9C%AC%29/%E5%8D%B716"
+      },
+      {
+        "title": "《明集礼·祭祀》",
+        "locator": "迎神、初献读祝、亚献、终献、送神与望瘗的国家祀典程序",
+        "url": "https://ctext.org/wiki.pl?chapter=745329&if=gb&remap=gb"
+      }
+    ],
+    "steps": [
+      { "id": "fasting", "label": "斋戒卜日", "note": "古礼先择日、斋戒并戒告执事，不从摆供直接开始。", "kind": "reverence", "icon": "hand" },
+      { "id": "vessels", "label": "省牲涤器", "note": "历史祀典核验牺牲并洁治祭器；太牢、少牢、特牲各有礼等。", "kind": "meal", "icon": "wheat" },
+      { "id": "food", "label": "陈粢盛酒醴", "note": "陈设谷物、酒醴与馔品，器数和品等随时代、祭级变化。", "kind": "wine", "icon": "wine" },
+      { "id": "welcome", "label": "迎神", "note": "奉请神位就祭，继而行献礼。", "kind": "incense", "icon": "flame" },
+      { "id": "first", "label": "初献读祝", "note": "初次酌献并读祝文，陈明祭意。", "kind": "text", "icon": "scroll" },
+      { "id": "later", "label": "亚献终献", "note": "第二、第三次酌献，合称三献。", "kind": "wine", "icon": "wine" },
+      { "id": "send", "label": "送神彻馔", "note": "礼成送神，随后撤馔；望瘗或望燎依具体祀典而异。", "kind": "reverence", "icon": "sparkles" }
+    ]
+  },
+  {
+    "id": "lineage-three-offerings",
+    "label": "传统三献框架",
+    "note": "缺少该神专属公开科本时，只采用传统礼书可核验的参神、进馔、三献、辞神框架，不伪称全国统一民俗。",
+    "sources": [
+      {
+        "title": "《朱子家礼·四时祭》",
+        "locator": "斋戒、陈器具馔、参神、降神、进馔、初献、亚献、终献、辞神、彻馔",
+        "url": "https://ctext.org/wiki.pl?if=gb&remap=gb&res=4068933"
+      },
+      {
+        "title": "《明集礼·祭祀》",
+        "locator": "三献及迎神、送神的礼制结构；页面仅取程序骨架",
+        "url": "https://ctext.org/wiki.pl?chapter=745329&if=gb&remap=gb"
+      }
+    ],
+    "steps": [
+      { "id": "prepare", "label": "盥洗陈器", "note": "先洁手、整衣、陈器具馔，再行参神。", "kind": "reverence", "icon": "hand" },
+      { "id": "invoke", "label": "参神降神", "note": "以礼拜、焚香与酹酒表达迎请。", "kind": "incense", "icon": "flame" },
+      { "id": "meal", "label": "进馔", "note": "传统礼书称进馔；具体牲、蔬、果、酒须按对象、地域和时代另证。", "kind": "meal", "icon": "meal" },
+      { "id": "first", "label": "初献读祝", "note": "第一次献酒并读祝，说明祭意。", "kind": "text", "icon": "scroll" },
+      { "id": "second", "label": "亚献", "note": "第二次酌献，通常不再读祝。", "kind": "wine", "icon": "wine" },
+      { "id": "third", "label": "终献", "note": "第三次酌献，完成三献。", "kind": "wine", "icon": "wine" },
+      { "id": "dismiss", "label": "辞神彻馔", "note": "礼毕辞神，再撤去供馔。", "kind": "reverence", "icon": "sparkles" }
+    ]
+  }
+]

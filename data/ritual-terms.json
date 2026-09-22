@@ -153,6 +153,53 @@
     "modern_actionable": true,
     "source_ids": ["SRC-038"],
     "review_status": "draft"
+  },
+  {
+    "id": "RIT-013",
+    "term": "黄箓醮仪三献",
+    "category": "道教斋醮程序",
+    "tradition": "传统道教科仪",
+    "region": "中国历史道教",
+    "period": "南宋文本所见",
+    "definition": "《无上黄箓大斋立成仪》所列发炉降神、一献上香、读词再献、三献送神复炉，并陈茶果酒馔。",
+    "modern_actionable": false,
+    "source_ids": ["SRC-096", "SRC-097"],
+    "review_status": "verified"
+  },
+  {
+    "id": "RIT-014",
+    "term": "佛典供养类别",
+    "category": "佛教经文供养",
+    "tradition": "汉译佛典",
+    "region": "汉传佛教文本传统",
+    "period": "古代汉译佛典",
+    "definition": "经文所见香、华、灯明、饮食、衣服、幢幡以及赞叹瞻礼等供养类别；不等同寺院专门法会次第。",
+    "modern_actionable": false,
+    "source_ids": ["SRC-101", "SRC-102"],
+    "review_status": "verified"
+  },
+  {
+    "id": "RIT-015",
+    "term": "古代祀典三献",
+    "category": "国家与山川祭祀程序",
+    "tradition": "古代国家礼制",
+    "region": "中国历史礼制",
+    "period": "先秦至明代文本所见",
+    "definition": "斋戒择日、陈牲牢与粢盛酒醴、迎神、初献读祝、亚献、终献、送神撤馔等程序骨架。",
+    "modern_actionable": false,
+    "source_ids": ["SRC-098", "SRC-100"],
+    "review_status": "verified"
+  },
+  {
+    "id": "RIT-016",
+    "term": "四时祭程序",
+    "category": "宗族祭礼程序",
+    "tradition": "宋以后家礼",
+    "region": "中国历史宗族礼制",
+    "period": "宋代礼书所见",
+    "definition": "斋戒、陈器具馔、参神、降神、进馔、初献、亚献、终献、辞神、彻馔的程序。",
+    "modern_actionable": false,
+    "source_ids": ["SRC-099"],
+    "review_status": "verified"
   }
 ]
-

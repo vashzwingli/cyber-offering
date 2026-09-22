@@ -1,19 +1,19 @@
 "use client";
 
 import {
-  Apple,
   Check,
   CircleAlert,
-  CupSoda,
-  Droplets,
   Flame,
   Flower2,
   Hand,
   LampDesk,
-  Leaf,
   LoaderCircle,
   RotateCcw,
+  ScrollText,
   Sparkles,
+  UtensilsCrossed,
+  Wheat,
+  Wine,
   type LucideIcon,
 } from "lucide-react";
 import { type CSSProperties, type FormEvent, useMemo, useState } from "react";
@@ -29,10 +29,12 @@ import {
 import { Input } from "@/components/ui/input";
 import mappingsJson from "@/data/action-mappings.json";
 import deitiesJson from "@/data/deities.json";
+import ritualProfilesJson from "@/data/ritual-profiles.json";
 import { findRuleMappingId } from "@/lib/intent-router";
 
 type Stage = "asking" | "seeking" | "ritual";
-type OfferingKind = "water" | "flower" | "lamp" | "fruit" | "incense" | "tea" | "vegetable" | "reverence";
+type OfferingKind = "flower" | "lamp" | "incense" | "meal" | "wine" | "text" | "reverence";
+type RitualIconName = "flame" | "flower" | "hand" | "lamp" | "meal" | "scroll" | "sparkles" | "wheat" | "wine";
 
 type Route = {
   target_id: string | null;
@@ -87,10 +89,41 @@ type RitualProfile = {
   label: string;
   note: string;
   steps: RitualStep[];
+  sources: RitualSource[];
+};
+
+type RitualSource = {
+  title: string;
+  locator: string;
+  url: string;
+};
+
+type RitualProfileData = {
+  id: string;
+  label: string;
+  note: string;
+  sources: RitualSource[];
+  steps: Array<Omit<RitualStep, "icon"> & { icon: RitualIconName }>;
 };
 
 const mappings = mappingsJson as Mapping[];
 const deities = deitiesJson as Deity[];
+const ritualProfiles = ritualProfilesJson as RitualProfileData[];
+const stateRiteDeityIds = new Set([
+  "DAO-012", "DAO-015", "DAO-043", "DAO-044", "DAO-045", "DAO-046",
+  "FOLK-008", "FOLK-009", "FOLK-010",
+]);
+const ritualIcons: Record<RitualIconName, LucideIcon> = {
+  flame: Flame,
+  flower: Flower2,
+  hand: Hand,
+  lamp: LampDesk,
+  meal: UtensilsCrossed,
+  scroll: ScrollText,
+  sparkles: Sparkles,
+  wheat: Wheat,
+  wine: Wine,
+};
 
 function getDeityImagePath(deity: Deity | null) {
   return deity ? `/images/deities/${deity.id}.png` : undefined;
@@ -141,47 +174,22 @@ function localMatch(query: string): MatchResult {
 }
 
 function getRitualProfile(deity: Deity | null): RitualProfile {
-  if (!deity) return { label: "不生成仪轨", note: "没有可靠直配时，不自动拼接供奉步骤。", steps: [] };
+  if (!deity) return { label: "不生成仪轨", note: "没有可靠直配时，不自动拼接供奉步骤。", steps: [], sources: [] };
 
-  if (/^(佛教|汉传佛教|藏传佛教)/.test(deity.tradition)) {
-    return {
-      label: "清净供养次序",
-      note: "仅呈现资料支持的清净供养类别；正式法会由寺院依本宗仪轨主持。",
-      steps: [
-        { id: "water", label: "奉净水", note: "使用洁净清水，不设固定数量。", kind: "water", icon: Droplets },
-        { id: "flower", label: "献鲜花", note: "选择清洁、无损坏的鲜花。", kind: "flower", icon: Flower2 },
-        { id: "lamp", label: "供灯", note: "页面模拟供灯；现实场所须遵守明火规定。", kind: "lamp", icon: LampDesk },
-        { id: "tea", label: "奉茶", note: "使用清洁茶水，不代拟正式斋供。", kind: "tea", icon: CupSoda },
-        { id: "fruit", label: "摆果蔬", note: "选择新鲜洁净的果物或菜蔬。", kind: "vegetable", icon: Leaf },
-        { id: "reverence", label: "合掌致意", note: "静心片刻，不许诺现实结果。", kind: "reverence", icon: Hand },
-      ],
-    };
-  }
-
-  if (deity.tradition.includes("道教")) {
-    return {
-      label: "五类清供次序",
-      note: "依据“香、花、灯、水、果”类别编排；数量与摆位依当地宫观。",
-      steps: [
-        { id: "incense", label: "奉香", note: "仅在场所允许且有人看管时进行。", kind: "incense", icon: Flame },
-        { id: "flower", label: "献鲜花", note: "以天然、洁净、节俭为原则。", kind: "flower", icon: Flower2 },
-        { id: "lamp", label: "供灯", note: "页面模拟供灯；现实中避免无人看管明火。", kind: "lamp", icon: LampDesk },
-        { id: "water", label: "奉净水", note: "使用洁净清水，不补造杯数。", kind: "water", icon: Droplets },
-        { id: "fruit", label: "摆净果", note: "使用新鲜时令果物，不规定单双数。", kind: "fruit", icon: Apple },
-        { id: "reverence", label: "拱手致礼", note: "以敬意收束，不把仪式当作结果保证。", kind: "reverence", icon: Hand },
-      ],
-    };
-  }
+  const profileId = stateRiteDeityIds.has(deity.id)
+    ? "state-ritual-classical"
+    : /佛教/.test(deity.tradition)
+      ? "buddhist-scriptural"
+      : /道教/.test(deity.tradition)
+        ? "dao-jiao-classical"
+        : "lineage-three-offerings";
+  const profile = ritualProfiles.find((item) => item.id === profileId) ?? ritualProfiles[3];
 
   return {
-    label: "清洁供品候选",
-    note: "该民间信仰尚无已核验的专属规格；以下不是地方仪轨，实际请依庙宇传统。",
-    steps: [
-      { id: "water", label: "奉净水", note: "以清洁、安全为原则。", kind: "water", icon: Droplets },
-      { id: "flower", label: "献鲜花", note: "不替代地方庙宇的正式规定。", kind: "flower", icon: Flower2 },
-      { id: "fruit", label: "摆净果", note: "不规定品种、数量与左右位置。", kind: "fruit", icon: Apple },
-      { id: "reverence", label: "静心致意", note: "表达心意，不承诺改变现实结果。", kind: "reverence", icon: Hand },
-    ],
+    label: profile.label,
+    note: profile.note,
+    sources: profile.sources,
+    steps: profile.steps.map((step) => ({ ...step, icon: ritualIcons[step.icon] })),
   };
 }
 
@@ -255,7 +263,7 @@ export default function Home() {
   const ritual = useMemo(() => getRitualProfile(result?.deity ?? null), [result]);
   const isComplete = ritual.steps.length > 0 && completedCount === ritual.steps.length;
   const illumination = stage === "ritual"
-    ? Math.min(1, 0.16 + (completedCount / Math.max(ritual.steps.length, 1)) * 0.84)
+    ? Math.min(0.7, 0.12 + (completedCount / Math.max(ritual.steps.length, 1)) * 0.58)
     : 0;
 
   async function ask(event: FormEvent) {
@@ -358,6 +366,14 @@ export default function Home() {
                   <span>{result.engine === "llm" ? "LLM 路由" : "证据路由"} · 研究草案</span>
                   <h3>{ritual.label}</h3>
                   <p>{ritual.note}</p>
+                  <div className="ritual-sources" aria-label="典籍依据">
+                    <span>典籍依据</span>
+                    {ritual.sources.map((source) => (
+                      <a key={source.url} href={source.url} target="_blank" rel="noreferrer" title={source.locator}>
+                        {source.title}
+                      </a>
+                    ))}
+                  </div>
                 </div>
                 <div className="ritual-progress" aria-label={`供奉进度 ${completedCount}/${ritual.steps.length}`}>
                   <span style={{ width: `${(completedCount / ritual.steps.length) * 100}%` }} />
@@ -387,7 +403,7 @@ export default function Home() {
                     <Sparkles /> 叩拜
                   </Button>
                 )}
-                <p className="ritual-safety">三牲、纸钱、酒供及具体数量未进入默认流程；请依当地寺观规定。</p>
+                <p className="ritual-safety">典籍摘要用于文化复原，不等于现代寺观统一规范；牲牢、焚词、灯火等内容不构成现实操作指引。</p>
               </aside>
             </>
           ) : (

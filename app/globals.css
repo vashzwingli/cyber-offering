@@ -93,7 +93,7 @@ input:focus-visible {
     linear-gradient(to bottom, rgba(1, 1, 1, 0.08), rgba(8, 5, 3, 0.38)),
     radial-gradient(ellipse at 50% 28%, rgba(174, 115, 45, calc(0.05 + var(--illumination) * 0.18)), transparent 32%),
     linear-gradient(90deg, #060504, #17100a 24%, #0c0906 50%, #17100a 76%, #060504);
-  filter: brightness(calc(0.43 + var(--illumination) * 0.72)) saturate(calc(0.55 + var(--illumination) * 0.55));
+  filter: brightness(calc(0.52 + var(--illumination) * 0.5)) saturate(calc(0.62 + var(--illumination) * 0.42));
   transform: scale(1.02);
   transition: filter 900ms ease, transform 1100ms ease;
 }
@@ -225,7 +225,7 @@ input:focus-visible {
   background:
     repeating-conic-gradient(from 0deg, rgba(215, 171, 89, 0.12) 0 1deg, transparent 1deg 9deg),
     radial-gradient(circle, rgba(215, 171, 89, calc(0.04 + var(--illumination) * 0.16)), transparent 64%);
-  opacity: calc(0.24 + var(--illumination) * 0.72);
+  opacity: calc(0.2 + var(--illumination) * 0.45);
   transition: opacity 700ms ease;
 }
 
@@ -250,10 +250,11 @@ input:focus-visible {
   margin-top: 0;
   object-fit: contain;
   object-position: center bottom;
-  opacity: calc(0.68 + var(--illumination) * 0.32);
+  opacity: calc(0.76 + var(--illumination) * 0.22);
   filter:
-    brightness(calc(0.52 + var(--illumination) * 0.55))
-    saturate(calc(0.7 + var(--illumination) * 0.3))
+    brightness(calc(0.58 + var(--illumination) * 0.35))
+    saturate(calc(0.74 + var(--illumination) * 0.28))
+    contrast(calc(1.02 + var(--illumination) * 0.06))
     drop-shadow(0 24px 28px rgba(0, 0, 0, 0.78));
   transition: filter 900ms ease, opacity 900ms ease;
 }
@@ -646,6 +647,27 @@ input:focus-visible {
   font-size: 0.7rem;
   line-height: 1.6;
 }
+
+.ritual-sources {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.45rem;
+  margin-top: 0.6rem;
+  font-size: 0.62rem;
+  line-height: 1.45;
+}
+
+.ritual-sources > span { color: rgba(240, 233, 220, 0.28); }
+
+.ritual-sources a {
+  border-bottom: 1px solid rgba(215, 171, 89, 0.2);
+  color: rgba(215, 171, 89, 0.66);
+  text-decoration: none;
+}
+
+.ritual-sources a:hover,
+.ritual-sources a:focus-visible { color: #f0cf8d; }
 
 .ritual-progress {
   height: 2px;
