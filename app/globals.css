@@ -84,14 +84,15 @@ input:focus-visible {
 
 .temple-scene {
   --illumination: 0;
-  --altar-bottom: 2%;
-  --altar-height: clamp(118px, 18vh, 180px);
+  --shrine-center: 44%;
+  --altar-bottom: 3%;
+  --altar-height: clamp(150px, 22vh, 225px);
   position: absolute;
   inset: -2%;
   overflow: hidden;
   background:
     linear-gradient(to bottom, rgba(1, 1, 1, 0.08), rgba(8, 5, 3, 0.38)),
-    radial-gradient(ellipse at 50% 28%, rgba(174, 115, 45, calc(0.05 + var(--illumination) * 0.18)), transparent 32%),
+    radial-gradient(ellipse at var(--shrine-center) 30%, rgba(174, 115, 45, calc(0.05 + var(--illumination) * 0.18)), transparent 35%),
     linear-gradient(90deg, #060504, #17100a 24%, #0c0906 50%, #17100a 76%, #060504);
   filter: brightness(calc(0.52 + var(--illumination) * 0.5)) saturate(calc(0.62 + var(--illumination) * 0.42));
   transform: scale(1.02);
@@ -191,10 +192,10 @@ input:focus-visible {
 .shrine-halo {
   position: absolute;
   top: auto;
-  bottom: calc(var(--altar-bottom) + var(--altar-height) - 7vh);
-  left: 50%;
-  width: min(52vw, 680px);
-  height: min(56vw, 620px);
+  bottom: calc(var(--altar-bottom) + var(--altar-height) - 9vh);
+  left: var(--shrine-center);
+  width: min(66vw, 900px);
+  height: min(68vw, 820px);
   border: 1px solid rgba(215, 171, 89, calc(0.04 + var(--illumination) * 0.12));
   border-radius: 50% 50% 42% 42%;
   background: radial-gradient(circle at 50% 45%, rgba(210, 147, 59, calc(0.03 + var(--illumination) * 0.18)), transparent 57%);
@@ -205,11 +206,11 @@ input:focus-visible {
 .deity-placeholder {
   position: absolute;
   top: auto;
-  bottom: calc(var(--altar-bottom) + var(--altar-height) - 2.75rem);
-  left: 50%;
+  bottom: calc(var(--altar-bottom) + var(--altar-height) - 3.4rem);
+  left: var(--shrine-center);
   display: flex;
-  width: clamp(280px, 34vw, 480px);
-  height: clamp(470px, 66vh, 720px);
+  width: clamp(420px, 50vw, 760px);
+  height: clamp(620px, 82vh, 930px);
   align-items: center;
   flex-direction: column;
   transform: translateX(-50%);
@@ -217,8 +218,8 @@ input:focus-visible {
 
 .placeholder-aureole {
   position: absolute;
-  top: 4%;
-  width: min(24vw, 290px);
+  top: 2%;
+  width: min(32vw, 400px);
   aspect-ratio: 1;
   border: 1px solid rgba(215, 171, 89, 0.2);
   border-radius: 50%;
@@ -275,8 +276,8 @@ input:focus-visible {
   position: absolute;
   z-index: 3;
   bottom: var(--altar-bottom);
-  left: 50%;
-  width: clamp(350px, 43vw, 620px);
+  left: var(--shrine-center);
+  width: clamp(500px, 55vw, 820px);
   height: var(--altar-height);
   transform: translateX(-50%);
 }
@@ -284,7 +285,7 @@ input:focus-visible {
 .altar-top {
   position: relative;
   z-index: 2;
-  height: 27%;
+  height: 25%;
   border: 1px solid rgba(215, 171, 89, 0.22);
   background: linear-gradient(to bottom, #3a2212, #160e08 72%);
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.65);
@@ -292,8 +293,8 @@ input:focus-visible {
 
 .altar-front {
   position: relative;
-  width: 89%;
-  height: 73%;
+  width: 92%;
+  height: 75%;
   margin: 0 auto;
   border-inline: 7px solid #24150c;
   background:
@@ -319,13 +320,13 @@ input:focus-visible {
   display: flex;
   align-items: end;
   justify-content: center;
-  gap: clamp(0.45rem, 1.5vw, 1.25rem);
+  gap: clamp(0.65rem, 1.65vw, 1.5rem);
 }
 
 .scene-offering {
   display: flex;
-  width: clamp(42px, 5vw, 64px);
-  height: clamp(48px, 7vh, 72px);
+  width: clamp(48px, 5vw, 72px);
+  height: clamp(54px, 7vh, 78px);
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -336,7 +337,7 @@ input:focus-visible {
   filter: drop-shadow(0 0 10px rgba(215, 171, 89, 0.12));
 }
 
-.scene-offering svg { width: 1.45rem; height: 1.45rem; }
+.scene-offering svg { width: 1.6rem; height: 1.6rem; }
 .scene-offering span { color: rgba(241, 221, 181, 0.56); font-size: 0.62rem; white-space: nowrap; }
 
 @keyframes offering-arrives {
@@ -350,7 +351,7 @@ input:focus-visible {
   bottom: -11%;
   left: 0;
   height: 42%;
-  background: radial-gradient(ellipse at 50% 5%, rgba(215, 171, 89, calc(0.02 + var(--illumination) * 0.12)), transparent 55%);
+  background: radial-gradient(ellipse at var(--shrine-center) 5%, rgba(215, 171, 89, calc(0.02 + var(--illumination) * 0.12)), transparent 58%);
   transform: perspective(500px) rotateX(62deg);
 }
 
@@ -602,9 +603,9 @@ input:focus-visible {
 .ritual-controls {
   position: absolute;
   top: 50%;
-  right: clamp(1.1rem, 3vw, 3rem);
+  right: clamp(1.1rem, 2.2vw, 2.25rem);
   display: flex;
-  width: min(360px, 29vw);
+  width: min(330px, 25vw);
   max-height: calc(100svh - 7.5rem);
   flex-direction: column;
   border: 1px solid rgba(255, 255, 255, 0.09);
@@ -900,7 +901,9 @@ input:focus-visible {
 
   .experience { min-height: 100svh; overflow: auto; }
   .temple-scene {
+    --shrine-center: 50%;
     --altar-bottom: 36%;
+    --altar-height: clamp(125px, 17vh, 155px);
     position: fixed;
     inset: -2%;
   }
@@ -910,8 +913,9 @@ input:focus-visible {
   @keyframes mobile-interface-enters { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
   .deity-caption { top: 5rem; bottom: auto; width: 42vw; }
   .step-copy small { white-space: normal; }
-  .deity-placeholder { top: auto; width: min(42vw, 420px); height: min(50vh, 600px); }
-  .altar { width: min(560px, 78vw); }
+  .deity-placeholder { top: auto; width: min(58vw, 540px); height: min(48vh, 600px); }
+  .placeholder-aureole { width: min(38vw, 340px); }
+  .altar { width: min(660px, 88vw); }
 }
 
 @media (max-width: 620px) {
@@ -922,10 +926,10 @@ input:focus-visible {
   .ritual-header > div p { display: none; }
   .deity-caption { top: 4.5rem; left: 1rem; width: calc(100% - 2rem); text-align: center; }
   .deity-caption h2 { font-size: 1.8rem; }
-  .temple-scene { --altar-bottom: 42%; --altar-height: 115px; }
-  .deity-placeholder { top: auto; width: 260px; height: 42vh; }
-  .placeholder-aureole { width: 220px; }
-  .altar { width: 86vw; }
+  .temple-scene { --altar-bottom: 40%; --altar-height: 132px; }
+  .deity-placeholder { top: auto; width: min(340px, 86vw); height: min(50vh, 460px); }
+  .placeholder-aureole { width: min(270px, 72vw); }
+  .altar { width: 94vw; }
   .scene-offering { width: 38px; }
   .scene-offering span { display: none; }
   .ritual-controls { max-height: 43svh; padding: 0.85rem; }
