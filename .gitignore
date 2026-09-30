@@ -46,3 +46,6 @@ next-env.d.ts
 /.codex/
 /outputs/
 /work/
+/pages-dist/
+/wrangler.api.jsonc
+/.dev.vars*

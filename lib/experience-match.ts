@@ -4,6 +4,7 @@ import mappings from "../data/action-mappings.json" with { type: "json" };
 import themes from "../data/experience-themes.json" with { type: "json" };
 import { findRuleMappingId } from "./intent-router.ts";
 import type { Deity, Mapping, MatchResult } from "./match.ts";
+import { buildMatchReason, getTravelDomain } from "./match-reason.ts";
 
 export const categories = ["learning", "wealth", "relationships", "health", "family", "travel", "craft", "performance", "food", "home", "protection", "ethics", "nature", "practice", "remembrance", "care", "everyday"] as const;
 export type Category = typeof categories[number];
@@ -38,6 +39,14 @@ function themeMatchesDeity(category: Category, deity: Deity) {
   return !!theme && theme.domains.some((term) => deity.domains.some((domain) => domain.includes(term)));
 }
 
+function fitsScene(category: Category, deity: Deity, query: string) {
+  if (category === "nature" && /追星|偶像/.test(query) && !/观星|星空|星辰|天文|雨|水|天气|雷|自然/.test(query)) return false;
+  if (category === "travel") return !!getTravelDomain(query, deity);
+  if (category === "performance" && /偶像|追星|应援|演唱会|见面会/.test(query))
+    return deity.domains.some((domain) => /音乐|戏曲|表演/.test(domain));
+  return true;
+}
+
 export function buildLocalAnalysis(query: string): Analysis {
   const normalized = query.trim().slice(0, 240);
   const clauses = normalized.split(/[，。！？；,;]|但是|而是|只想|但/).filter(Boolean);
@@ -47,13 +56,13 @@ export function buildLocalAnalysis(query: string): Analysis {
   })).map((theme) => theme.id as Category);
   const positive = clauses.filter((clause) => !/^(?:我)?(?:不想|不要|不求|不打算|不是)/.test(clause) || /失败|挂科|生病|危险|出事/.test(clause)).join("，") || normalized;
   const matchedThemes = themes.filter((theme) => new RegExp(theme.pattern).test(positive) && !excluded.includes(theme.id as Category)).slice(0, 4);
-  const intents: Intent[] = matchedThemes.length ? matchedThemes.map((theme, i) => ({ action: positive, scene: "", wish: theme.label, category: theme.id as Category, priority: i === 0 ? 3 : 2, mapping_id: findRuleMappingId(positive) ?? null }))
+  const intents: Intent[] = matchedThemes.length ? matchedThemes.map((theme, i) => ({ action: positive, scene: /日本/.test(positive) ? "日本" : "", wish: theme.id === "travel" && /偶像|追星|应援|演唱会|见面会/.test(positive) ? "旅途平安、相见如愿" : theme.label, category: theme.id as Category, priority: i === 0 ? 3 : 2, mapping_id: findRuleMappingId(positive) ?? null }))
     : [{ action: normalized, scene: "", wish: "日常心愿", category: "everyday", priority: 3, mapping_id: null }];
   const named = findNamedDeities(normalized);
   const candidates: Candidate[] = [];
   intents.forEach((intent, index) => {
     const mapping = mappings.find((item) => item.id === intent.mapping_id);
-    const pool = named.length ? named : intent.category === "everyday" ? deities : deities.filter((deity) => themeMatchesDeity(intent.category, deity));
+    const pool = named.length ? named : intent.category === "everyday" ? deities : deities.filter((deity) => themeMatchesDeity(intent.category, deity) && fitsScene(intent.category, deity, positive));
     for (const deity of pool) {
       if (excluded.some((category) => themeMatchesDeity(category, deity))) continue;
       const route = mapping?.routes.find((item) => item.target_id === deity.id);
@@ -87,6 +96,9 @@ export function parseModelAnalysis(content: string, query: string): Analysis | n
     const deity = deities.find((item) => item.id === candidate.deity_id);
     const intent = intents[candidate.intent_index];
     if (!deity || !intent || excluded.some((category) => themeMatchesDeity(category, deity))) continue;
+    if (intent.category === "everyday" && local.intents.some((item) => item.category !== "everyday") && !findNamedDeities(query).length) continue;
+    if (intent.category !== "everyday" && !findNamedDeities(query).some((item) => item.id === deity.id) &&
+      (!themeMatchesDeity(intent.category, deity) || !fitsScene(intent.category, deity, query))) continue;
     const route = mappings.find((mapping) => mapping.id === intent.mapping_id)?.routes.find((item) => item.target_id === deity.id);
     // The model cannot promote an unregistered association to a traditional fact.
     const relation = candidate.relation_level === "direct_traditional" || candidate.relation_level === "contextual_direct"
@@ -128,6 +140,7 @@ export function buildExperienceResult(query: string, analysis: Analysis, selecte
   const mapping: Mapping = { id: `EXPERIENCE-${intent.category}`, life_domain: intent.category, input_examples: [], normalized_intent: intent.wish,
     routes: [{ target_id: deity.id, relation_level: selected.relation_level, score: selected.score }], clarifying_questions: [], exclusions: [], source_ids: deity.source_ids, review_status: deity.review_status };
   return { query: query.trim().slice(0, 240), mode: "experience", mapping, deity, status: "matched", engine: options.engine ?? "local", message: "愿你心有所定，所行顺遂。",
+    reason: buildMatchReason(query, deity, intent.category, selected.relation_level, findNamedDeities(query).some((item) => item.id === deity.id)),
     analysis: { intents: analysis.intents, excluded_categories: analysis.excluded_categories }, candidates: analysis.candidates, relation_level: selected.relation_level,
     selection: { balanced: options.balanced ?? false, persistence: options.persistence ?? "offline", replayed: options.replayed ?? false, window_size: 1000 }, model_status: options.modelStatus ?? "local_fallback" };
 }

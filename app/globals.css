@@ -915,6 +915,7 @@ html, body { min-width: 0; overflow-x: clip; overflow-y: auto; }
 .deity-caption h2 { font-size: clamp(1.8rem, 3vw, 3rem); line-height: 1.4; }
 .deity-caption p { font-size: 1rem; color: #c8b79b; }
 .petition-summary { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; overflow-wrap: anywhere; }
+.deity-caption .match-reason { margin-top: 0.85rem; font-size: 0.875rem; line-height: 1.8; color: #e2cfaa; overflow-wrap: anywhere; }
 .concept-label { display: block; margin-top: 0.75rem; color: #ac977b; font-size: 0.75rem; }
 .ritual-controls { top: calc(50% + 1.2rem); width: min(390px, 31vw); max-height: calc(100svh - 10rem); padding: 1.25rem; border-color: #d7ab592b; background: #100c09ed; }
 .ritual-control-head > span { color: #cdaa6c; font-size: 0.75rem; letter-spacing: 0.08em; }

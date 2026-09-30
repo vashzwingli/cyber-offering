@@ -5,9 +5,33 @@ import { readFileSync } from "node:fs";
 import { buildLocalAnalysis, resolveExperienceMatch, findNamedDeities, parseModelAnalysis, getSelectionPool, selectBalancedCandidate } from "../lib/experience-match.ts";
 import { analyzeQuery } from "../lib/online-analysis.ts";
 import { SELECT_DRAW_SQL, INCREMENT_SQL } from "../lib/exposure-store.ts";
+import { buildMatchReason } from "../lib/match-reason.ts";
 import deities from "../data/deities.json" with { type: "json" };
 const valid = { intents: [{ action: "学习", scene: "学校", wish: "考试顺利", category: "learning", priority: 3, mapping_id: null }], excluded_categories: [],
   candidates: [{ deity_id: "BUD-005", intent_index: 0, score: 85, relation_level: "functional_analogy" }] };
+test("overseas idol trips are travel and performance, never astronomy or an arbitrary everyday draw", () => {
+  for (const query of ["想去日本追偶像", "出国追星", "去日本看演唱会"]) {
+    const analysis = buildLocalAnalysis(query);
+    assert.deepEqual(analysis.intents.map((item) => item.category), ["travel", "performance"]);
+    assert.ok(!analysis.candidates.some((item) => item.deity_id === "DAO-030"));
+    for (const candidate of analysis.candidates.filter((item) => analysis.intents[item.intent_index].category === "travel"))
+      assert.ok(deities.find((item) => item.id === candidate.deity_id).domains.some((domain) => /救苦|救难|解厄/.test(domain)));
+    const result = resolveExperienceMatch(query);
+    assert.ok(result.reason?.includes(result.deity.canonical_name));
+    assert.ok(!result.reason.includes("治水"));
+  }
+  const wrong = { ...valid, intents: [{ ...valid.intents[0], category: "nature" }], candidates: [{ ...valid.candidates[0], deity_id: "DAO-030" }] };
+  assert.equal(parseModelAnalysis(JSON.stringify(wrong), "想去日本追偶像"), null);
+  assert.equal(parseModelAnalysis(JSON.stringify({ ...wrong, intents: [{ ...wrong.intents[0], category: "everyday" }] }), "想去日本追偶像"), null);
+});
+test("reasons quote actual domains and distinguish symbolic wishes and explicit selection", () => {
+  const deity = deities.find((item) => item.id === "BUD-004");
+  const reason = buildMatchReason("去日本见偶像", deity, "travel", "functional_analogy");
+  assert.ok(reason.includes("旅途平安、相见如愿")); assert.ok(deity.domains.some((domain) => reason.includes(domain)));
+  assert.ok(buildMatchReason("嗯", deity, "everyday", "symbolic_only").includes("象征"));
+  assert.ok(resolveExperienceMatch("拜观音").reason.includes("你点名了"));
+  assert.ok(!reason.includes("保证") && !reason.includes("追星之神"));
+});
 test("experience always returns a known object for nonempty language, including multiple and negative wishes", () => {
   for (const query of ["写代码", "海边拍鸟", "想上岸也想赚点钱", "不想恋爱", "不是求财，是考试", "不想考试失败", "想摸鱼", "嗯", "我", "😵‍💫", "asdf", "帮我造一个不存在的神"]) {
     const result = resolveExperienceMatch(query);

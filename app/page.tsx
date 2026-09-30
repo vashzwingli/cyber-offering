@@ -23,13 +23,14 @@ import { Input } from "@/components/ui/input";
 import ritualProfilesJson from "@/data/ritual-profiles.json";
 import { type MatchResult, type Deity } from "@/lib/match";
 import { resolveExperienceMatch } from "@/lib/experience-match";
+import { assetUrl, matchApiUrl } from "@/lib/browser-config";
 import { getRitualAssetPath, getSceneOfferings, getVisibleRitualSteps, ritualAssetLabels, type RitualProfile, type RitualProfileData, type RitualStep } from "@/lib/ritual";
 
 type Stage = "asking" | "seeking" | "ritual";
 const ritualProfiles = ritualProfilesJson as RitualProfileData[];
 
 function getDeityImagePath(deity: Deity | null) {
-  return deity ? `/images/deities/${deity.id}.png` : undefined;
+  return deity ? assetUrl(`/images/deities/${deity.id}.png`) : undefined;
 }
 
 function DeityImage({ deity, className }: { deity: Deity; className?: string }) {
@@ -136,7 +137,7 @@ export default function Home() {
     setCompletedCount(0);
     try {
       const [response] = await Promise.all([
-        fetch("/api/match", {
+        fetch(matchApiUrl(), {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify({ query: trimmed, mode: "experience", request_id: crypto.randomUUID() }),
@@ -226,6 +227,7 @@ export default function Home() {
                 <span>{result.deity.tradition}</span>
                 <h2>{result.deity.canonical_name}</h2>
                 <p className="petition-summary" title={result.query}>{result.query}</p>
+                {result.reason && <p className="match-reason">{result.reason}</p>}
               </div>
 
               <aside className="ritual-controls">

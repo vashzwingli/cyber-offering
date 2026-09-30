@@ -1,0 +1,24 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cyber-offering-api",
+  "main": "worker/api.ts",
+  "compatibility_date": "2026-05-15",
+  "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "ALLOWED_ORIGINS": "https://YOUR_USERNAME.github.io",
+    "LLM_API_URL": "https://api.deepseek.com/chat/completions",
+    "LLM_MODEL": "deepseek-flash",
+    "LLM_TIMEOUT_MS": "12000"
+  },
+  "d1_databases": [{
+    "binding": "DB",
+    "database_name": "cyber-offering",
+    "database_id": "REPLACE_WITH_YOUR_D1_DATABASE_ID",
+    "migrations_dir": "drizzle"
+  }],
+  "ratelimits": [{
+    "name": "MATCH_RATE_LIMITER",
+    "namespace_id": "1001",
+    "simple": { "limit": 30, "period": 60 }
+  }]
+}

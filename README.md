@@ -21,6 +21,10 @@ npm run build
 
 审查记录与已修复问题见 [REVIEW.md](REVIEW.md)。知识内容以项目上层 `SOURCE_OF_TRUTH.md` 为准，勿直接把草案改成已核验。
 
+2026-09-30 更新：匹配响应新增 `reason`，页面在神名与原始心愿下显示一句原因。追星／追偶像不再作为天文或泛愿；出国场景不凭空推定乘船，候选受已有领域与场景约束。系统提示词版本为 `2026-09-30.2`。
+
+GitHub Pages 静态入口为 `github-pages/`，构建命令 `npm run build:pages`；独立 API 为 `worker/api.ts`，发布步骤与 Key 保密说明见 [GITHUB-PAGES.md](GITHUB-PAGES.md)。Pages 工作流只接收公开 API 地址，模型 Key 保存在后端 Secret。
+
 下面保留运行框架与部署说明。
 
 A clean full-stack starter running on [vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and Drizzle support.

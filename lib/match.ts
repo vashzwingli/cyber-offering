@@ -1,6 +1,7 @@
 import mappings from "../data/action-mappings.json" with { type: "json" };
 import deities from "../data/deities.json" with { type: "json" };
 import { findRuleMappingId } from "./intent-router.ts";
+import { buildMatchReason } from "./match-reason.ts";
 
 export type MatchMode = "experience" | "research" | "verified";
 export type Deity = (typeof deities)[number];
@@ -13,6 +14,7 @@ export type MatchResult = {
   engine: "local" | "llm" | "cached";
   status: "matched" | "no_match" | "unverified" | "needs_context";
   message: string;
+  reason?: string;
 };
 
 const noMatch: Mapping = {
@@ -50,5 +52,6 @@ export function resolveMatch(query: string, mode: MatchMode = "research", choice
       : deity
         ? "愿你心有所定，所行顺遂。"
         : "此事在现有资料中没有可信的传统直配。不妄指神职，也是一种敬慎。";
-  return { query: normalized, mode, mapping, deity, status, engine: choice ? "llm" : "local", message };
+  return { query: normalized, mode, mapping, deity, status, engine: choice ? "llm" : "local", message,
+    ...(deity ? { reason: buildMatchReason(normalized, deity, mapping.life_domain, "direct_traditional") } : {}) };
 }

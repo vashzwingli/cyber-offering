@@ -1,3 +1,4 @@
+import { assetUrl } from "./browser-config.ts";
 export type RitualAssetId = "incense" | "flower" | "lamp" | "meal" | "fruit" | "tea" | "wine" | "scroll" | "grain";
 
 export type RitualScene = {
@@ -36,7 +37,7 @@ export const ritualAssetLabels: Record<RitualAssetId, string> = {
 };
 
 export function getRitualAssetPath(asset: RitualAssetId) {
-  return `/images/rituals/${asset}.png`;
+  return assetUrl(`/images/rituals/${asset}.png`);
 }
 
 export function getVisibleRitualSteps(profile: RitualProfileData): RitualStep[] {
