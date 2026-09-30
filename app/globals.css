@@ -324,21 +324,15 @@ input:focus-visible {
 }
 
 .scene-offering {
-  display: flex;
-  width: clamp(48px, 5vw, 72px);
-  height: clamp(54px, 7vh, 78px);
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 0.22rem;
-  border-bottom: 1px solid rgba(215, 171, 89, 0.18);
-  color: #d7ab59;
+  flex: 0 1 110px;
+  width: clamp(64px, 7vw, 110px);
+  min-width: 0;
+  aspect-ratio: 1;
   animation: offering-arrives 620ms cubic-bezier(0.2, 0.8, 0.25, 1) both;
-  filter: drop-shadow(0 0 10px rgba(215, 171, 89, 0.12));
 }
 
-.scene-offering svg { width: 1.6rem; height: 1.6rem; }
-.scene-offering span { color: rgba(241, 221, 181, 0.56); font-size: 0.62rem; white-space: nowrap; }
+.scene-offering img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.step-art { display: block; width: 2.5rem; height: 2.5rem; object-fit: contain; }
 
 @keyframes offering-arrives {
   from { opacity: 0; transform: translateY(24px) scale(0.8); }
@@ -895,68 +889,112 @@ input:focus-visible {
 .dialog-evidence { color: rgba(240, 233, 220, 0.26); font-size: 0.62rem; }
 .dialog-evidence { line-height: 1.5; }
 
-@media (max-width: 980px) {
-  html,
-  body { overflow: auto; }
+/* Keep the room subdued while the figure and reading surface remain legible. */
+html, body { min-width: 0; overflow-x: clip; overflow-y: auto; }
+.experience { min-height: 100svh; }
+.temple-scene { --shrine-center: 36%; position: fixed; inset: 0; transform: none; filter: brightness(calc(0.88 + var(--illumination) * 0.18)) saturate(0.9); pointer-events: none; }
+.temple-scene.is-blurred { filter: blur(8px) brightness(0.72) saturate(0.7); transform: scale(1.03); }
+.deity-placeholder { width: min(56vw, 780px); height: min(76svh, 840px); bottom: calc(var(--altar-bottom) + var(--altar-height) - 3rem); }
+.deity-figure-image { opacity: 1; filter: brightness(calc(0.94 + var(--illumination) * 0.16)) saturate(0.95) drop-shadow(0 16px 24px #0008); }
+.placeholder-aureole { top: 8%; opacity: calc(0.35 + var(--illumination) * 0.4); }
+.altar { width: min(57vw, 820px); }
+.brand-whisper { color: #c6a46e; font-size: 0.875rem; }
+.petition-form h1 { line-height: 1.2; }
+.petition-input-wrap input::placeholder { color: #a79a87; }
+.petition-footnote { color: #b3a590; font-size: 0.8125rem; line-height: 1.75; }
+.divination-button:disabled { color: #988773; border-color: #71533860; background: #24190d; opacity: 0.75; }
+.match-mode { display: flex; justify-content: center; gap: 0.25rem; margin-top: 1.75rem; }
+.match-mode button { min-height: 44px; padding: 0.5rem 1rem; border: 1px solid transparent; color: #aa9981; background: transparent; font-size: 0.875rem; cursor: pointer; }
+.match-mode button[aria-pressed="true"] { color: #f0cf8d; border-color: #c1964d66; background: #d7ab5910; }
+.cancel-request { justify-self: center; margin-top: 1.5rem; }
+.seeking-layer > small { color: #b5a38c; font-size: 0.875rem; }
+.ritual-header > div { color: #d2bd9c; }
+.restart-button { min-height: 44px; color: #cfbd9f; font-size: 0.875rem; cursor: pointer; }
+.deity-caption { top: 6rem; bottom: auto; left: 2rem; width: min(320px, 28vw); }
+.deity-caption span { font-size: 0.8125rem; }
+.deity-caption h2 { font-size: clamp(1.8rem, 3vw, 3rem); line-height: 1.4; }
+.deity-caption p { font-size: 1rem; color: #c8b79b; }
+.petition-summary { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; overflow-wrap: anywhere; }
+.concept-label { display: block; margin-top: 0.75rem; color: #ac977b; font-size: 0.75rem; }
+.ritual-controls { top: calc(50% + 1.2rem); width: min(390px, 31vw); max-height: calc(100svh - 10rem); padding: 1.25rem; border-color: #d7ab592b; background: #100c09ed; }
+.ritual-control-head > span { color: #cdaa6c; font-size: 0.75rem; letter-spacing: 0.08em; }
+.ritual-control-head h3 { font-size: 1.5rem; line-height: 1.5; }
+.ritual-control-head p { color: #bcad97; font-size: 0.875rem; line-height: 1.75; }
+.ritual-sources { font-size: 0.75rem; line-height: 1.75; }
+.ritual-sources > span { color: #ad9b82; }
+.ritual-sources a { color: #dabb82; }
+.progress-caption { flex-shrink: 0; margin-top: 1rem; color: #e5c993; font-size: 0.875rem; line-height: 1.5; }
+.ritual-progress { min-height: 3px; flex-shrink: 0; margin: 0.65rem 0; }
+.ritual-step-list { overscroll-behavior: contain; scroll-padding: 0.5rem; }
+.ritual-step { flex-shrink: 0; min-height: 56px; grid-template-columns: 1.6rem 2.5rem minmax(0, 1fr); gap: 0.5rem; padding: 0.65rem; color: #b6a68d; }
+.ritual-step:disabled { opacity: 1; }
+.ritual-step.is-done { color: #c5a266; background: #d7ab5908; }
+.ritual-step.is-active { background: #d7ab5914; border-color: #d7ab5980; }
+.step-index { font-size: 0.75rem; }
+.step-copy strong { font-size: 1rem; line-height: 1.5; }
+.step-copy small { font-size: 0.8125rem; line-height: 1.6; color: #b2a28b; white-space: normal; overflow: visible; }
+.bow-button { flex-shrink: 0; letter-spacing: 0.12em; }
+.ritual-safety { flex-shrink: 0; font-size: 0.75rem; color: #ab987d; line-height: 1.7; }
+.no-match-card { max-height: calc(100svh - 8rem); overflow-y: auto; }
+.no-match-card > span { font-size: 0.8125rem; color: #d7ab59; }
+.no-match-card p { font-size: 1rem; color: #d1bea2; }
+.no-match-card small { font-size: 0.8125rem; color: #a9967c; line-height: 1.6; }
+.clarifying-questions { padding-left: 1.2rem; margin: 1rem 0 1.5rem; text-align: left; color: #dbc5a4; font-size: 0.875rem; line-height: 1.8; }
+.connection-status { position: fixed; z-index: 20; bottom: 0.6rem; left: 50%; transform: translateX(-50%); width: max-content; max-width: 90vw; color: #e3c08a; font-size: 0.8125rem; background: #17110bec; }
+.connection-status:empty { display: none; }
+.revelation-dialog { width: min(920px, calc(100vw - 2rem)); max-width: 920px; }
+.revelation-image-frame { min-height: 380px; }
+.revelation-dialog [data-slot="dialog-description"] { color: #b8a78e; font-size: 0.875rem; }
+.dialog-kicker { font-size: 0.8125rem; }
+.revelation-section > span, .message-scroll > span { font-size: 0.8125rem; }
+.revelation-section p { font-size: 1rem; color: #d8c9b1; }
+.revelation-section small { font-size: 0.875rem; color: #b1a18a; }
+.message-scroll small, .dialog-evidence { font-size: 0.75rem; color: #b1a18a; line-height: 1.7; }
+.image-unavailable { display: grid; width: 100%; height: 100%; place-items: center; color: #bda178; font-size: 0.875rem; }
 
-  .experience { min-height: 100svh; overflow: auto; }
-  .temple-scene {
-    --shrine-center: 50%;
-    --altar-bottom: 36%;
-    --altar-height: clamp(125px, 17vh, 155px);
-    position: fixed;
-    inset: -2%;
-  }
-  .ritual-interface { min-height: 100svh; padding-bottom: 24rem; }
-  .ritual-controls { top: auto; right: 1rem; bottom: 1rem; left: 1rem; width: auto; max-height: 42svh; transform: none; }
-  .ritual-controls { animation-name: mobile-interface-enters; }
-  @keyframes mobile-interface-enters { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-  .deity-caption { top: 5rem; bottom: auto; width: 42vw; }
-  .step-copy small { white-space: normal; }
-  .deity-placeholder { top: auto; width: min(58vw, 540px); height: min(48vh, 600px); }
-  .placeholder-aureole { width: min(38vw, 340px); }
-  .altar { width: min(660px, 88vw); }
+@media (max-width: 980px) {
+  .ritual-interface { padding: 1rem; padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
+  .temple-scene { --shrine-center: 50%; --altar-bottom: 34svh; --altar-height: 85px; }
+  .deity-placeholder { width: min(80vw, 560px); height: 36svh; bottom: calc(var(--altar-bottom) + var(--altar-height) - 2rem); }
+  .placeholder-aureole { width: min(70vw, 330px); }
+  .altar { width: min(80vw, 620px); }
+  .deity-caption { position: relative; top: auto; left: auto; width: 100%; margin-top: 1rem; text-align: center; }
+  .deity-caption h2 { margin-top: 0.25rem; font-size: 2rem; }
+  .deity-caption p { margin-top: 0.25rem; }
+  .concept-label { margin-top: 0.3rem; }
+  .ritual-controls { position: relative; top: auto; right: auto; width: min(620px, 100%); max-height: none; margin: calc(44svh + 1.5rem) auto 0; transform: none; animation-name: caption-enters; }
+  .ritual-step-list { overflow: visible; }
+  .temple-ceiling { height: 15%; }
+  .side-lantern { top: 30%; }
+  .no-match-card { position: relative; top: auto; left: auto; transform: none; margin: 3rem auto 0; width: min(480px, 100%); max-height: none; }
+  .offering-row { gap: clamp(0.25rem, 1vw, 0.65rem); bottom: 35%; }
+  .scene-offering { flex-basis: 80px; width: clamp(40px, 10vw, 80px); }
 }
 
 @media (max-width: 620px) {
-  .petition-layer { padding: 1rem; }
-  .petition-form h1 { margin-bottom: 1.8rem; font-size: 3.2rem; }
-  .petition-footnote { padding-inline: 1rem; line-height: 1.6; }
-  .ritual-header { align-items: flex-start; }
+  .petition-layer { padding: 1.25rem; }
+  .petition-form h1 { font-size: clamp(2.2rem, 11vw, 3.2rem); margin-bottom: 1.8rem; }
+  .petition-input-wrap input { font-size: 1rem; letter-spacing: 0; padding-inline: 0.5rem; }
   .ritual-header > div p { display: none; }
-  .deity-caption { top: 4.5rem; left: 1rem; width: calc(100% - 2rem); text-align: center; }
   .deity-caption h2 { font-size: 1.8rem; }
-  .temple-scene { --altar-bottom: 40%; --altar-height: 132px; }
-  .deity-placeholder { top: auto; width: min(340px, 86vw); height: min(50vh, 460px); }
-  .placeholder-aureole { width: min(270px, 72vw); }
+  .deity-caption p { font-size: 0.875rem; }
+  .ritual-controls { padding: 1rem; }
+  .ritual-control-head h3 { font-size: 1.3rem; }
+  .deity-placeholder { width: 96vw; }
   .altar { width: 94vw; }
-  .scene-offering { width: 38px; }
-  .scene-offering span { display: none; }
-  .ritual-controls { max-height: 43svh; padding: 0.85rem; }
-  .ritual-control-head p { display: none; }
-  .revelation-dialog {
-    width: calc(100vw - 1rem);
-    max-height: 94svh;
-    padding: 1rem;
-  }
-  .revelation-layout { grid-template-columns: 1fr; gap: 1.15rem; }
-  .revelation-image-frame { min-height: 330px; max-height: 40svh; }
-  .revelation-image-frame img { height: 96%; }
-  .revelation-copy { justify-content: flex-start; }
-  .ritual-control-head h3 { font-size: 1.1rem; }
-  .ritual-step { padding-block: 0.45rem; }
-  .ritual-safety { display: none; }
   .side-lantern { display: none; }
   .pillar-left { left: 3%; }
   .pillar-right { right: 3%; }
+  .revelation-dialog { width: calc(100vw - 1rem); max-height: 92svh; padding: 2.5rem 1rem 1rem; }
+  .revelation-layout { grid-template-columns: 1fr; gap: 1.25rem; }
+  .revelation-image-frame { min-height: 0; height: 32svh; }
+  .revelation-image-frame img { height: 100%; }
+  .no-match-card { padding: 1.4rem; }
+  .no-match-card h2 { font-size: 1.5rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-  }
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
+
+

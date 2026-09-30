@@ -1,7 +1,11 @@
 const intentRules: Array<[string, RegExp]> = [
   ["MAP-023", /^(?:正一玄坛元帅|财神|赵公明)$/],
   ["MAP-003", /复合|前任|让.+(?:爱上|回头)/],
-  ["MAP-019", /海鸟|海上.+(?:鲸|野生动物)|海岛生态/],
+  ["MAP-019", /(?:乘船|坐船|出海|海上).*(?:拍鸟|观鸟|海鸟|鲸|野生动物)/],
+  ["MAP-018", /海鸟|海岛生态|拍鸟|观鸟|野生动物|生态摄影|野保摄影/],
+  ["MAP-025", /炒股|买币|博彩|彩票|赌博/],
+  ["MAP-033", /网络安全|黑客|系统守门|信息安全/],
+  ["MAP-032", /写代码|软件|产品设计|机器人|编程/],
   ["MAP-001", /恋爱|脱单|找对象|婚配|姻缘/],
   ["MAP-002", /感情和睦|婚后|夫妻|家庭和气|家庭关系|减少争吵/],
   ["MAP-004", /养蚕|蚕桑|丝绸|缫丝|纺织生产|传统服装/],
@@ -39,5 +43,8 @@ const intentRules: Array<[string, RegExp]> = [
 ];
 
 export function findRuleMappingId(query: string) {
-  return intentRules.find(([, pattern]) => pattern.test(query))?.[0];
+  const normalized = query.trim().replace(/[，。！？、\s]/g, "");
+  // Keyword routing cannot safely distinguish negation or multiple independent requests.
+  if (/不是|不想|不要|不打算|不求|同时|还想|又想|顺便/.test(normalized)) return "NO-MATCH";
+  return intentRules.find(([, pattern]) => pattern.test(normalized))?.[0];
 }

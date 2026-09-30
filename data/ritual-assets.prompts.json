@@ -1,0 +1,42 @@
+{
+  "mode": "built-in image_gen exploratory generation and edits; final original SVG geometry and PNG export",
+  "style": "Use case: stylized-concept. Asset type: individual transparent PNG illustration used as a physical offering in a website shrine scene. Primary request: minimalist modern poster graphic made exclusively from large hard-edged geometric flat solid color shapes, simple silhouette, no outlines, restrained palette of ochre #D7AB59, vermilion #B54D39, warm cream #F0E9DC and deep muted green #4E6453. Subject centered in the square canvas, visually resting on the same horizontal baseline at 82% canvas height, generous transparent breathing room, subject occupies about 75% width and 65% height, frontal view with just a shallow ellipse for the top when appropriate. Genuine transparent alpha background, not white, black, checkerboard or colored backdrop. Every region exactly flat: NO gradients, NO shading, NO highlights, NO texture or noise, NO realistic rendering, NO drop shadows or glow, NO 3D depth, NO typography, NO badges, NO frames, NO deity or extra props. This is an abstract object illustration, no ceremonial quantity or historical accuracy claims. ",
+  "briefs": [
+    {
+      "id": "incense",
+      "subject": "A simplified incense burner: a wide ochre bowl-shaped censer on a short pedestal, a vermilion rim, one abstract slender incense stem and a simple solid cream smoke ribbon. Category illustration, no prescribed incense count."
+    },
+    {
+      "id": "flower",
+      "subject": "An abstract floral offering: a compact vermilion blossom silhouette with broad geometric petals, dark green stem and leaf, standing in a simple ochre vase. No species-specific flower details or decorative ornament."
+    },
+    {
+      "id": "lamp",
+      "subject": "A simple ceremonial oil offering lamp: a shallow ochre oil bowl on a short vermilion pedestal, one large geometric cream-and-vermilion flame silhouette. It must read as an oil lamp, never a desk lamp, lantern or candle."
+    },
+    {
+      "id": "meal",
+      "subject": "A plain shallow ochre offering dish, containing a single abstract cream food mound with a broad vermilion accent. Do not depict meat, animals, specific foods, cakes or prescribed ingredients. Read as a simple food offering."
+    },
+    {
+      "id": "fruit",
+      "subject": "A low ochre fruit offering plate supporting a compact grouping of abstract vermilion and muted green fruit-like circles and a broad pear-like silhouette, one simple dark green leaf. No prescribed fruit count or identifiable ritual arrangement."
+    },
+    {
+      "id": "tea",
+      "subject": "A low wide cream ceramic tea cup, ochre tea represented by a flat ellipse at the top, broad vermilion foot. No handle, saucer, steam, ornament or lettering. Distinguish clearly from the wine vessel."
+    },
+    {
+      "id": "wine",
+      "subject": "A simple tall stemmed ochre wine offering cup with a broad cream bowl and a vermilion foot, flat ellipse showing the opening. No liquid pour, bottle, ornament or lettering. Abstract contemporary illustration, not a claim of ancient vessel type."
+    },
+    {
+      "id": "scroll",
+      "subject": "An unrolled blank cream ceremonial text scroll resting horizontally with vermilion rolled ends, a broad ochre inner panel. Completely blank. No letters, characters, marks, seals, symbols, talismans, scripture, writing tools or ornament."
+    },
+    {
+      "id": "grain",
+      "subject": "A simple low vermilion bowl containing an ochre mound of grain, a few large cream geometric grain shapes to communicate texture symbolically. No wheat stalks, no food garnish, no exact historic vessel type or prescribed quantity."
+    }
+  ]
+}

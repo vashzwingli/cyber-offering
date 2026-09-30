@@ -1,0 +1,68 @@
+{
+  "created_at": "2026-09-30",
+  "method": "Original SVG geometry with PNG raster exports. Imagegen was used for exploratory drafts; generated drafts are not production assets.",
+  "style": "Geometric solid-color minimalist poster graphics; transparent; no gradients, textures, shadows, lettering or religious symbols.",
+  "palette": [
+    "#D7AB59",
+    "#B54D39",
+    "#F0E9DC",
+    "#4E6453"
+  ],
+  "scope": "Abstract category illustrations. Object counts, ingredients, vessel shapes and placement do not define ritual rules.",
+  "assets": [
+    {
+      "id": "incense",
+      "label": "香炉",
+      "svg": "/images/rituals/incense.svg",
+      "png": "/images/rituals/incense.png"
+    },
+    {
+      "id": "flower",
+      "label": "花供",
+      "svg": "/images/rituals/flower.svg",
+      "png": "/images/rituals/flower.png"
+    },
+    {
+      "id": "lamp",
+      "label": "供灯",
+      "svg": "/images/rituals/lamp.svg",
+      "png": "/images/rituals/lamp.png"
+    },
+    {
+      "id": "meal",
+      "label": "供馔",
+      "svg": "/images/rituals/meal.svg",
+      "png": "/images/rituals/meal.png"
+    },
+    {
+      "id": "fruit",
+      "label": "果盘",
+      "svg": "/images/rituals/fruit.svg",
+      "png": "/images/rituals/fruit.png"
+    },
+    {
+      "id": "tea",
+      "label": "茶盏",
+      "svg": "/images/rituals/tea.svg",
+      "png": "/images/rituals/tea.png"
+    },
+    {
+      "id": "wine",
+      "label": "酒器",
+      "svg": "/images/rituals/wine.svg",
+      "png": "/images/rituals/wine.png"
+    },
+    {
+      "id": "scroll",
+      "label": "祝文卷轴",
+      "svg": "/images/rituals/scroll.svg",
+      "png": "/images/rituals/scroll.png"
+    },
+    {
+      "id": "grain",
+      "label": "谷物供器",
+      "svg": "/images/rituals/grain.svg",
+      "png": "/images/rituals/grain.png"
+    }
+  ]
+}

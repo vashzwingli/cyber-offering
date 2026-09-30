@@ -3,20 +3,11 @@
 import {
   Check,
   CircleAlert,
-  Flame,
-  Flower2,
-  Hand,
-  LampDesk,
   LoaderCircle,
   RotateCcw,
-  ScrollText,
   Sparkles,
-  UtensilsCrossed,
-  Wheat,
-  Wine,
-  type LucideIcon,
 } from "lucide-react";
-import { type CSSProperties, type FormEvent, useMemo, useState } from "react";
+import { type CSSProperties, type FormEvent, useEffect, useMemo, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -27,172 +18,39 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import mappingsJson from "@/data/action-mappings.json";
-import deitiesJson from "@/data/deities.json";
+
+
 import ritualProfilesJson from "@/data/ritual-profiles.json";
-import { findRuleMappingId } from "@/lib/intent-router";
+import { resolveMatch, type MatchResult, type Deity } from "@/lib/match";
+import { getRitualAssetPath, getSceneOfferings, getVisibleRitualSteps, ritualAssetLabels, type RitualProfile, type RitualProfileData, type RitualStep } from "@/lib/ritual";
 
 type Stage = "asking" | "seeking" | "ritual";
-type OfferingKind = "flower" | "lamp" | "incense" | "meal" | "wine" | "text" | "reverence";
-type RitualIconName = "flame" | "flower" | "hand" | "lamp" | "meal" | "scroll" | "sparkles" | "wheat" | "wine";
-
-type Route = {
-  target_id: string | null;
-  relation_level: string;
-  score: number;
-};
-
-type Mapping = {
-  id: string;
-  life_domain: string;
-  input_examples: string[];
-  normalized_intent: string;
-  routes: Route[];
-  clarifying_questions: string[];
-  exclusions: string[];
-  source_ids: string[];
-  review_status: string;
-};
-
-type Deity = {
-  id: string;
-  canonical_name: string;
-  tradition: string;
-  entity_type: string;
-  honorific_names: string[];
-  aliases: string[];
-  domains: string[];
-  matching_tags: string[];
-  iconography: string;
-  iconography_variation: string;
-  source_ids: string[];
-  review_status: string;
-};
-
-type MatchResult = {
-  query: string;
-  mapping: Mapping;
-  deity: Deity | null;
-  engine: "local" | "llm";
-  message: string;
-};
-
-type RitualStep = {
-  id: string;
-  label: string;
-  note: string;
-  kind: OfferingKind;
-  icon: LucideIcon;
-};
-
-type RitualProfile = {
-  label: string;
-  note: string;
-  steps: RitualStep[];
-  sources: RitualSource[];
-};
-
-type RitualSource = {
-  title: string;
-  locator: string;
-  url: string;
-};
-
-type RitualProfileData = {
-  id: string;
-  label: string;
-  note: string;
-  sources: RitualSource[];
-  steps: Array<Omit<RitualStep, "icon"> & { icon: RitualIconName }>;
-};
-
-const mappings = mappingsJson as Mapping[];
-const deities = deitiesJson as Deity[];
 const ritualProfiles = ritualProfilesJson as RitualProfileData[];
-const stateRiteDeityIds = new Set([
-  "DAO-012", "DAO-015", "DAO-043", "DAO-044", "DAO-045", "DAO-046",
-  "FOLK-008", "FOLK-009", "FOLK-010",
-]);
-const ritualIcons: Record<RitualIconName, LucideIcon> = {
-  flame: Flame,
-  flower: Flower2,
-  hand: Hand,
-  lamp: LampDesk,
-  meal: UtensilsCrossed,
-  scroll: ScrollText,
-  sparkles: Sparkles,
-  wheat: Wheat,
-  wine: Wine,
-};
 
 function getDeityImagePath(deity: Deity | null) {
   return deity ? `/images/deities/${deity.id}.png` : undefined;
 }
 
-function similarity(query: string, mapping: Mapping) {
-  const normalized = query.replace(/[，。！？、\s]/g, "").toLowerCase();
-  const corpus = [...mapping.input_examples, mapping.normalized_intent, mapping.life_domain]
-    .join("")
-    .replace(/[，。！？、\s]/g, "")
-    .toLowerCase();
-  if (mapping.input_examples.some((item) => normalized.includes(item) || item.includes(normalized))) return 100;
-  const strip = (value: string) => value.replace(/我|想|要|准备|近期|第一次|去|做|制作|希望|参与|开始|进行/g, "");
-  const subject = strip(normalized) || normalized;
-  const evidence = strip(corpus);
-  let score = 0;
-  for (let index = 0; index < subject.length - 1; index += 1) {
-    if (evidence.includes(subject.slice(index, index + 2))) score += 8;
-  }
-  for (const character of new Set(subject)) {
-    if (evidence.includes(character)) score += 1;
-  }
-  return score;
-}
-
-function localMatch(query: string): MatchResult {
-  const ranked = [...mappings].sort((a, b) => similarity(query, b) - similarity(query, a));
-  const ruleId = findRuleMappingId(query);
-  const mapping = mappings.find((item) => item.id === ruleId) ??
-    (similarity(query, ranked[0]) >= 16 ? ranked[0] : {
-      id: "NO-MATCH",
-      life_domain: "未分类",
-      input_examples: [],
-      normalized_intent: "未在当前行为映射库中找到可靠对应",
-      routes: [{ target_id: null, relation_level: "no_match", score: 0 }],
-      clarifying_questions: ["可以补充具体行为、场景和希望获得的帮助吗？"],
-      exclusions: ["不根据谐音、动物名、法器或单一造像元素猜测神职"],
-      source_ids: [],
-      review_status: "verified",
-    });
-  const deity = mapping.routes[0]?.target_id
-    ? deities.find((item) => item.id === mapping.routes[0].target_id) ?? null
-    : null;
-  const message = deity
-    ? `所求关乎“${mapping.normalized_intent}”。愿你先尽人事、守住分寸，再以此礼整理心意。`
-    : "此事在现有资料中没有可信的传统直配。不妄指神职，也是一种敬慎。";
-  return { query, mapping, deity, engine: "local", message };
+function DeityImage({ deity, className }: { deity: Deity; className?: string }) {
+  const [failed, setFailed] = useState(false);
+  return failed ? <div className="image-unavailable">图像暂不可用</div> : (
+    // Local transparent concept assets are deliberately served without image transformation.
+    // eslint-disable-next-line @next/next/no-img-element
+    <img className={className} src={getDeityImagePath(deity)} alt={deity.canonical_name} onError={() => setFailed(true)} />
+  );
 }
 
 function getRitualProfile(deity: Deity | null): RitualProfile {
-  if (!deity) return { label: "不生成仪轨", note: "没有可靠直配时，不自动拼接供奉步骤。", steps: [], sources: [] };
-
-  const profileId = stateRiteDeityIds.has(deity.id)
-    ? "state-ritual-classical"
-    : /佛教/.test(deity.tradition)
-      ? "buddhist-scriptural"
-      : /道教/.test(deity.tradition)
-        ? "dao-jiao-classical"
-        : "lineage-three-offerings";
-  const profile = ritualProfiles.find((item) => item.id === profileId) ?? ritualProfiles[3];
-
+  const empty = { label: "寄语", steps: [] };
+  if (!deity) return empty;
+  const profileId = /佛教/.test(deity.tradition) ? "buddhist-scriptural" : /道教/.test(deity.tradition) ? "dao-jiao-classical" : null;
+  const profile = ritualProfiles.find((item) => item.id === profileId);
+  if (!profile) return empty;
   return {
-    label: profile.label,
-    note: profile.note,
-    sources: profile.sources,
-    steps: profile.steps.map((step) => ({ ...step, icon: ritualIcons[step.icon] })),
+    label: "供奉仪轨",
+    steps: getVisibleRitualSteps(profile),
   };
 }
-
 function TempleScene({
   deity,
   completedSteps,
@@ -205,6 +63,7 @@ function TempleScene({
   blurred: boolean;
 }) {
   const deityImage = getDeityImagePath(deity);
+  const offerings = getSceneOfferings(completedSteps);
 
   return (
     <div
@@ -220,30 +79,24 @@ function TempleScene({
       <div className="shrine-halo" />
       <div className="deity-placeholder">
         <div className="placeholder-aureole" />
-        {deityImage ? (
-          <img
-            className="deity-figure-image"
-            src={deityImage}
-            alt={`${deity.canonical_name}极简形象`}
-          />
+        {deityImage && deity ? (
+          <DeityImage key={deity.id} deity={deity} className="deity-figure-image" />
         ) : (
           <div className="placeholder-figure">
-            <span>{deity ? "神明形象" : "形象占位"}</span>
+            <span />
           </div>
         )}
       </div>
       <div className="altar">
         <div className="altar-top">
           <div className="offering-row">
-            {completedSteps.filter((step) => step.kind !== "reverence").map((step) => {
-              const Icon = step.icon;
-              return (
-                <div className={`scene-offering offering-${step.kind}`} key={step.id}>
-                  <Icon />
-                  <span>{step.label}</span>
-                </div>
-              );
-            })}
+            {offerings.map(({ asset, stepId }) => (
+              <div className={`scene-offering offering-${asset}`} key={`${asset}-${stepId}`}>
+                {/* Transparent original artwork is placed directly on the altar. */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={getRitualAssetPath(asset)} alt={ritualAssetLabels[asset]} draggable={false} />
+              </div>
+            ))}
           </div>
         </div>
         <div className="altar-front"><span>敬</span></div>
@@ -257,6 +110,10 @@ function TempleScene({
 export default function Home() {
   const [stage, setStage] = useState<Stage>("asking");
   const [query, setQuery] = useState("");
+  const [offline, setOffline] = useState(false);
+  const requestRef = useRef<AbortController | null>(null);
+  const stepListRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => () => requestRef.current?.abort(), []);
   const [result, setResult] = useState<MatchResult | null>(null);
   const [completedCount, setCompletedCount] = useState(0);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -269,7 +126,11 @@ export default function Home() {
   async function ask(event: FormEvent) {
     event.preventDefault();
     const trimmed = query.trim();
-    if (!trimmed) return;
+    if (!trimmed || stage === "seeking") return;
+    requestRef.current?.abort();
+    const controller = new AbortController();
+    requestRef.current = controller;
+    setOffline(false);
     setStage("seeking");
     setCompletedCount(0);
     try {
@@ -278,21 +139,26 @@ export default function Home() {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify({ query: trimmed }),
+          signal: AbortSignal.any([controller.signal, AbortSignal.timeout(10000)]),
         }),
         new Promise((resolve) => setTimeout(resolve, 1400)),
       ]);
       if (!response.ok) throw new Error("match failed");
-      setResult(await response.json() as MatchResult);
+      const nextResult = await response.json() as MatchResult;
+      if (!controller.signal.aborted) setResult(nextResult);
     } catch {
-      setResult(localMatch(trimmed));
+      if (controller.signal.aborted) return;
+      setOffline(true);
+      setResult(resolveMatch(trimmed));
     } finally {
-      setStage("ritual");
+      if (!controller.signal.aborted) setStage("ritual");
     }
   }
 
-  function restart() {
+  function restart(clearQuery = true) {
+    requestRef.current?.abort();
     setStage("asking");
-    setQuery("");
+    if (clearQuery) setQuery("");
     setResult(null);
     setCompletedCount(0);
     setDialogOpen(false);
@@ -314,10 +180,11 @@ export default function Home() {
             <h1>所求何事</h1>
             <div className="petition-input-wrap">
               <Input
-                autoFocus
+                maxLength={240}
+                autoComplete="off"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="说清要做的事、所在场景与心中所求"
+                placeholder="说说你要做的事与心愿"
                 aria-label="所求何事"
               />
               <span className="input-glow" />
@@ -325,7 +192,6 @@ export default function Home() {
             <Button type="submit" disabled={!query.trim()} className="divination-button">
               问卜
             </Button>
-            <p className="petition-footnote">系统只在现有名录与证据中寻找对应，不凭谐音臆造神职</p>
           </form>
         </section>
       )}
@@ -337,7 +203,7 @@ export default function Home() {
             <LoaderCircle />
           </div>
           <p>正在寻找对应神明</p>
-          <small>辨行为 · 察场景 · 明所求</small>
+          <button type="button" className="restart-button cancel-request" onClick={() => restart(false)}>返回修改</button>
         </section>
       )}
 
@@ -348,7 +214,7 @@ export default function Home() {
               <span className="tiny-seal">功</span>
               <p>赛博供奉</p>
             </div>
-            <button type="button" onClick={restart} className="restart-button">
+            <button type="button" onClick={() => restart()} className="restart-button">
               <RotateCcw /> 另问一事
             </button>
           </header>
@@ -358,29 +224,21 @@ export default function Home() {
               <div className="deity-caption">
                 <span>{result.deity.tradition}</span>
                 <h2>{result.deity.canonical_name}</h2>
-                <p>{result.mapping.normalized_intent}</p>
+                <p className="petition-summary" title={result.query}>{result.query}</p>
               </div>
 
               <aside className="ritual-controls">
                 <div className="ritual-control-head">
-                  <span>{result.engine === "llm" ? "LLM 路由" : "证据路由"} · 研究草案</span>
                   <h3>{ritual.label}</h3>
-                  <p>{ritual.note}</p>
-                  <div className="ritual-sources" aria-label="典籍依据">
-                    <span>典籍依据</span>
-                    {ritual.sources.map((source) => (
-                      <a key={source.url} href={source.url} target="_blank" rel="noreferrer" title={source.locator}>
-                        {source.title}
-                      </a>
-                    ))}
-                  </div>
                 </div>
-                <div className="ritual-progress" aria-label={`供奉进度 ${completedCount}/${ritual.steps.length}`}>
-                  <span style={{ width: `${(completedCount / ritual.steps.length) * 100}%` }} />
+                {ritual.steps.length > 0 && <p className="progress-caption" aria-live="polite">{isComplete ? "礼成" : `已完成 ${completedCount} / ${ritual.steps.length}`}</p>}
+                {ritual.steps.length > 0 && (
+                <div className="ritual-progress" role="progressbar" aria-valuemin={0} aria-valuemax={ritual.steps.length || 1} aria-valuenow={completedCount} aria-label="供奉进度">
+                  <span style={{ width: `${(completedCount / Math.max(ritual.steps.length, 1)) * 100}%` }} />
                 </div>
-                <div className="ritual-step-list">
+                )}
+                <div className="ritual-step-list" ref={stepListRef}>
                   {ritual.steps.map((step, index) => {
-                    const Icon = step.icon;
                     const done = index < completedCount;
                     const active = index === completedCount;
                     return (
@@ -389,68 +247,58 @@ export default function Home() {
                         key={step.id}
                         disabled={!active}
                         className={`ritual-step ${done ? "is-done" : ""} ${active ? "is-active" : ""}`}
-                        onClick={() => setCompletedCount((count) => Math.min(count + 1, ritual.steps.length))}
+                        onClick={() => {
+                          setCompletedCount((count) => count === index ? count + 1 : count);
+                          const nextStep = stepListRef.current?.children[index + 1];
+                          if (nextStep instanceof HTMLElement) nextStep.scrollIntoView({ block: "nearest", behavior: "auto" });
+                        }}
                       >
                         <span className="step-index">{done ? <Check /> : String(index + 1).padStart(2, "0")}</span>
-                        <Icon className="step-icon" />
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img className="step-art" src={getRitualAssetPath(step.assets[0])} alt="" draggable={false} />
                         <span className="step-copy"><strong>{step.label}</strong><small>{step.note}</small></span>
                       </button>
                     );
                   })}
                 </div>
-                {isComplete && (
+                {(isComplete || !ritual.steps.length) && (
                   <Button className="bow-button" onClick={() => setDialogOpen(true)}>
-                    <Sparkles /> 叩拜
+                    <Sparkles /> {isComplete ? "叩拜 · 查看寄语" : "查看寄语"}
                   </Button>
                 )}
-                <p className="ritual-safety">典籍摘要用于文化复原，不等于现代寺观统一规范；牲牢、焚词、灯火等内容不构成现实操作指引。</p>
               </aside>
             </>
           ) : (
             <aside className="no-match-card">
               <CircleAlert />
-              <span>无传统直配</span>
-              <h2>未找到可信对应</h2>
-              <p>{result.mapping.normalized_intent}</p>
-              <small>{result.mapping.exclusions[0]}</small>
-              <Button onClick={restart}>换个说法</Button>
+              <h2>{result.status === "needs_context" ? "再说具体一些" : "暂未找到对应"}</h2>
+              <p>{result.status === "needs_context" ? "补充所在地点与具体场景，再来问一问。" : "说清要做的事情，以及心中的所求。"}</p>
+              <Button onClick={() => restart(false)}>补充或修改所求</Button>
             </aside>
           )}
         </section>
       )}
 
+      <p className="connection-status" role="status">{offline && "网络暂不可用，已为你继续匹配"}</p>
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="revelation-dialog">
           <div className="revelation-layout">
             {result?.deity && (
               <figure className="revelation-image-frame">
                 <div className="revelation-aureole" />
-                <img
-                  src={getDeityImagePath(result.deity)}
-                  alt={`${result.deity.canonical_name}造像`}
-                />
+                <DeityImage key={result.deity.id} deity={result.deity} />
                 <figcaption>{result.deity.canonical_name}</figcaption>
               </figure>
             )}
             <div className="revelation-copy">
               <DialogHeader>
-                <span className="dialog-kicker">礼成 · 尊号</span>
+                <span className="dialog-kicker">{ritual.steps.length ? "礼成" : "心意"}</span>
                 <DialogTitle>{result?.deity?.honorific_names[0] || result?.deity?.canonical_name}</DialogTitle>
                 <DialogDescription>{result?.deity?.tradition} · {result?.deity?.entity_type}</DialogDescription>
               </DialogHeader>
-              <div className="revelation-section">
-                <span>原典形象</span>
-                <p>{result?.deity?.iconography}</p>
-                {result?.deity?.iconography_variation && <small>{result.deity.iconography_variation}</small>}
-              </div>
               <div className="message-scroll">
                 <span>寄语</span>
                 <blockquote>{result?.message}</blockquote>
-                <small>现代生成寄语 · 非签文、非神谕、不承诺结果</small>
-              </div>
-              <div className="dialog-evidence">
-                数据状态：{result?.deity?.review_status === "verified" ? "已核验" : "研究草案"} ·
-                来源编号 {result?.deity?.source_ids.join("、")}
               </div>
             </div>
           </div>
@@ -459,3 +307,4 @@ export default function Home() {
     </main>
   );
 }
+

@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "赛博供奉｜所求何事",
-  description: "说出所求，在传统神职数据库中寻找对应，循清净供奉次序完成一场克制、可追溯的数字仪式。",
+  description: "写下心中所求，寻得相应神明，循礼供奉，收下一份寄语。",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",

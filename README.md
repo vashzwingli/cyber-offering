@@ -1,4 +1,25 @@
-# vinext-starter
+# 赛博供奉
+
+本地应用入口：`app/page.tsx`。行为路由与资料过滤统一由 `lib/match.ts` 负责，服务端与离线回退使用同一规则。
+
+匹配默认使用内部研究数据：100 条神佛名录、36 条行为映射均未完成终审，图片为原创概念资产。API 的 `verified` 模式只推荐映射和实体均已核验的直接传统职掌；当前无已核验条目。地域性对应先提示补充语境，功能类比与玩梗不作为推荐。
+
+对外页面按 2026-09-30 的展示要求精简，不显示模式选择、审核状态、文献来源或免责声明。仪轨使用 `display_note` 展示步骤行为，原始 `note` 与 `sources` 保留用于内部维护。
+
+仪轨场景按 `ritual-profiles.json` 中的 `scene` 配置过滤：当前道教显示 3 个物件互动，佛教显示 4 个。`lib/ritual.ts` 负责步骤筛选与供物状态，`public/images/rituals/` 存放九类纯色透明图片。重复献礼复用供物，撤馔移除饮食供物；原始 26 个步骤保留。全量清单见上层 `02-供奉仪轨/2026-09-30-仪轨场景与资产清单.md`。
+
+在本目录运行（Node.js ≥22.13）：
+
+```powershell
+node scripts/run-framework.mjs dev --port 5173
+node --experimental-strip-types --test scripts/match.test.mjs
+node node_modules/typescript/bin/tsc --noEmit
+npm run build
+```
+
+审查记录与已修复问题见 [REVIEW.md](REVIEW.md)。知识内容以项目上层 `SOURCE_OF_TRUTH.md` 为准，勿直接把草案改成已核验。
+
+下面保留运行框架与部署说明。
 
 A clean full-stack starter running on [vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and Drizzle support.
 

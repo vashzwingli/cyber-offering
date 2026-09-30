@@ -16,12 +16,90 @@
       }
     ],
     "steps": [
-      { "id": "purify", "label": "澡洁正衣", "note": "典籍先强调洁净坛场、香具与衣冠，再进入行礼。", "kind": "reverence", "icon": "hand" },
-      { "id": "invoke", "label": "发炉降神", "note": "启坛奉请，表明所告之事与奉祀对象。", "kind": "lamp", "icon": "lamp" },
-      { "id": "first-offering", "label": "一献上香", "note": "《醮说》所列第一献；《正一威仪经》亦记三献续香。", "kind": "incense", "icon": "flame" },
-      { "id": "second-offering", "label": "读词再献", "note": "第二献配合宣读词文，不以空泛许愿代替祝告。", "kind": "text", "icon": "scroll" },
-      { "id": "set-feast", "label": "陈茶果酒馔", "note": "《醮说》原列茶、果、酒、馔并言随力丰俭；不同神位用物有别。", "kind": "meal", "icon": "meal" },
-      { "id": "third-offering", "label": "三献送神", "note": "完成第三献，依文送神复炉，礼有始终。", "kind": "wine", "icon": "wine" }
+      {
+        "id": "purify",
+        "label": "澡洁正衣",
+        "note": "典籍先强调洁净坛场、香具与衣冠，再进入行礼。",
+        "kind": "reverence",
+        "icon": "hand",
+        "display_note": "净身整衣，洁净坛场与香具。",
+        "scene": {
+          "enabled": false,
+          "reason": "洁身正衣与洁坛场，不是供桌上的独立物件。"
+        }
+      },
+      {
+        "id": "invoke",
+        "label": "发炉降神",
+        "note": "启坛奉请，表明所告之事与奉祀对象。",
+        "kind": "lamp",
+        "icon": "lamp",
+        "display_note": "启坛奉请，陈明所告之事。",
+        "scene": {
+          "enabled": false,
+          "reason": "启坛奉请不能用台灯或推测的供物代替。"
+        }
+      },
+      {
+        "id": "first-offering",
+        "label": "一献上香",
+        "note": "《醮说》所列第一献；《正一威仪经》亦记三献续香。",
+        "kind": "incense",
+        "icon": "flame",
+        "display_note": "奉香行礼，行第一献。",
+        "scene": {
+          "enabled": true,
+          "action": "offer",
+          "assets": [
+            "incense"
+          ]
+        }
+      },
+      {
+        "id": "second-offering",
+        "label": "读词再献",
+        "note": "第二献配合宣读词文，不以空泛许愿代替祝告。",
+        "kind": "text",
+        "icon": "scroll",
+        "display_note": "宣读词文，行第二献。",
+        "scene": {
+          "enabled": true,
+          "action": "offer",
+          "assets": [
+            "scroll"
+          ]
+        }
+      },
+      {
+        "id": "set-feast",
+        "label": "陈茶果酒馔",
+        "note": "《醮说》原列茶、果、酒、馔并言随力丰俭；不同神位用物有别。",
+        "kind": "meal",
+        "icon": "meal",
+        "display_note": "陈设茶、果、酒与馔品。",
+        "scene": {
+          "enabled": true,
+          "action": "offer",
+          "assets": [
+            "tea",
+            "fruit",
+            "wine",
+            "meal"
+          ]
+        }
+      },
+      {
+        "id": "third-offering",
+        "label": "三献送神",
+        "note": "完成第三献，依文送神复炉，礼有始终。",
+        "kind": "wine",
+        "icon": "wine",
+        "display_note": "行第三献，送神复炉。",
+        "scene": {
+          "enabled": false,
+          "reason": "三献送神复炉无独立实体，不凭原 wine 图标推定酒供。"
+        }
+      }
     ]
   },
   {
@@ -41,12 +119,90 @@
       }
     ],
     "steps": [
-      { "id": "compose", "label": "正身合掌", "note": "先摄身心，以合掌恭敬进入供养。", "kind": "reverence", "icon": "hand" },
-      { "id": "flower", "label": "献华", "note": "经文所见“华香”供养之一，不规定现代花材与数量。", "kind": "flower", "icon": "flower" },
-      { "id": "incense", "label": "烧香", "note": "佛典区分末香、涂香、烧香等，这里仅以烧香作界面代表。", "kind": "incense", "icon": "flame" },
-      { "id": "lamp", "label": "燃灯明", "note": "灯明供养见于佛典；页面只作象征呈现。", "kind": "lamp", "icon": "lamp" },
-      { "id": "food", "label": "陈饮食", "note": "经文称饮食供养；不据现代网络说法补造固定果数和摆位。", "kind": "meal", "icon": "meal" },
-      { "id": "praise", "label": "赞叹瞻礼", "note": "以赞叹、瞻礼收束；不替代寺院的专门法会仪轨。", "kind": "reverence", "icon": "sparkles" }
+      {
+        "id": "compose",
+        "label": "正身合掌",
+        "note": "先摄身心，以合掌恭敬进入供养。",
+        "kind": "reverence",
+        "icon": "hand",
+        "display_note": "正身合掌，收摄身心。",
+        "scene": {
+          "enabled": false,
+          "reason": "正身合掌是身体姿态与摄心，不是供物。"
+        }
+      },
+      {
+        "id": "flower",
+        "label": "献华",
+        "note": "经文所见“华香”供养之一，不规定现代花材与数量。",
+        "kind": "flower",
+        "icon": "flower",
+        "display_note": "献花供养，表达敬意。",
+        "scene": {
+          "enabled": true,
+          "action": "offer",
+          "assets": [
+            "flower"
+          ]
+        }
+      },
+      {
+        "id": "incense",
+        "label": "烧香",
+        "note": "佛典区分末香、涂香、烧香等，这里仅以烧香作界面代表。",
+        "kind": "incense",
+        "icon": "flame",
+        "display_note": "焚香供养，恭敬行礼。",
+        "scene": {
+          "enabled": true,
+          "action": "offer",
+          "assets": [
+            "incense"
+          ]
+        }
+      },
+      {
+        "id": "lamp",
+        "label": "燃灯明",
+        "note": "灯明供养见于佛典；页面只作象征呈现。",
+        "kind": "lamp",
+        "icon": "lamp",
+        "display_note": "点亮供灯。",
+        "scene": {
+          "enabled": true,
+          "action": "offer",
+          "assets": [
+            "lamp"
+          ]
+        }
+      },
+      {
+        "id": "food",
+        "label": "陈饮食",
+        "note": "经文称饮食供养；不据现代网络说法补造固定果数和摆位。",
+        "kind": "meal",
+        "icon": "meal",
+        "display_note": "陈设饮食，表达供养之意。",
+        "scene": {
+          "enabled": true,
+          "action": "offer",
+          "assets": [
+            "meal"
+          ]
+        }
+      },
+      {
+        "id": "praise",
+        "label": "赞叹瞻礼",
+        "note": "以赞叹、瞻礼收束；不替代寺院的专门法会仪轨。",
+        "kind": "reverence",
+        "icon": "sparkles",
+        "display_note": "赞叹瞻礼，以敬意收束。",
+        "scene": {
+          "enabled": false,
+          "reason": "赞叹瞻礼没有独立物件，不以星光占位。"
+        }
+      }
     ]
   },
   {
@@ -66,13 +222,111 @@
       }
     ],
     "steps": [
-      { "id": "fasting", "label": "斋戒卜日", "note": "古礼先择日、斋戒并戒告执事，不从摆供直接开始。", "kind": "reverence", "icon": "hand" },
-      { "id": "vessels", "label": "省牲涤器", "note": "历史祀典核验牺牲并洁治祭器；太牢、少牢、特牲各有礼等。", "kind": "meal", "icon": "wheat" },
-      { "id": "food", "label": "陈粢盛酒醴", "note": "陈设谷物、酒醴与馔品，器数和品等随时代、祭级变化。", "kind": "wine", "icon": "wine" },
-      { "id": "welcome", "label": "迎神", "note": "奉请神位就祭，继而行献礼。", "kind": "incense", "icon": "flame" },
-      { "id": "first", "label": "初献读祝", "note": "初次酌献并读祝文，陈明祭意。", "kind": "text", "icon": "scroll" },
-      { "id": "later", "label": "亚献终献", "note": "第二、第三次酌献，合称三献。", "kind": "wine", "icon": "wine" },
-      { "id": "send", "label": "送神彻馔", "note": "礼成送神，随后撤馔；望瘗或望燎依具体祀典而异。", "kind": "reverence", "icon": "sparkles" }
+      {
+        "id": "fasting",
+        "label": "斋戒卜日",
+        "note": "古礼先择日、斋戒并戒告执事，不从摆供直接开始。",
+        "kind": "reverence",
+        "icon": "hand",
+        "display_note": "择日斋戒，戒告执事。",
+        "scene": {
+          "enabled": false,
+          "reason": "斋戒卜日属于准备行为。"
+        }
+      },
+      {
+        "id": "vessels",
+        "label": "省牲涤器",
+        "note": "历史祀典核验牺牲并洁治祭器；太牢、少牢、特牲各有礼等。",
+        "kind": "meal",
+        "icon": "wheat",
+        "display_note": "省视祭牲，洁治祭器。",
+        "scene": {
+          "enabled": false,
+          "reason": "省牲与涤器是核验、清洁过程，祭牲组合和器型尚未限定。"
+        }
+      },
+      {
+        "id": "food",
+        "label": "陈粢盛酒醴",
+        "note": "陈设谷物、酒醴与馔品，器数和品等随时代、祭级变化。",
+        "kind": "wine",
+        "icon": "wine",
+        "display_note": "陈设谷物、酒醴与馔品。",
+        "scene": {
+          "enabled": true,
+          "action": "offer",
+          "assets": [
+            "grain",
+            "wine",
+            "meal"
+          ]
+        }
+      },
+      {
+        "id": "welcome",
+        "label": "迎神",
+        "note": "奉请神位就祭，继而行献礼。",
+        "kind": "incense",
+        "icon": "flame",
+        "display_note": "奉请神位就祭。",
+        "scene": {
+          "enabled": false,
+          "reason": "迎神属于奉请动作，不凭火焰图标添加香供。"
+        }
+      },
+      {
+        "id": "first",
+        "label": "初献读祝",
+        "note": "初次酌献并读祝文，陈明祭意。",
+        "kind": "text",
+        "icon": "scroll",
+        "display_note": "酌献并读祝文，陈明祭意。",
+        "scene": {
+          "enabled": true,
+          "action": "offer",
+          "assets": [
+            "wine",
+            "scroll"
+          ]
+        }
+      },
+      {
+        "id": "later",
+        "label": "亚献终献",
+        "note": "第二、第三次酌献，合称三献。",
+        "kind": "wine",
+        "icon": "wine",
+        "display_note": "依次行亚献与终献。",
+        "scene": {
+          "enabled": true,
+          "action": "offer",
+          "assets": [
+            "wine"
+          ]
+        }
+      },
+      {
+        "id": "send",
+        "label": "送神彻馔",
+        "note": "礼成送神，随后撤馔；望瘗或望燎依具体祀典而异。",
+        "kind": "reverence",
+        "icon": "sparkles",
+        "display_note": "送神礼毕，撤去供馔。",
+        "scene": {
+          "enabled": true,
+          "action": "withdraw",
+          "assets": [
+            "meal",
+            "fruit",
+            "tea",
+            "wine",
+            "grain"
+          ],
+          "label": "撤馔",
+          "note": "撤去供馔。"
+        }
+      }
     ]
   },
   {
@@ -92,13 +346,118 @@
       }
     ],
     "steps": [
-      { "id": "prepare", "label": "盥洗陈器", "note": "先洁手、整衣、陈器具馔，再行参神。", "kind": "reverence", "icon": "hand" },
-      { "id": "invoke", "label": "参神降神", "note": "以礼拜、焚香与酹酒表达迎请。", "kind": "incense", "icon": "flame" },
-      { "id": "meal", "label": "进馔", "note": "传统礼书称进馔；具体牲、蔬、果、酒须按对象、地域和时代另证。", "kind": "meal", "icon": "meal" },
-      { "id": "first", "label": "初献读祝", "note": "第一次献酒并读祝，说明祭意。", "kind": "text", "icon": "scroll" },
-      { "id": "second", "label": "亚献", "note": "第二次酌献，通常不再读祝。", "kind": "wine", "icon": "wine" },
-      { "id": "third", "label": "终献", "note": "第三次酌献，完成三献。", "kind": "wine", "icon": "wine" },
-      { "id": "dismiss", "label": "辞神彻馔", "note": "礼毕辞神，再撤去供馔。", "kind": "reverence", "icon": "sparkles" }
+      {
+        "id": "prepare",
+        "label": "盥洗陈器",
+        "note": "先洁手、整衣、陈器具馔，再行参神。",
+        "kind": "reverence",
+        "icon": "hand",
+        "display_note": "洁手整衣，陈设器具与馔品。",
+        "scene": {
+          "enabled": false,
+          "reason": "盥洗整衣属于准备行为，不重复进馔。"
+        }
+      },
+      {
+        "id": "invoke",
+        "label": "参神降神",
+        "note": "以礼拜、焚香与酹酒表达迎请。",
+        "kind": "incense",
+        "icon": "flame",
+        "display_note": "礼拜、焚香、酹酒，奉请神位。",
+        "scene": {
+          "enabled": true,
+          "action": "offer",
+          "assets": [
+            "incense",
+            "wine"
+          ],
+          "label": "焚香酹酒",
+          "note": "焚香、酹酒。"
+        }
+      },
+      {
+        "id": "meal",
+        "label": "进馔",
+        "note": "传统礼书称进馔；具体牲、蔬、果、酒须按对象、地域和时代另证。",
+        "kind": "meal",
+        "icon": "meal",
+        "display_note": "进献供馔。",
+        "scene": {
+          "enabled": true,
+          "action": "offer",
+          "assets": [
+            "meal"
+          ]
+        }
+      },
+      {
+        "id": "first",
+        "label": "初献读祝",
+        "note": "第一次献酒并读祝，说明祭意。",
+        "kind": "text",
+        "icon": "scroll",
+        "display_note": "第一次献酒并读祝，陈明祭意。",
+        "scene": {
+          "enabled": true,
+          "action": "offer",
+          "assets": [
+            "wine",
+            "scroll"
+          ]
+        }
+      },
+      {
+        "id": "second",
+        "label": "亚献",
+        "note": "第二次酌献，通常不再读祝。",
+        "kind": "wine",
+        "icon": "wine",
+        "display_note": "行第二次酌献。",
+        "scene": {
+          "enabled": true,
+          "action": "offer",
+          "assets": [
+            "wine"
+          ]
+        }
+      },
+      {
+        "id": "third",
+        "label": "终献",
+        "note": "第三次酌献，完成三献。",
+        "kind": "wine",
+        "icon": "wine",
+        "display_note": "行第三次酌献。",
+        "scene": {
+          "enabled": true,
+          "action": "offer",
+          "assets": [
+            "wine"
+          ]
+        }
+      },
+      {
+        "id": "dismiss",
+        "label": "辞神彻馔",
+        "note": "礼毕辞神，再撤去供馔。",
+        "kind": "reverence",
+        "icon": "sparkles",
+        "display_note": "辞神礼毕，撤去供馔。",
+        "scene": {
+          "enabled": true,
+          "action": "withdraw",
+          "assets": [
+            "meal",
+            "fruit",
+            "tea",
+            "wine",
+            "grain"
+          ],
+          "label": "撤馔",
+          "note": "撤去供馔。"
+        }
+      }
     ]
   }
 ]
