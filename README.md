@@ -14,7 +14,7 @@ DeepSeek 配置见 `.env.example`；仅在服务端设置 `LLM_API_KEY`。系统
 
 ```powershell
 node scripts/run-framework.mjs dev --port 5173
-node --experimental-strip-types --test scripts/match.test.mjs scripts/experience-match.test.mjs
+node --experimental-strip-types --test scripts/match.test.mjs scripts/experience-match.test.mjs scripts/browser-match-request.test.mjs
 node node_modules/typescript/bin/tsc --noEmit
 npm run build
 ```
@@ -24,6 +24,8 @@ npm run build
 2026-09-30 更新：匹配响应新增 `reason`，页面在神名与原始心愿下显示一句原因。追星／追偶像不再作为天文或泛愿；出国场景不凭空推定乘船，候选受已有领域与场景约束。系统提示词版本为 `2026-09-30.3`。
 
 问卜时一次 DeepSeek 调用同时返回候选与 `message` 个性化寄语，寄语规则见 `lib/blessing-prompt.ts`。前端收到完整结果后先展示对象和原因；完成仪轨后叩拜，900ms 动效结束才打开寄语。叩拜与再次查看均不发 API 请求。D1 迁移 `0001_match_message.sql` 为抽取记录增加寄语字段，相同请求 ID 返回同对象、同寄语且不重复计数。旧记录没有寄语时使用按心愿生成的本地祝愿；模型失败时也保留体验兜底。
+
+手机端请求由 `lib/browser-match-request.ts` 负责：使用基本 AbortController 和独立 20 秒截止计时，覆盖网络请求及响应正文解析；即使浏览器忽略网络取消也会结束等待并走本地匹配。避免依赖较新的 AbortSignal.any／timeout，并兼容缺少 crypto.randomUUID 的浏览器。返回修改会立即取消等待，不让旧结果覆盖页面。回归测试见 `scripts/browser-match-request.test.mjs`。
 
 GitHub Pages 静态入口为 `github-pages/`，构建命令 `npm run build:pages`；独立 API 为 `worker/api.ts`，发布步骤与 Key 保密说明见 [GITHUB-PAGES.md](GITHUB-PAGES.md)。Pages 工作流只接收公开 API 地址，模型 Key 保存在后端 Secret。
 

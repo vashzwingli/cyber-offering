@@ -24,6 +24,7 @@ import ritualProfilesJson from "@/data/ritual-profiles.json";
 import { type MatchResult, type Deity } from "@/lib/match";
 import { resolveExperienceMatch } from "@/lib/experience-match";
 import { assetUrl, matchApiUrl } from "@/lib/browser-config";
+import { requestBrowserMatch } from "@/lib/browser-match-request";
 import { getRitualAssetPath, getSceneOfferings, getVisibleRitualSteps, ritualAssetLabels, type RitualProfile, type RitualProfileData, type RitualStep } from "@/lib/ritual";
 
 type Stage = "asking" | "seeking" | "ritual";
@@ -144,17 +145,10 @@ export default function Home() {
     setHasBowed(false);
     setDialogOpen(false);
     try {
-      const [response] = await Promise.all([
-        fetch(matchApiUrl(), {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({ query: trimmed, mode: "experience", request_id: crypto.randomUUID() }),
-          signal: AbortSignal.any([controller.signal, AbortSignal.timeout(20000)]),
-        }),
+      const [nextResult] = await Promise.all([
+        requestBrowserMatch(matchApiUrl(), trimmed, { signal: controller.signal }),
         new Promise((resolve) => setTimeout(resolve, 1400)),
       ]);
-      if (!response.ok) throw new Error("match failed");
-      const nextResult = await response.json() as MatchResult;
       if (!controller.signal.aborted) setResult(nextResult);
     } catch {
       if (controller.signal.aborted) return;
