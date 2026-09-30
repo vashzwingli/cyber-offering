@@ -1,8 +1,10 @@
 # 赛博供奉
 
-本地应用入口：`app/page.tsx`。行为路由与资料过滤统一由 `lib/match.ts` 负责，服务端与离线回退使用同一规则。
+本地应用入口：`app/page.tsx`。默认体验匹配由 `lib/experience-match.ts`、`lib/online-analysis.ts`、`lib/match-service.ts` 负责；研究与正典过滤保留在 `lib/match.ts`。
 
-匹配默认使用内部研究数据：100 条神佛名录、36 条行为映射均未完成终审，图片为原创概念资产。API 的 `verified` 模式只推荐映射和实体均已核验的直接传统职掌；当前无已核验条目。地域性对应先提示补充语境，功能类比与玩梗不作为推荐。
+100 条神佛名录、36 条行为映射均未完成终审，图片为原创概念资产。默认 `experience` 模式解析口语与多重诉求，允许功能联想和一般象征兜底；非空有效输入始终匹配名录内对象。`research`、`verified` 仍保留原有证据过滤，当前无已核验条目。
+
+DeepSeek 配置见 `.env.example`；仅在服务端设置 `LLM_API_KEY`。系统提示词位于 `lib/match-prompt.ts`。API 包括 `POST /api/match`、`POST /api/match/analyze`、`GET /api/match/status`、`GET /api/match/stats`。D1 原子抽取以最近 1000 次和累计次数优先轮换相关性接近的候选；同一 request_id 重试不重复计数。详细接口与限制见上层 `05-现代行为映射/2026-09-30-在线解析与频率均衡.md`。
 
 对外页面按 2026-09-30 的展示要求精简，不显示模式选择、审核状态、文献来源或免责声明。仪轨使用 `display_note` 展示步骤行为，原始 `note` 与 `sources` 保留用于内部维护。
 
@@ -12,7 +14,7 @@
 
 ```powershell
 node scripts/run-framework.mjs dev --port 5173
-node --experimental-strip-types --test scripts/match.test.mjs
+node --experimental-strip-types --test scripts/match.test.mjs scripts/experience-match.test.mjs
 node node_modules/typescript/bin/tsc --noEmit
 npm run build
 ```

@@ -1,4 +1,8 @@
-// Intentionally empty by default.
-// Add Drizzle tables here when the site actually needs a database.
-// See examples/d1/db/schema.ts for an opt-in example.
-export {};
+import { sqliteTable, text, integer, index } from "drizzle-orm/sqlite-core";
+export const deityExposures = sqliteTable("deity_exposures", {
+  deityId: text("deity_id").primaryKey(), totalCount: integer("total_count").notNull().default(0), lastShown: integer("last_shown").notNull().default(0),
+});
+export const matchDraws = sqliteTable("match_draws", {
+  requestId: text("request_id").primaryKey(), queryHash: text("query_hash").notNull(), deityId: text("deity_id").notNull(),
+  score: integer("score").notNull(), relationLevel: text("relation_level").notNull(), category: text("category").notNull(), createdAt: integer("created_at").notNull(),
+}, (table) => [index("match_draws_created_at_idx").on(table.createdAt)]);

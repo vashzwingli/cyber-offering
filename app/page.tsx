@@ -21,7 +21,8 @@ import { Input } from "@/components/ui/input";
 
 
 import ritualProfilesJson from "@/data/ritual-profiles.json";
-import { resolveMatch, type MatchResult, type Deity } from "@/lib/match";
+import { type MatchResult, type Deity } from "@/lib/match";
+import { resolveExperienceMatch } from "@/lib/experience-match";
 import { getRitualAssetPath, getSceneOfferings, getVisibleRitualSteps, ritualAssetLabels, type RitualProfile, type RitualProfileData, type RitualStep } from "@/lib/ritual";
 
 type Stage = "asking" | "seeking" | "ritual";
@@ -138,8 +139,8 @@ export default function Home() {
         fetch("/api/match", {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ query: trimmed }),
-          signal: AbortSignal.any([controller.signal, AbortSignal.timeout(10000)]),
+          body: JSON.stringify({ query: trimmed, mode: "experience", request_id: crypto.randomUUID() }),
+          signal: AbortSignal.any([controller.signal, AbortSignal.timeout(20000)]),
         }),
         new Promise((resolve) => setTimeout(resolve, 1400)),
       ]);
@@ -149,7 +150,7 @@ export default function Home() {
     } catch {
       if (controller.signal.aborted) return;
       setOffline(true);
-      setResult(resolveMatch(trimmed));
+      setResult(resolveExperienceMatch(trimmed));
     } finally {
       if (!controller.signal.aborted) setStage("ritual");
     }

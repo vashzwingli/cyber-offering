@@ -2,6 +2,12 @@ import { env } from "cloudflare:workers";
 import { drizzle } from "drizzle-orm/d1";
 import * as schema from "./schema";
 
+export function getD1() { return env.DB; }
+export function getLlmEnvironment() {
+  return { LLM_API_KEY: env.LLM_API_KEY ?? process.env.LLM_API_KEY, LLM_API_URL: env.LLM_API_URL ?? process.env.LLM_API_URL,
+    LLM_MODEL: env.LLM_MODEL ?? process.env.LLM_MODEL, LLM_TIMEOUT_MS: env.LLM_TIMEOUT_MS ?? process.env.LLM_TIMEOUT_MS };
+}
+
 export function getDb() {
   if (!env.DB) {
     throw new Error(

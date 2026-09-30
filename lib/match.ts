@@ -2,7 +2,7 @@ import mappings from "../data/action-mappings.json" with { type: "json" };
 import deities from "../data/deities.json" with { type: "json" };
 import { findRuleMappingId } from "./intent-router.ts";
 
-export type MatchMode = "research" | "verified";
+export type MatchMode = "experience" | "research" | "verified";
 export type Deity = (typeof deities)[number];
 export type Mapping = (typeof mappings)[number];
 export type MatchResult = {
@@ -10,7 +10,7 @@ export type MatchResult = {
   mode: MatchMode;
   mapping: Mapping;
   deity: Deity | null;
-  engine: "local" | "llm";
+  engine: "local" | "llm" | "cached";
   status: "matched" | "no_match" | "unverified" | "needs_context";
   message: string;
 };
