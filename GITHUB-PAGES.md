@@ -1,6 +1,19 @@
 # GitHub Pages 发布与 API Key 保密
 
-适用于 2026-09-30 当前版本。仓库尚未创建、Cloudflare 后端尚未部署；以下文件已在本地准备好。
+适用于 2026-09-30 当前版本。按用户选择，仓库 [vashzwingli/cyber-offering](https://github.com/vashzwingli/cyber-offering) 已改为公开并启用 GitHub Pages，Cloudflare 后端已部署。
+
+## 当前部署状态
+
+- API：`https://cyber-offering-api.agrandwalk.workers.dev`
+- Worker：`cyber-offering-api`；D1：`cyber-offering`，迁移已完成。
+- 页面允许来源：`https://vashzwingli.github.io`；限流：每 IP 每 60 秒约 30 次。
+- 已验证线上状态接口、D1 持久计数、相同请求去重、追偶像匹配原因、跨域预检和拒绝未允许的来源。
+- DeepSeek Key 已配置；三条线上输入均返回 `engine=llm`、`model_status=ready`，模型响应约 1.8–2.5 秒。追偶像输入返回妈祖，并说明寄托旅途平安、相见如愿的心愿；面试原因已改为面试顺利、求职如愿。
+- GitHub Actions 的 `VITE_API_BASE_URL` 已设为上述 API origin。GitHub Pages 已设为 GitHub Actions 发布，网页入口为 `https://vashzwingli.github.io/cyber-offering/`；每次推送 `main` 自动更新，构建状态见仓库 Actions。
+
+本机 `wrangler.api.jsonc` 已写入真实账户与数据库配置，且被 Git 忽略。当前继续部署时不要再复制范本覆盖，也不要重复创建数据库。Key 已存入 Worker Secrets，无需再次输入或配置到 GitHub。
+
+GitHub Pages 免费计划支持公开仓库；私有仓库需要相应付费计划。请先确认账号资格，再启用 Pages；仓库可保持私有并改用 Cloudflare 托管前端。参见 [GitHub Pages 可用范围](https://docs.github.com/en/pages/getting-started-with-github-pages)。
 
 ## 发布结构
 
@@ -17,7 +30,7 @@ GitHub Pages（页面、图片、交互）
 
 创建一个空仓库，将当前 `site/` 的**内容**作为仓库根目录上传，根目录应直接包含 `package.json`、`github-pages/`、`worker/`、`.github/`。不要把整个知识库作为发布源码，也不要手动上传 `node_modules`、`.env.local`、`.dev.vars`、`.sites-runtime`、`.wrangler`、`dist`、`pages-dist` 或旧的打包文件。现有 `.gitignore` 已排除这些文件。
 
-如果使用 GitHub Desktop，将此 `site/` 目录作为本地仓库，添加新 GitHub 仓库为另一个远程，不覆盖现有 Sites 远程。也可将本目录导出的源码包解压到新目录后初始化新仓库。GitHub Pages 发布配置默认监听 `main`；其他默认分支应修改 `.github/workflows/pages.yml`。
+当前 `site/` 的 `origin` 已指向上述 GitHub 仓库。另行迁移项目时，可将源码包解压到新目录后初始化新仓库。GitHub Pages 发布配置默认监听 `main`；其他默认分支应修改 `.github/workflows/pages.yml`。
 
 ## 2. 创建 Cloudflare 后端及 D1
 
@@ -70,4 +83,4 @@ npm run build:pages
 
 可访问后端 `/api/match/status` 检查 `configured`、`database_ready`；正常连接时前者应为 true。页面成功调用返回 `model_status=ready`、`engine=llm` 才表明真实在线模型已完成解析。`GET /api/match/stats` 查看所有对象计数；匹配响应的 `reason` 是页面神名下方的一句原因。
 
-本地已验证：追偶像语义及原因、旧模式、模型输出校验，共 16 项测试；独立 Worker 的跨域预检、允许／拒绝来源、D1 去重；仓库子路径构建及前端秘密标记扫描。真实 GitHub 发布和 Cloudflare 远程调用需上述账户配置完成后验证。
+本地已验证：追偶像语义及原因、旧模式、模型输出校验，共 16 项测试；独立 Worker 的跨域预检、允许／拒绝来源、D1 去重；仓库子路径构建及前端秘密标记扫描。Cloudflare 远程接口、真实 DeepSeek 调用及数据库已验证；重复线上请求返回相同对象且只增加一次计数。网页最终验收应确认 Actions 发布成功，并在上述网页入口检查图片和真实 API 调用。

@@ -19,15 +19,17 @@ export function getTravelDomain(query: string, deity: Deity) {
   return deity.domains.find((domain) => /救苦|救难|解厄/.test(domain));
 }
 export function buildMatchReason(query: string, deity: Deity, category: string, relation: string, explicit = false) {
-  if (explicit) return `你点名了${deity.canonical_name}，便向这一位寄托心愿，愿${wishes[category] ?? wishes.everyday}。`;
-  if (relation === "symbolic_only") return `为你选${deity.canonical_name}作为这次心愿的象征，愿${wishes[category] ?? wishes.everyday}。`;
+  const fanTrip = category === "travel" && /偶像|追星|应援|演唱会|见面会/.test(query);
+  const aim = category === "learning" && /面试|求职|应聘|offer/i.test(query)
+    ? "面试顺利、求职如愿" : fanTrip ? "旅途平安、相见如愿"
+    : category === "performance" && /偶像|追星|应援|演唱会|见面会/.test(query)
+      ? "现场尽兴、相见如愿" : wishes[category] ?? wishes.everyday;
+  if (explicit) return `你点名了${deity.canonical_name}，便向这一位寄托心愿，愿${aim}。`;
+  if (relation === "symbolic_only") return `为你选${deity.canonical_name}作为这次心愿的象征，愿${aim}。`;
   const theme = themes.find((item) => item.id === category);
   const domain = (category === "travel" ? getTravelDomain(query, deity) : undefined)
     ?? deity.domains.find((domain) => theme?.domains.some((term) => domain.includes(term))) ?? deity.domains[0];
-  if (!domain) return `向${deity.canonical_name}寄托这次心愿，愿${wishes[category] ?? wishes.everyday}。`;
-  const fanTrip = category === "travel" && /偶像|追星|应援|演唱会|见面会/.test(query);
-  const aim = fanTrip ? "旅途平安、相见如愿" : category === "performance" && /偶像|追星|应援|演唱会|见面会/.test(query)
-    ? "现场尽兴、相见如愿" : wishes[category] ?? wishes.everyday;
+  if (!domain) return `向${deity.canonical_name}寄托这次心愿，愿${aim}。`;
   // Quote existing domains; modern wishes never become new traditional offices.
   return `这次取${deity.canonical_name}所关联的“${domain}”之意，寄托${aim}的心愿。`;
 }
