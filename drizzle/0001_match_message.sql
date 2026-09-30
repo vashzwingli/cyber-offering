@@ -1,0 +1,1 @@
+ALTER TABLE `match_draws` ADD `message` text;

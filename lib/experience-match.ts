@@ -5,6 +5,7 @@ import themes from "../data/experience-themes.json" with { type: "json" };
 import { findRuleMappingId } from "./intent-router.ts";
 import type { Deity, Mapping, MatchResult } from "./match.ts";
 import { buildMatchReason, getTravelDomain } from "./match-reason.ts";
+import { buildLocalBlessing } from "./blessing.ts";
 
 export const categories = ["learning", "wealth", "relationships", "health", "family", "travel", "craft", "performance", "food", "home", "protection", "ethics", "nature", "practice", "remembrance", "care", "everyday"] as const;
 export type Category = typeof categories[number];
@@ -133,13 +134,13 @@ export function selectBalancedCandidate(pool: Candidate[], counts: ExposureCount
 }
 
 export function buildExperienceResult(query: string, analysis: Analysis, selected: Candidate, options: {
-  engine?: "local" | "llm" | "cached"; modelStatus?: string; balanced?: boolean; persistence?: "d1" | "unavailable" | "offline"; replayed?: boolean;
+  engine?: "local" | "llm" | "cached"; modelStatus?: string; balanced?: boolean; persistence?: "d1" | "unavailable" | "offline"; replayed?: boolean; message?: string;
 } = {}): ExperienceResult {
   const deity = deities.find((item) => item.id === selected.deity_id)!;
   const intent = analysis.intents[selected.intent_index] ?? analysis.intents[0];
   const mapping: Mapping = { id: `EXPERIENCE-${intent.category}`, life_domain: intent.category, input_examples: [], normalized_intent: intent.wish,
     routes: [{ target_id: deity.id, relation_level: selected.relation_level, score: selected.score }], clarifying_questions: [], exclusions: [], source_ids: deity.source_ids, review_status: deity.review_status };
-  return { query: query.trim().slice(0, 240), mode: "experience", mapping, deity, status: "matched", engine: options.engine ?? "local", message: "愿你心有所定，所行顺遂。",
+  return { query: query.trim().slice(0, 240), mode: "experience", mapping, deity, status: "matched", engine: options.engine ?? "local", message: options.message ?? buildLocalBlessing(query, analysis),
     reason: buildMatchReason(query, deity, intent.category, selected.relation_level, findNamedDeities(query).some((item) => item.id === deity.id)),
     analysis: { intents: analysis.intents, excluded_categories: analysis.excluded_categories }, candidates: analysis.candidates, relation_level: selected.relation_level,
     selection: { balanced: options.balanced ?? false, persistence: options.persistence ?? "offline", replayed: options.replayed ?? false, window_size: 1000 }, model_status: options.modelStatus ?? "local_fallback" };

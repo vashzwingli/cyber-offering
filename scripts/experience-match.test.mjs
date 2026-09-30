@@ -4,11 +4,12 @@ import { DatabaseSync } from "node:sqlite";
 import { readFileSync } from "node:fs";
 import { buildLocalAnalysis, resolveExperienceMatch, findNamedDeities, parseModelAnalysis, getSelectionPool, selectBalancedCandidate } from "../lib/experience-match.ts";
 import { analyzeQuery } from "../lib/online-analysis.ts";
-import { SELECT_DRAW_SQL, INCREMENT_SQL } from "../lib/exposure-store.ts";
+import { SELECT_DRAW_SQL, INCREMENT_SQL, recordDraw, readDraw } from "../lib/exposure-store.ts";
+import { parseBlessingContent } from "../lib/blessing.ts";
 import { buildMatchReason } from "../lib/match-reason.ts";
 import deities from "../data/deities.json" with { type: "json" };
 const valid = { intents: [{ action: "学习", scene: "学校", wish: "考试顺利", category: "learning", priority: 3, mapping_id: null }], excluded_categories: [],
-  candidates: [{ deity_id: "BUD-005", intent_index: 0, score: 85, relation_level: "functional_analogy" }] };
+  candidates: [{ deity_id: "BUD-005", intent_index: 0, score: 85, relation_level: "functional_analogy" }], message: "愿你在准备考试的日子里，逐渐理清思路，也把休息留给自己。把熟悉的知识再走一遍，带着从容迈向考场，愿这份认真有所回应。" };
 test("overseas idol trips are travel and performance, never astronomy or an arbitrary everyday draw", () => {
   for (const query of ["想去日本追偶像", "出国追星", "去日本看演唱会"]) {
     const analysis = buildLocalAnalysis(query);
@@ -60,7 +61,42 @@ test("configured provider runs even for a known local rule and receives all 100 
     assert.equal(JSON.parse(body.messages[1].content).catalogue.length, 100);
     return Response.json({ choices: [{ finish_reason: "stop", message: { content: JSON.stringify(valid) } }] });
   });
-  assert.equal(calls, 1); assert.equal(result.engine, "llm");
+  assert.equal(calls, 1); assert.equal(result.engine, "llm"); assert.equal(result.message, valid.message);
+});
+test("blessing text is validated and missing or unsafe text triggers a contextual fallback", async () => {
+  for (const message of [undefined, "", "短", "愿你一定拿到这份工作，我保证你成功，神谕已定。", "<script>不应显示</script>", "字".repeat(181)]) {
+    assert.equal(parseBlessingContent(JSON.stringify({ message })), null);
+    const result = await analyzeQuery("明天面试，想顺利拿到 offer", { LLM_API_KEY: "test-key" }, {}, async () => Response.json({ choices: [{ message: { content: JSON.stringify({ ...valid, message }) } }] }));
+    assert.equal(result.engine, "local"); assert.ok(result.message.includes("面试顺利、求职如愿"));
+  }
+});
+test("D1 records the original blessing with its draw and replay does not replace it or count again", async () => {
+  const sqlite = new DatabaseSync(":memory:");
+  sqlite.exec(readFileSync(new URL("../drizzle/0000_lean_leader.sql", import.meta.url), "utf8"));
+  sqlite.exec(readFileSync(new URL("../drizzle/0001_match_message.sql", import.meta.url), "utf8"));
+  const prepare = (sql, args = []) => ({
+    bind: (...values) => prepare(sql, values),
+    first: async () => sqlite.prepare(sql).get(...args) ?? null,
+    execute: () => {
+      const statement = sqlite.prepare(sql);
+      if (statement.columns().length) return { results: statement.all(...args), meta: { changes: 0 } };
+      const result = statement.run(...args); return { results: [], meta: { changes: Number(result.changes) } };
+    },
+  });
+  const db = { prepare, batch: async (statements) => {
+    sqlite.exec("BEGIN");
+    try { const results = statements.map((statement) => statement.execute()); sqlite.exec("COMMIT"); return results; }
+    catch (error) { sqlite.exec("ROLLBACK"); throw error; }
+  } };
+  const pool = [{ ...valid.candidates[0], category: "learning" }];
+  const first = await recordDraw(db, "blessing-replay", "query", pool, valid.message);
+  const repeat = await recordDraw(db, "blessing-replay", "query", pool, "不应该覆盖的另一段寄语");
+  assert.equal(first.draw.message, valid.message); assert.equal(repeat.draw.message, valid.message); assert.equal(repeat.replayed, true);
+  assert.equal((await readDraw(db, "blessing-replay")).message, valid.message);
+  assert.equal(sqlite.prepare("SELECT sum(total_count) AS n FROM deity_exposures").get().n, 1);
+  await assert.rejects(recordDraw(db, "blessing-replay", "other-query", pool, "冲突内容"));
+  assert.equal((await readDraw(db, "blessing-replay")).message, valid.message);
+  sqlite.close();
 });
 test("provider errors, malformed JSON, null, empty and low confidence output safely fall back", async () => {
   for (const content of ["broken", "null", JSON.stringify({ ...valid, candidates: [] }), JSON.stringify({ ...valid, candidates: [{ ...valid.candidates[0], score: 0 }] })]) {

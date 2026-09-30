@@ -1,6 +1,6 @@
 import type { Candidate, Category, ExposureCounts, RelationLevel } from "./experience-match.ts";
 export const WINDOW_SIZE = 1000;
-export type Draw = { request_id: string; query_hash: string; deity_id: string; score: number; relation_level: RelationLevel; category: Category; created_at: number };
+export type Draw = { request_id: string; query_hash: string; deity_id: string; score: number; relation_level: RelationLevel; category: Category; created_at: number; message?: string | null };
 export const SELECT_DRAW_SQL = `WITH recent AS (
  SELECT deity_id, count(*) AS recent_count FROM (SELECT deity_id FROM match_draws ORDER BY created_at DESC, rowid DESC LIMIT 1000) GROUP BY deity_id
 ), candidates AS (
@@ -25,12 +25,13 @@ export async function readCounts(db: D1Database): Promise<ExposureCounts> {
 export async function readDraw(db: D1Database, requestId: string) {
   return db.prepare("SELECT * FROM match_draws WHERE request_id=?").bind(requestId).first<Draw>();
 }
-export async function recordDraw(db: D1Database, requestId: string, queryHash: string, pool: Array<Candidate & { category: Category }>) {
+export async function recordDraw(db: D1Database, requestId: string, queryHash: string, pool: Array<Candidate & { category: Category }>, message?: string) {
   const results = await db.batch([
     db.prepare(SELECT_DRAW_SQL).bind(JSON.stringify(pool), requestId, queryHash, Date.now()), db.prepare(INCREMENT_SQL).bind(requestId),
+    db.prepare("UPDATE match_draws SET message=? WHERE request_id=? AND query_hash=? AND message IS NULL").bind(message ?? null, requestId, queryHash),
     db.prepare("SELECT * FROM match_draws WHERE request_id=?").bind(requestId),
   ]);
-  const draw = results[2].results[0] as unknown as Draw;
+  const draw = results[3].results[0] as unknown as Draw;
   if (!draw || draw.query_hash !== queryHash) throw new RequestConflictError();
   return { draw, replayed: Number(results[0].meta.changes) === 0 };
 }

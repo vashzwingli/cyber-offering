@@ -1,6 +1,7 @@
 import mappings from "../data/action-mappings.json" with { type: "json" };
 import { buildLocalAnalysis, getModelCatalogue, getSelectionPool, parseModelAnalysis, type ExposureCounts } from "./experience-match.ts";
 import { MATCH_SYSTEM_PROMPT } from "./match-prompt.ts";
+import { buildLocalBlessing, parseBlessingContent } from "./blessing.ts";
 export type LlmEnvironment = { LLM_API_KEY?: string; LLM_API_URL?: string; LLM_MODEL?: string; LLM_TIMEOUT_MS?: string };
 export function getLlmConfig(env: LlmEnvironment) {
   return { endpoint: env.LLM_API_URL || "https://api.deepseek.com/chat/completions", apiKey: env.LLM_API_KEY?.trim() || "",
@@ -9,7 +10,7 @@ export function getLlmConfig(env: LlmEnvironment) {
 export async function analyzeQuery(query: string, env: LlmEnvironment, counts: ExposureCounts = {}, fetcher: typeof fetch = fetch) {
   const local = buildLocalAnalysis(query);
   const config = getLlmConfig(env);
-  const fallback = (model_status: string) => ({ analysis: local, engine: "local" as const, model_status });
+  const fallback = (model_status: string) => ({ analysis: local, engine: "local" as const, model_status, message: buildLocalBlessing(query, local) });
   if (!config.apiKey) return fallback("missing_key");
   try {
     const response = await fetcher(config.endpoint, {
@@ -24,7 +25,8 @@ export async function analyzeQuery(query: string, env: LlmEnvironment, counts: E
     const choice = payload.choices?.[0];
     if (choice?.finish_reason && choice.finish_reason !== "stop") return fallback("incomplete_response");
     const analysis = parseModelAnalysis(choice?.message?.content ?? "", query);
-    if (!analysis || !getSelectionPool(analysis, query).length) return fallback("invalid_response");
-    return { analysis, engine: "llm" as const, model_status: "ready" };
+    const message = parseBlessingContent(choice?.message?.content ?? "");
+    if (!analysis || !getSelectionPool(analysis, query).length || !message) return fallback("invalid_response");
+    return { analysis, engine: "llm" as const, model_status: "ready", message };
   } catch (error) { return fallback(error instanceof Error && /timeout|abort/i.test(error.name) ? "timeout" : "provider_error"); }
 }

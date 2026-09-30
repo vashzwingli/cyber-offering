@@ -10,6 +10,7 @@
 - 已验证线上状态接口、D1 持久计数、相同请求去重、追偶像匹配原因、跨域预检和拒绝未允许的来源。
 - DeepSeek Key 已配置；三条线上输入均返回 `engine=llm`、`model_status=ready`，模型响应约 1.8–2.5 秒。追偶像输入返回妈祖，并说明寄托旅途平安、相见如愿的心愿；面试原因已改为面试顺利、求职如愿。
 - GitHub Actions 的 `VITE_API_BASE_URL` 已设为上述 API origin。GitHub Pages 已设为 GitHub Actions 发布，网页入口为 `https://vashzwingli.github.io/cyber-offering/`；每次推送 `main` 自动更新，构建状态见仓库 Actions。
+- 问卜请求在同一次模型调用中生成候选和个性化 `message` 寄语，叩拜完成后才展示；叩拜不再发请求。寄语与抽取结果一起保存，重复查看保持一致。部署该版本前需应用 `0001_match_message.sql` 迁移。
 
 本机 `wrangler.api.jsonc` 已写入真实账户与数据库配置，且被 Git 忽略。当前继续部署时不要再复制范本覆盖，也不要重复创建数据库。Key 已存入 Worker Secrets，无需再次输入或配置到 GitHub。
 
@@ -83,4 +84,4 @@ npm run build:pages
 
 可访问后端 `/api/match/status` 检查 `configured`、`database_ready`；正常连接时前者应为 true。页面成功调用返回 `model_status=ready`、`engine=llm` 才表明真实在线模型已完成解析。`GET /api/match/stats` 查看所有对象计数；匹配响应的 `reason` 是页面神名下方的一句原因。
 
-本地已验证：追偶像语义及原因、旧模式、模型输出校验，共 16 项测试；独立 Worker 的跨域预检、允许／拒绝来源、D1 去重；仓库子路径构建及前端秘密标记扫描。Cloudflare 远程接口、真实 DeepSeek 调用及数据库已验证；重复线上请求返回相同对象且只增加一次计数。网页最终验收应确认 Actions 发布成功，并在上述网页入口检查图片和真实 API 调用。
+本地已验证：追偶像语义及原因、旧模式、模型输出校验，共 18 项测试（新增单次调用寄语校验及 D1 寄语去重）；独立 Worker 的跨域预检、允许／拒绝来源、D1 去重；仓库子路径构建及前端秘密标记扫描。Cloudflare 远程接口、真实 DeepSeek 调用及数据库已验证；重复线上请求返回相同对象且只增加一次计数。网页最终验收应确认 Actions 发布成功，并在上述网页入口检查图片和真实 API 调用。

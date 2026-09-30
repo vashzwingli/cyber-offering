@@ -114,11 +114,17 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [offline, setOffline] = useState(false);
   const requestRef = useRef<AbortController | null>(null);
+  const bowTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const stepListRef = useRef<HTMLDivElement | null>(null);
-  useEffect(() => () => requestRef.current?.abort(), []);
+  useEffect(() => () => {
+    requestRef.current?.abort();
+    if (bowTimerRef.current) clearTimeout(bowTimerRef.current);
+  }, []);
   const [result, setResult] = useState<MatchResult | null>(null);
   const [completedCount, setCompletedCount] = useState(0);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [isBowing, setIsBowing] = useState(false);
+  const [hasBowed, setHasBowed] = useState(false);
   const ritual = useMemo(() => getRitualProfile(result?.deity ?? null), [result]);
   const isComplete = ritual.steps.length > 0 && completedCount === ritual.steps.length;
   const illumination = stage === "ritual"
@@ -135,6 +141,8 @@ export default function Home() {
     setOffline(false);
     setStage("seeking");
     setCompletedCount(0);
+    setHasBowed(false);
+    setDialogOpen(false);
     try {
       const [response] = await Promise.all([
         fetch(matchApiUrl(), {
@@ -159,6 +167,10 @@ export default function Home() {
 
   function restart(clearQuery = true) {
     requestRef.current?.abort();
+    if (bowTimerRef.current) clearTimeout(bowTimerRef.current);
+    bowTimerRef.current = null;
+    setIsBowing(false);
+    setHasBowed(false);
     setStage("asking");
     if (clearQuery) setQuery("");
     setResult(null);
@@ -166,8 +178,20 @@ export default function Home() {
     setDialogOpen(false);
   }
 
+  function bowAndReveal() {
+    if (isBowing) return;
+    if (hasBowed) { setDialogOpen(true); return; }
+    setIsBowing(true);
+    bowTimerRef.current = setTimeout(() => {
+      bowTimerRef.current = null;
+      setIsBowing(false);
+      setHasBowed(true);
+      setDialogOpen(true);
+    }, 900);
+  }
+
   return (
-    <main className={`experience stage-${stage}`}>
+    <main className={`experience stage-${stage} ${isBowing ? "is-bowing" : ""}`}>
       <TempleScene
         deity={result?.deity ?? null}
         completedSteps={ritual.steps.slice(0, completedCount)}
@@ -265,8 +289,9 @@ export default function Home() {
                   })}
                 </div>
                 {(isComplete || !ritual.steps.length) && (
-                  <Button className="bow-button" onClick={() => setDialogOpen(true)}>
-                    <Sparkles /> {isComplete ? "叩拜 · 查看寄语" : "查看寄语"}
+                  <Button className="bow-button" disabled={isBowing} onClick={bowAndReveal}>
+                    {isBowing ? <LoaderCircle className="animate-spin" /> : <Sparkles />}
+                    {isBowing ? "叩拜中…" : hasBowed ? "查看寄语" : "叩拜 · 查看寄语"}
                   </Button>
                 )}
               </aside>

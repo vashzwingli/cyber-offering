@@ -5,4 +5,5 @@ export const deityExposures = sqliteTable("deity_exposures", {
 export const matchDraws = sqliteTable("match_draws", {
   requestId: text("request_id").primaryKey(), queryHash: text("query_hash").notNull(), deityId: text("deity_id").notNull(),
   score: integer("score").notNull(), relationLevel: text("relation_level").notNull(), category: text("category").notNull(), createdAt: integer("created_at").notNull(),
+  message: text("message"),
 }, (table) => [index("match_draws_created_at_idx").on(table.createdAt)]);

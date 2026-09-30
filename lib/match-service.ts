@@ -2,6 +2,7 @@ import { getD1, getLlmEnvironment } from "../db/index";
 import { buildExperienceResult, buildLocalAnalysis, getSelectionPool, selectBalancedCandidate, type ExposureCounts, type Analysis } from "./experience-match";
 import { analyzeQuery, getLlmConfig } from "./online-analysis";
 import { readCounts, readDraw, recordDraw, RequestConflictError } from "./exposure-store";
+import { buildLocalBlessing } from "./blessing";
 export { RequestConflictError };
 async function state() {
   const db = getD1();
@@ -23,22 +24,25 @@ export async function matchExperience(query: string, requestId: string) {
     if (prior) {
       if (prior.query_hash !== queryHash) throw new RequestConflictError();
       const analysis = buildLocalAnalysis(query); analysis.intents[0].category = prior.category;
-      return buildExperienceResult(query, analysis, { ...prior, intent_index: 0 }, { engine: "cached", modelStatus: "replayed", balanced: true, persistence: "d1", replayed: true });
+      return buildExperienceResult(query, analysis, { ...prior, intent_index: 0 }, { engine: "cached", modelStatus: "replayed", balanced: true, persistence: "d1", replayed: true,
+        message: prior.message ?? buildLocalBlessing(query, analysis) });
     }
   }
-  const { analysis, engine, model_status } = await analyzeQuery(query, getLlmEnvironment(), counts);
+  const { analysis, engine, model_status, message } = await analyzeQuery(query, getLlmEnvironment(), counts);
   const pool = getSelectionPool(analysis, query);
   let selected = selectBalancedCandidate(pool, counts)!;
   let persistent = false; let replayed = false; let finalAnalysis: Analysis = analysis;
+  let finalMessage = message;
   if (db) try {
-    const recorded = await recordDraw(db, requestId, queryHash, pool.map((candidate) => ({ ...candidate, category: analysis.intents[candidate.intent_index].category })));
+    const recorded = await recordDraw(db, requestId, queryHash, pool.map((candidate) => ({ ...candidate, category: analysis.intents[candidate.intent_index].category })), message);
+    finalMessage = recorded.draw.message ?? message;
     selected = { ...recorded.draw, intent_index: pool.find((candidate) => candidate.deity_id === recorded.draw.deity_id)?.intent_index ?? 0 };
     if (!pool.some((candidate) => candidate.deity_id === recorded.draw.deity_id)) {
       finalAnalysis = buildLocalAnalysis(query); finalAnalysis.intents[0].category = recorded.draw.category;
     }
     persistent = true; replayed = recorded.replayed;
   } catch (error) { if (error instanceof RequestConflictError) throw error; }
-  return buildExperienceResult(query, finalAnalysis, selected, { engine, modelStatus: model_status, balanced: persistent, persistence: persistent ? "d1" : "unavailable", replayed });
+  return buildExperienceResult(query, finalAnalysis, selected, { engine, modelStatus: model_status, balanced: persistent, persistence: persistent ? "d1" : "unavailable", replayed, message: finalMessage });
 }
 export async function matchStatus() {
   const { db } = await state(); const config = getLlmConfig(getLlmEnvironment());

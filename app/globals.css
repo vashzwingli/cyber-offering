@@ -104,6 +104,15 @@ input:focus-visible {
   transform: scale(1.08);
 }
 
+.experience.is-bowing .temple-scene { animation: temple-bow 900ms ease-in-out; }
+@keyframes temple-bow {
+  0%, 100% { transform: scale(1.02) translateY(0); }
+  45% { transform: scale(1.055) translateY(3%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .experience.is-bowing .temple-scene { animation: none; }
+}
+
 .temple-scene::before {
   position: absolute;
   inset: 0;
